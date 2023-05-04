@@ -14,7 +14,7 @@ export default function Home() {
 
         <div className={styles.main}>
             <HeaderNavBar />
-            <div className={"h-96 w-96 bg-amber-400 page-body"}></div>
+            <div className={"max-h-full max-w-full bg-amber-400 page-body"}></div>
         </div>
     </>
   )
