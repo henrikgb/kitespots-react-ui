@@ -34,13 +34,13 @@ export default function HeaderNavBar() {
                 }>
                 <ul>
                     <li>
-                        <Link href="/home">Home</Link>
+                        <Link href="/">Home</Link>
                     </li>
                     <li>
-                        <Link href="/about">About</Link>
+                        <Link href="/About">About</Link>
                     </li>
                     <li>
-                        <Link href="/contact">Contact</Link>
+                        <Link href="/Contact">Contact</Link>
                     </li>
                 </ul>
             </div>
