@@ -1,13 +1,19 @@
 import * as React from "react";
 import Link from "next/link";
+import {useState} from "react";
 
 export default function HeaderNavBar() {
+    const [isNavExpanded, setIsNavExpanded] = useState(false)
+
     return (
         <nav className="navigation">
             <Link href="/" className="brand-name">
                 Kite Spots
             </Link>
-            <button className="hamburger">
+            <button className="hamburger"
+                    onClick={() => {
+                        setIsNavExpanded(!isNavExpanded);
+                    }}>
                 {/* icon from heroicons.com */}
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -23,7 +29,9 @@ export default function HeaderNavBar() {
                 </svg>
             </button>
             <div
-                className="navigation-menu">
+                className={
+                 isNavExpanded ? "navigation-menu expanded" : "navigation-menu"
+                }>
                 <ul>
                     <li>
                         <Link href="/home">Home</Link>
