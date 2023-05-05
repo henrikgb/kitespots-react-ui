@@ -23,7 +23,7 @@ export default function Home() {
 
         <div className={styles.main}>
             <HeaderNavBar />
-            <div className={"max-h-full max-w-full bg-amber-400 page-body"}>
+            <div className={"max-h-full max-w-full bg-amber-100 page-body"}>
                 <DynamicMap />
             </div>
         </div>
