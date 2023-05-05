@@ -24,7 +24,7 @@ export default function HeaderNavBar() {
             </button>
             <div
                 className="navigation-menu">
-                <ul className={"flex gap-4 mr-4"}>
+                <ul>
                     <li>
                         <Link href="/home">Home</Link>
                     </li>
