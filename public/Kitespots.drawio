@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net" modified="2023-06-21T10:27:12.260Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36 Edg/114.0.1823.51" etag="zVmVf2WI_W0kYQJa_Efx" version="21.3.8" type="github">
+  <diagram name="Page-1" id="BrZDqkCZ9IHl-KEAK0aq">
+    <mxGraphModel dx="1379" dy="796" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-9" value="User Interface" style="swimlane;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="60" y="120" width="200" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-10" value="Map" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="HSWr8mDZnpKa8TnozZEZ-9" vertex="1">
+          <mxGeometry x="10" y="30" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-11" value="Weather Data" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="HSWr8mDZnpKa8TnozZEZ-9" vertex="1">
+          <mxGeometry x="100" y="30" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-12" value="YR API" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="540" y="120" width="120" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-13" value="API" style="whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="345" y="320" width="80" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-14" value="Forecast data" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=15;" parent="1" vertex="1">
+          <mxGeometry x="355" y="460" width="60" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-15" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="HSWr8mDZnpKa8TnozZEZ-9" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="210" y="380" as="sourcePoint" />
+            <mxPoint x="160" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-16" value="" style="endArrow=none;html=1;rounded=0;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="HSWr8mDZnpKa8TnozZEZ-13" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="170" y="250" as="sourcePoint" />
+            <mxPoint x="160" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-17" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="HSWr8mDZnpKa8TnozZEZ-13" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="180" y="260" as="sourcePoint" />
+            <mxPoint x="385" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-18" value="" style="endArrow=none;html=1;rounded=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" target="HSWr8mDZnpKa8TnozZEZ-13" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="600" y="360" as="sourcePoint" />
+            <mxPoint x="190" y="370" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="HSWr8mDZnpKa8TnozZEZ-19" value="" style="endArrow=none;html=1;rounded=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" parent="1" source="HSWr8mDZnpKa8TnozZEZ-12" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="200" y="280" as="sourcePoint" />
+            <mxPoint x="600" y="360" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
