@@ -5,6 +5,11 @@
   min-height: 100vh;
 }
 
+.email-link {
+  color: green;
+  font-weight: bold;
+}
+
 .description {
   display: inherit;
   justify-content: inherit;
