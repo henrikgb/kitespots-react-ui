@@ -1,4 +1,3 @@
-import styles from '@/styles/Home.module.css'
 import HeaderNavBar from "@/components/HeaderNavBar";
 import dynamic from "next/dynamic";
 import React from "react";
@@ -12,9 +11,9 @@ export default function Home() {
     }
   ), [/* list variables which should trigger a re-render here */]);
   return (
-    <div className={styles.main}>
+    <div className="main">
       <HeaderNavBar />
-      <div className={"max-h-full max-w-full bg-amber-100 page-body"}>
+      <div className={"page-body"}>
         <DynamicMap />
       </div>
     </div>

@@ -19,7 +19,7 @@ export function AboutContent() {
       });
   }, []);
   return (
-    <div className={"container bg-amber-200"}>
+    <div className={"text-container"}>
       <h1 className={"font-bold"}>Om denne siden..</h1>
       {data ? (
         <div>
