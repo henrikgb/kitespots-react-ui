@@ -1,5 +1,5 @@
-import HeaderNavBar from "@/components/HeaderNavBar";
-import {AboutContent} from "@/components/AboutContent";
+import HeaderNavBar from "@/components/HeaderNavigationBar/HeaderNavBar";
+import {AboutContent} from "@/components/AboutPage/AboutContent";
 
 export default function About() {
   return (

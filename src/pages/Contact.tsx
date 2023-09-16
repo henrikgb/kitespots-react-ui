@@ -1,5 +1,5 @@
-import HeaderNavBar from "@/components/HeaderNavBar";
-import {ContactContent} from "@/components/ContactContent";
+import HeaderNavBar from "@/components/HeaderNavigationBar/HeaderNavBar";
+import {ContactContent} from "@/components/ContactPage/ContactContent";
 
 export default function Contact() {
   return (
