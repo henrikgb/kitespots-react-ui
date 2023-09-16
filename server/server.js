@@ -4,7 +4,6 @@ const { BlobServiceClient } = require('@azure/storage-blob');
 const cors = require('cors');
 require('dotenv').config();
 
-
 app.use(cors());
 
 const AZURE_STORAGE_CONNECTION_STRING = process.env.AZURE_STORAGE_CONNECTION_STRING;
