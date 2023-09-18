@@ -29,7 +29,7 @@ body {
     height: fit-content;
     margin: 10vh auto 10vh auto;
     padding: 5rem;
-    elevation: higher;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 0.2); /* box-shadow: [horizontal offset] [vertical offset] [blur radius] [optional spread radius] [color]; https://css-tricks.com/almanac/properties/b/box-shadow/ */
     --tw-bg-opacity: 1;
     background-color: rgb(253 230 138 / var(--tw-bg-opacity));
 }
