@@ -46,6 +46,9 @@ export default function HeaderNavBar() {
           <li>
             <Link suppressHydrationWarning href="/Contact">{t("Contact")}</Link>
           </li>
+          <li>
+            <Link suppressHydrationWarning href="/Settings">{t("Settings")}</Link>
+          </li>
         </ul>
       </div>
     </nav>

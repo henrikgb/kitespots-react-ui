@@ -2,6 +2,7 @@
   "Home": "Hjem",
   "About": "Om",
   "Contact": "Kontakt",
+  "Settings": "Innstillinger",
   "contactInfoHeader": "Kontaktinformasjon",
   "contactInfoMessagePart1": "Har du spørsmål angående nettsiden, <br>eller ønsker du å legge til koordinater og værdata for flere lokasjoner? <br>Ikke nøl med å ta kontakt.<br>",
   "contactInfoEmail": "Send en epost til: <0>{{email}}</0>",

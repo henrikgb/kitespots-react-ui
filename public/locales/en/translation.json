@@ -2,6 +2,7 @@
   "Home": "Home",
   "About": "About",
   "Contact": "Contact",
+  "Settings": "Settings",
   "contactInfoHeader": "Contact Info",
   "contactInfoMessagePart1": "Do you have questions about the website, <br>or would you like to add coordinates and weather data for more locations? <br>Do not hesitate to contact.<br>",
   "contactInfoEmail": "Send an email to: <0>{{email}}</0>",
