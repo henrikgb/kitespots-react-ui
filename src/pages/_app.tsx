@@ -2,6 +2,7 @@
 import "@/styles/styles.css";
 import '@/styles/globals.css';
 import "@/components/HeaderNavigationBar/navbarStyling.css";
+import "@/i18n/i18n";
 import HeaderNavBar from "@/components/HeaderNavigationBar/HeaderNavBar";
 
 // The AppProps type includes `Component` and `pageProps` properties.
