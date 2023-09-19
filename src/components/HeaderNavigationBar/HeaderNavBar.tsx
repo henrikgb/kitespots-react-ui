@@ -1,9 +1,13 @@
 import * as React from "react";
 import Link from "next/link";
 import {useState} from "react";
+import {useTranslation} from "next-i18next";
+
+
 
 export default function HeaderNavBar() {
   const [isNavExpanded, setIsNavExpanded] = useState(false)
+  const { t } = useTranslation(["translation"]);
 
   return (
     <nav className="navigation">
@@ -34,13 +38,13 @@ export default function HeaderNavBar() {
         }>
         <ul>
           <li>
-            <Link href="/">Home</Link>
+            <Link suppressHydrationWarning href="/">{t("Home")}</Link>
           </li>
           <li>
-            <Link href="/About">About</Link>
+            <Link suppressHydrationWarning href="/About">{t("About")}</Link>
           </li>
           <li>
-            <Link href="/Contact">Contact</Link>
+            <Link suppressHydrationWarning href="/Contact">{t("Contact")}</Link>
           </li>
         </ul>
       </div>
