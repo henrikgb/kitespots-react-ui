@@ -1,11 +1,18 @@
-export function ContactContent() {
+import React from 'react';
+import { Trans, useTranslation } from 'next-i18next';
+
+export const ContactContent: React.FC = () => {
+  const { t } = useTranslation();
+  const email = 'henrik-gb@hotmail.com';
+
   return (
-    <div className={"text-container"}>
-      <h1 className={"font-bold"}>Kontakt info</h1>
-      <p>Har du spørsmål angående nettsiden eller ønsker du å legge til koordinater og værdata for flere lokasjoner?
-        <br /> Ikke nøl med å ta kontakt. <br /> Send en epost til
-        <a href="mailto:henrik-gb@hotmail.com" className="font-bold text-green-700"> henrik-gb@hotmail.com</a>, og jeg vil svare deg så snart som mulig.
-      </p>
+    <div className="text-container">
+      <h1 className="font-bold">{t('contactInfoHeader')}</h1>
+      <Trans i18nKey="contactInfoMessagePart1" components={{ br: <br /> }}></Trans>
+      <Trans i18nKey="contactInfoEmail" values={{ email }}>
+        <a href={`mailto:${email}`} className="font-bold text-green-700"></a>
+      </Trans>
+      <p>{t('contactInfoMessagePart2')}</p>
     </div>
-  )
-}
+  );
+};
