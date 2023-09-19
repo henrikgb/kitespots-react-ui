@@ -1,0 +1,9 @@
+{
+  "Home": "Hjem",
+  "About": "Om",
+  "Contact": "Kontakt",
+  "contactInfoHeader": "Kontaktinformasjon",
+  "contactInfoMessagePart1": "Har du spørsmål angående nettsiden, <br>eller ønsker du å legge til koordinater og værdata for flere lokasjoner? <br>Ikke nøl med å ta kontakt.",
+  "contactInfoEmail": "Send en epost til: <0>{{email}}</0>",
+  "contactInfoMessagePart2": "Jeg vil svare deg så snart som mulig."
+}
