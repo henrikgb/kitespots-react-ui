@@ -5,7 +5,7 @@ import {useTranslation} from "next-i18next";
 export function AboutContent() {
   const [data, setData] = useState(null);
   const {theme} = useThemeStore();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/data')
