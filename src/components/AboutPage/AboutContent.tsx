@@ -1,7 +1,11 @@
 import React, {useEffect, useState} from "react";
+import useThemeStore from "@/store/themeStore";
+import {useTranslation} from "next-i18next";
 
 export function AboutContent() {
   const [data, setData] = useState(null);
+  const {theme} = useThemeStore();
+  const { t, i18n } = useTranslation();
 
   useEffect(() => {
     fetch('http://localhost:5000/api/data')
@@ -19,15 +23,18 @@ export function AboutContent() {
       });
   }, []);
   return (
-    <div className={"text-container"}>
-      <h1 className={"font-bold"}>Om denne siden..</h1>
+    <div className={`text-container ${theme}`}>
+      <p className={"font-bold text-3xl"}>{t("weatherDataFromOpenWeatherMap")}</p>
       {data ? (
-        <div>
-          <h1>Værdata fra Azure Blob Storage</h1>
+        <div className="flex flex-col gap-8">
+          <p>{t("updatedDataStoredInAzure")}</p>
           <p>{data}</p>
         </div>
       ) : (
-        <p>Loading data...</p>
+        <>
+          <br/>
+          <p>Loading data...</p>
+        </>
       )}
     </div>
   )

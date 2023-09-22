@@ -8,12 +8,14 @@ import HeaderNavBar from "@/components/HeaderNavigationBar/HeaderNavBar";
 // The AppProps type includes `Component` and `pageProps` properties.
 // `Component` is the active page, and `pageProps` are its incoming props.
 import type { AppProps } from 'next/app';
+import useThemeStore from "@/store/themeStore";
 
 // This custom App component initializes all pages in the Next.js application.
 // It allows for setting global components like the HeaderNavBar or for keeping shared state across pages.
 export default function App({ Component, pageProps }: AppProps) {
+  const {theme} = useThemeStore();
   return (
-    <div className="main">
+    <div className={`main ${theme}`}>
       {/* The HeaderNavBar is included here to be available on all pages. */}
       <HeaderNavBar />
       {/* Render the current page component. */}
