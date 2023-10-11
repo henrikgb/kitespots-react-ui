@@ -1,27 +1,23 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import useThemeStore from "@/store/themeStore";
-import {useTranslation} from "next-i18next";
+import { useTranslation } from "next-i18next";
+import axios from 'axios'; // <-- Add this line
 
 export function AboutContent() {
   const [data, setData] = useState(null);
-  const {theme} = useThemeStore();
+  const { theme } = useThemeStore();
   const { t } = useTranslation();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/data')
+    axios.get('http://localhost:5000/api/data')
       .then((response) => {
-        if (!response.ok) {
-          throw new Error(`Request failed with status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setData(data.data);
+        setData(response.data.data);
       })
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
   }, []);
+
   return (
     <div className={`text-container ${theme}`}>
       <p className={"font-bold text-3xl"}>{t("weatherDataFromOpenWeatherMap")}</p>
