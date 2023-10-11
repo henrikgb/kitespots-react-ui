@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "concurrently \"next dev\" \"node ./server/server.js\"",
+    "dev": "concurrently \"next dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
@@ -14,11 +14,9 @@
     "@types/react": "18.2.3",
     "@types/react-dom": "18.2.3",
     "axios": "^1.5.1",
-    "cors": "^2.8.5",
     "dotenv": "^16.3.1",
     "eslint": "8.39.0",
     "eslint-config-next": "13.3.4",
-    "express": "^4.18.2",
     "i18next": "^23.5.1",
     "i18next-browser-languagedetector": "^7.1.0",
     "i18next-http-backend": "^2.2.2",
@@ -33,15 +31,14 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.14",
-    "@types/express": "^4.17.19",
     "@types/i18next": "^13.0.0",
     "@types/leaflet": "^1.9.3",
     "@types/react-i18next": "^8.1.0",
     "autoprefixer": "^10.4.14",
     "concurrently": "^8.2.1",
     "postcss": "^8.4.23",
-    "tailwindcss": "^3.3.2"
+    "tailwindcss": "^3.3.2",
+    "ts-node": "^10.9.1"
   },
   "description": "This project is all about testing new technologies and learning new stuff.",
   "main": "next.config.js",

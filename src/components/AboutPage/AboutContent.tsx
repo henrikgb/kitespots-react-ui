@@ -9,7 +9,7 @@ export function AboutContent() {
   const { t } = useTranslation();
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/data')
+    axios.get('/api/data')
       .then((response) => {
         setData(response.data.data);
       })
