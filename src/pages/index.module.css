@@ -1,0 +1,38 @@
+.flexWrap1000{
+    display: flex;
+    flex-wrap: nowrap;
+}
+.mapContainer{
+    border: 1px solid grey;
+    width: 50vw;
+    height: 60vh;
+}
+.graphContainer{
+    border: 1px solid grey;
+    padding: 1.25rem;
+    width: 50vw;
+    height: 60vh;
+}
+.bottomCraphContainer{
+    border: 1px solid grey;
+    padding: 1.25rem;
+    width: 100vw;
+    height: 32vh;
+}
+
+@media (max-width: 1000px) {
+    .flexWrap1000{
+        flex-wrap: wrap;
+    }
+    .mapContainer{
+        width: 100vw;
+        height: 75vh;
+    }
+    .graphContainer{
+        width: 100vw;
+        height: 75vh;
+    }
+    .bottomCraphContainer{
+        height: 75vh;
+    }
+}
