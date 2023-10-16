@@ -10,7 +10,7 @@ export default function Home() {
   useEffect(() => {
     axios.get('/api/data')
       .then((response) => {
-        const { hourly, daily } = response.data.data;  // Destructure the hourly and daily data
+        const { hourly } = response.data.data;  // Destructure the hourly and daily data
         setHourlyData(hourly);
       })
       .catch((error) => {
