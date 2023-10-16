@@ -114,7 +114,8 @@ const WindVsRain = ({ data, ...opts }: WindVsRainProps) => {
         // prettier-ignore
         data: data?.map((item) => item.rainProbability) || [],
       }
-    ]
+    ],
+    ...opts,
   };
 
   return (
