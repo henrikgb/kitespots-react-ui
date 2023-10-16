@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import useThemeStore from "@/store/themeStore";
 import { useTranslation } from "next-i18next";
 import axios from 'axios';
+import WindVsRain from "@/components/Charts/WindVsRain";
 
 export function AboutContent() {
   const [hourlyData, setHourlyData] = useState(null);
@@ -31,13 +32,8 @@ export function AboutContent() {
       {hourlyData && dailyData ? (
         <div className="flex flex-col gap-8">
           <p>{t("updatedDataStoredInAzure")}</p>
-          <div>
-            <h3>Hourly Data</h3>
-            {/* You can display hourly data here */}
-          </div>
-          <div>
-            <h3>Daily Data</h3>
-            {/* You can display daily data here */}
+          <div style={{ height: "400px" }}>
+            <WindVsRain data={hourlyData}/>
           </div>
         </div>
       ) : (
