@@ -145,7 +145,8 @@ const WindDirection = ({ data, ...opts }: WindDirectionProps) => {
           }
         ]
       }
-    }
+    },
+    ...opts,
   }
 
   return (
