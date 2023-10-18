@@ -20,7 +20,8 @@ const WindVsRain = ({ data, ...opts }: WindVsRainProps) => {
       left: 'center'
     },
     grid: {
-      bottom: 80
+      bottom: 80,
+      right: "15%"
     },
     toolbox: {
       feature: {
@@ -50,13 +51,13 @@ const WindVsRain = ({ data, ...opts }: WindVsRainProps) => {
         show: true,
         realtime: true,
         start: 0,
-        end: 50
+        end: 100
       },
       {
         type: 'inside',
         realtime: true,
         start: 0,
-        end: 50
+        end: 100
       }
     ],
     xAxis: [

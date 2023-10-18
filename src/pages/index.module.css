@@ -5,34 +5,70 @@
 .mapContainer{
     border: 1px solid grey;
     width: 50vw;
-    height: 60vh;
+    height: 55vh;
 }
 .graphContainer{
-    border: 1px solid grey;
-    padding: 1.25rem;
+    display: flex;
     width: 50vw;
-    height: 60vh;
+    border: 1px solid grey;
+    height: 55vh;
+    justify-content: center;
 }
 .bottomCraphContainer{
     border: 1px solid grey;
-    padding: 1.25rem;
     width: 100vw;
-    height: 32vh;
+    height: 36.5vh;
+    display: flex;
+    flex-direction: row;
+}
+.windVsRainGraph {
+    border: 1px solid grey;
+    padding: 1.25rem;
+    width: 50vw;
+}
+.windDirectionGraph{
+    border: 1px solid grey;
+    padding: 1.25rem;
+    width: 50vw;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1600px) {
     .flexWrap1000{
         flex-wrap: wrap;
     }
     .mapContainer{
         width: 100vw;
-        height: 75vh;
+        height: 50vh;
     }
     .graphContainer{
+        justify-content: center;
+        align-items: center;
         width: 100vw;
-        height: 75vh;
+        height: 55vh;
     }
     .bottomCraphContainer{
-        height: 75vh;
+        height: 100vh;
+        flex-direction: column;
     }
+    .windVsRainGraph {
+        height: 50vh;
+        width: 100vw;
+    }
+    .windDirectionGraph{
+        height: 50vh;
+        width: 100vw;
+    }
+}
+
+@media (max-width: 800px) {
+    .graphContainer{
+        flex-wrap: wrap;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.textList li{
+    white-space: nowrap;
 }
