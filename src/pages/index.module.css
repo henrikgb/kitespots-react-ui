@@ -7,7 +7,7 @@
     width: 50vw;
     height: 55vh;
 }
-.graphContainer{
+.descriptionContainer{
     display: flex;
     width: 50vw;
     border: 1px solid grey;
@@ -32,7 +32,7 @@
     width: 50vw;
 }
 
-@media (max-width: 1600px) {
+@media (max-width: 1838px) {
     .flexWrap1000{
         flex-wrap: wrap;
     }
@@ -40,7 +40,7 @@
         width: 100vw;
         height: 50vh;
     }
-    .graphContainer{
+    .descriptionContainer{
         justify-content: center;
         align-items: center;
         width: 100vw;
@@ -61,7 +61,7 @@
 }
 
 @media (max-width: 800px) {
-    .graphContainer{
+    .descriptionContainer{
         flex-wrap: wrap;
         height: 100vh;
         justify-content: center;

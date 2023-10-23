@@ -5,10 +5,16 @@ import {KiteSpotsMap} from "@/components/MapPage/KiteSpotsMap";
 import WindVsRain from "@/components/Charts/WindVsRain";
 import styleClasses from "@/pages/index.module.css";
 import WindDirection from "@/components/Charts/WindDirection";
-import beachWindDirections from "@/assets/images/SeleNorthBore.png";
+import {beachCoordinates} from "@/assets/beachCoordinates";
+import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 
 export default function Home() {
   const [hourlyData, setHourlyData] = useState(null);
+  const {nameId,
+    image,
+    beginnerScore,
+    freestyleScore,
+    waveScore} = useBeachDescriptionStore();
 
   useEffect(() => {
     axios.get('/api/data')
@@ -27,10 +33,10 @@ export default function Home() {
         <div className={`${styleClasses.mapContainer}`}>
           <KiteSpotsMap />
         </div>
-        <div className={`${styleClasses.graphContainer} bg-white`} >
-          <Image src={beachWindDirections} alt="Beach Wind Directions" style={{ width: '54vh' }} />
+        <div className={`${styleClasses.descriptionContainer} bg-white`} >
+          <Image src={image ? image : ""} alt="Beach Wind Directions" style={{ width: '54vh' }} />
           <div className="bg-white p-5 flex flex-col gap-12 justify-center">
-            <p className={"font-bold text-3xl"}>Sele Beach</p>
+            <p className={"font-bold text-3xl"}>{nameId} Beach</p>
             <div className={`${styleClasses.textList}`}>
               <li>Side Onshore - Ideal</li>
               <li>Onshore - Hard for beginners</li>
@@ -39,9 +45,9 @@ export default function Home() {
               <li>Offshore - Very Dangerous</li>
             </div>
             <div>
-              <li>Beginner</li>
-              <li>Freestyle</li>
-              <li>Wave</li>
+              <li>Beginner: {beginnerScore}</li>
+              <li>Freestyle: {freestyleScore}</li>
+              <li>Wave: {waveScore}</li>
             </div>
           </div>
         </div>

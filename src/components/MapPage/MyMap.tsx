@@ -1,15 +1,44 @@
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import {Icon} from "leaflet";
-import {beachCoordinates} from "@/assets/beachCoordinates";
+import {BeachCoordinateProp, beachCoordinates} from "@/assets/beachCoordinates";
 import React from "react";
 import styleClasses from "@/pages/index.module.css";
+import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 
 const MyMap = () => {
-  const markers = beachCoordinates.map((beachCoordinates) => (
-    <Marker key={beachCoordinates.id} position={[beachCoordinates.latitude, beachCoordinates.longitude]}
-      icon={new Icon({iconUrl: "pin.png", iconSize: [25, 41], iconAnchor: [12, 41]})} >
-      <Popup>{beachCoordinates.info}</Popup>
+  const { nameId,
+    image,
+    beginnerScore,
+    freestyleScore,
+    waveScore,
+    setNameId,
+    setImage,
+    setBeginnerScore,
+    setFreestyleScore,
+    setWaveScore} = useBeachDescriptionStore();
+  const handleMarkerClick = (beachCoordinate: BeachCoordinateProp) => {
+    setNameId(beachCoordinate.nameId);
+    setImage(beachCoordinate.image);
+    setBeginnerScore(beachCoordinate.beginnerScore);
+    setFreestyleScore(beachCoordinate.freestyleScore);
+    setWaveScore(beachCoordinate.waveScore);
+  }
+
+  const markers = beachCoordinates.map((beachCoordinate) => (
+    <Marker
+      key={beachCoordinate.id}
+      position={[beachCoordinate.latitude, beachCoordinate.longitude]}
+      icon={new Icon({
+        iconUrl: "pin.png",
+        iconSize: [25, 41],
+        iconAnchor: [12, 41]
+      })}
+      eventHandlers={{
+        click: () => handleMarkerClick(beachCoordinate),
+      }}
+    >
+      <Popup>{beachCoordinate.info}</Popup>
     </Marker>
   ));
 
