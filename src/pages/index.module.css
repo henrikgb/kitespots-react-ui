@@ -1,0 +1,107 @@
+.flexWrap1000{
+    display: flex;
+    flex-wrap: nowrap;
+}
+.mapContainer{
+    border: 1px solid grey;
+    width: 50vw;
+    height: 55vh;
+}
+.descriptionContainer{
+    display: flex;
+    width: 50vw;
+    border: 1px solid grey;
+    height: 55vh;
+    justify-content: center;
+}
+.bottomCraphContainer{
+    border: 1px solid grey;
+    width: 100vw;
+    height: 36.5vh;
+    display: flex;
+    flex-direction: row;
+}
+.windVsRainGraph {
+    border: 1px solid grey;
+    padding: 1.25rem;
+    width: 50vw;
+}
+.windDirectionGraph{
+    border: 1px solid grey;
+    padding: 1.25rem;
+    width: 50vw;
+}
+
+@media (max-width: 1838px) {
+    .flexWrap1000{
+        flex-wrap: wrap;
+    }
+    .mapContainer{
+        width: 100vw;
+        height: 50vh;
+    }
+    .descriptionContainer{
+        justify-content: center;
+        align-items: center;
+        width: 100vw;
+        height: 55vh;
+    }
+    .bottomCraphContainer{
+        height: 100vh;
+        flex-direction: column;
+    }
+    .windVsRainGraph {
+        height: 50vh;
+        width: 100vw;
+    }
+    .windDirectionGraph{
+        height: 50vh;
+        width: 100vw;
+    }
+}
+
+@media (max-width: 800px) {
+    .descriptionContainer{
+        flex-wrap: wrap;
+        height: 100vh;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.textList li{
+    white-space: nowrap;
+}
+
+.textList ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.textList li {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.square {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 10px;
+    position: absolute;
+    top: 4px;
+    left: -20px; /* Adjust the positioning as needed */
+}
+
+.star {
+    color: #f1c40f;
+    font-size: 18px;
+    margin-right: 3px;
+}
+
+.starRed {
+    color: #dbdbdb;
+    font-size: 18px;
+    margin-right: 3px;
+}
+
