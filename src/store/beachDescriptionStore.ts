@@ -26,16 +26,18 @@ interface beachDescriptionState {
     setWaveScore: (value: number) => void;
 }
 
+const defaultBeachCoordinate = beachCoordinates.find((coordinate) => coordinate.nameId === "Sele"); // Choose the default coordinate
+
 const useBeachDescriptionStore = create<beachDescriptionState>((set) => ({
-  id: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.id,
-  latitude: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.latitude,
-  longitude: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.longitude,
-  info: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.info,
-  nameId: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.nameId,
-  image: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.image,
-  beginnerScore: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.beginnerScore,
-  freestyleScore: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.freestyleScore,
-  waveScore: beachCoordinates.find((coordinate) => coordinate.nameId === "sele")?.waveScore,
+  id: defaultBeachCoordinate?.id || undefined,
+  latitude: defaultBeachCoordinate?.latitude || undefined,
+  longitude: defaultBeachCoordinate?.longitude || undefined,
+  info: defaultBeachCoordinate?.info || undefined,
+  nameId: defaultBeachCoordinate?.nameId || undefined,
+  image: defaultBeachCoordinate?.image || undefined,
+  beginnerScore: defaultBeachCoordinate?.beginnerScore || undefined,
+  freestyleScore: defaultBeachCoordinate?.freestyleScore || undefined,
+  waveScore: defaultBeachCoordinate?.waveScore || undefined,
   setId: (updateId?: number) => {
     set(()=> ({
       id: updateId

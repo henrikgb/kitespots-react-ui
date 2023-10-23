@@ -92,3 +92,16 @@
     top: 4px;
     left: -20px; /* Adjust the positioning as needed */
 }
+
+.star {
+    color: #f1c40f;
+    font-size: 18px;
+    margin-right: 3px;
+}
+
+.starRed {
+    color: #dbdbdb;
+    font-size: 18px;
+    margin-right: 3px;
+}
+

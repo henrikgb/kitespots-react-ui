@@ -6,10 +6,12 @@ import WindVsRain from "@/components/Charts/WindVsRain";
 import styleClasses from "@/pages/index.module.css";
 import WindDirection from "@/components/Charts/WindDirection";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
+import {StarRating} from "@/util/StarRating";
 
 export default function Home() {
   const [hourlyData, setHourlyData] = useState(null);
-  const {nameId,
+  const {
+    nameId,
     image,
     beginnerScore,
     freestyleScore,
@@ -61,9 +63,20 @@ export default function Home() {
               </ul>
             </div>
             <div>
-              <li>Beginner: {beginnerScore}</li>
-              <li>Freestyle: {freestyleScore}</li>
-              <li>Wave: {waveScore}</li>
+              <ul>
+                <li className="flex flex-row gap-2">
+                  <p>Beginner:</p>
+                  <StarRating score={beginnerScore ? beginnerScore : 0} />
+                </li>
+                <li className="flex flex-row gap-2">
+                  <p>Freestyle:</p>
+                  <StarRating score={freestyleScore ? freestyleScore : 0} />
+                </li>
+                <li className="flex flex-row gap-2">
+                  <p>Wave:</p>
+                  <StarRating score={waveScore ? waveScore : 0} />
+                </li>
+              </ul>
             </div>
           </div>
         </div>
