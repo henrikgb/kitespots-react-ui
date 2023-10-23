@@ -72,3 +72,23 @@
 .textList li{
     white-space: nowrap;
 }
+
+.textList ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.textList li {
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.square {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    margin-right: 10px;
+    position: absolute;
+    top: 4px;
+    left: -20px; /* Adjust the positioning as needed */
+}

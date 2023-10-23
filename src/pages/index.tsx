@@ -36,12 +36,29 @@ export default function Home() {
           <Image src={image ? image : ""} alt="Beach Wind Directions" style={{ width: '54vh' }} />
           <div className="bg-white p-5 flex flex-col gap-12 justify-center">
             <p className={"font-bold text-3xl"}>{nameId} Beach</p>
-            <div className={`${styleClasses.textList}`}>
-              <li>Side Onshore - Ideal</li>
-              <li>Onshore - Hard for beginners</li>
-              <li>Over land - Gusty</li>
-              <li>Side Offshore - Dangerous</li>
-              <li>Offshore - Very Dangerous</li>
+            <div className={styleClasses.textList}>
+              <ul className="flex flex-col justify-center ">
+                <li>
+                  Side Onshore - Ideal
+                  <span className={styleClasses.square} style={{ backgroundColor: '#00bb00' }}></span>
+                </li>
+                <li>
+                  Onshore - Hard for beginners
+                  <span className={styleClasses.square} style={{ backgroundColor: '#008000' }}></span>
+                </li>
+                <li>
+                  Over land - Gusty
+                  <span className={styleClasses.square} style={{ backgroundColor: '#45a3ff' }}></span>
+                </li>
+                <li>
+                  Side Offshore - Dangerous
+                  <span className={styleClasses.square} style={{ backgroundColor: '#ffa500' }}></span>
+                </li>
+                <li>
+                  Offshore - Very Dangerous
+                  <span className={styleClasses.square} style={{ backgroundColor: '#FD0100' }}></span>
+                </li>
+              </ul>
             </div>
             <div>
               <li>Beginner: {beginnerScore}</li>
