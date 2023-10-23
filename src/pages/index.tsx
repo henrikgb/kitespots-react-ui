@@ -5,7 +5,6 @@ import {KiteSpotsMap} from "@/components/MapPage/KiteSpotsMap";
 import WindVsRain from "@/components/Charts/WindVsRain";
 import styleClasses from "@/pages/index.module.css";
 import WindDirection from "@/components/Charts/WindDirection";
-import {beachCoordinates} from "@/assets/beachCoordinates";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 
 export default function Home() {

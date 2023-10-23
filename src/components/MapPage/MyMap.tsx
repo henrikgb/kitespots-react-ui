@@ -7,11 +7,7 @@ import styleClasses from "@/pages/index.module.css";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 
 const MyMap = () => {
-  const { nameId,
-    image,
-    beginnerScore,
-    freestyleScore,
-    waveScore,
+  const {
     setNameId,
     setImage,
     setBeginnerScore,
