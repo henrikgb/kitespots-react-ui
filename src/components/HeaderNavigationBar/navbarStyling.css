@@ -66,7 +66,7 @@ text-decoration: none;
     .navigation-menu.expanded ul {
         display: block;
         position: absolute;
-        z-index: 2;
+        z-index: 20000;
     }
 }
 
