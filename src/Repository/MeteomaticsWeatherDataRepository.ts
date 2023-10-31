@@ -27,8 +27,7 @@ export const fetchMeteomaticsWeatherData = async (): Promise<MeteomaticsWeatherD
     const rawData: MeteomaticsJsonResponseDTO = JSON.parse(blobContent.toString('utf-8'));
 
     // Transform rawData to MeteomaticsWeatherData
-    const transformedData: MeteomaticsWeatherData = transformRawDataToWeatherData(rawData, locationName);
-    return transformedData;
+    return transformRawDataToWeatherData(rawData, locationName);
   });
 
   return Promise.all(weatherDataPromises);
