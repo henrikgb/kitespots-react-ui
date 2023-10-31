@@ -9,6 +9,7 @@ import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {StarRating} from "@/util/StarRating";
 
 export default function Home() {
+  const [meteomaticsData, setMeteomaticsData] = useState(null);
   const [hourlyData, setHourlyData] = useState(null);
   const {
     nameId,
@@ -26,7 +27,19 @@ export default function Home() {
       .catch((error) => {
         console.error('Error fetching data:', error);
       });
+
+    axios.get('/api/meteomaticsData')
+      .then((response) => {
+        const data = response.data.data;
+        setMeteomaticsData(data);
+        console.log('Meteomatics data:', data);
+      })
+      .catch((error) => {
+        console.error('Error fetching Meteomatics data:', error);
+      });
   }, []);
+
+  console.log(meteomaticsData);
 
   return (
     <div className="flex flex-col">
