@@ -1,7 +1,7 @@
 // store.ts
 import { create } from 'zustand';
 import {StaticImageData} from "next/image";
-import {beachCoordinates} from "@/assets/beachCoordinates";
+import {beachCoordinates, WindDirectionDescriptions} from "@/assets/beachCoordinates";
 
 // Define the state's shape
 interface beachDescriptionState {
@@ -14,6 +14,7 @@ interface beachDescriptionState {
     beginnerScore: number | undefined,
     freestyleScore: number | undefined,
     waveScore: number | undefined,
+    windDirectionDescriptions: WindDirectionDescriptions[] | undefined,
 
     setId: (value: number) => void;
     setLatitude: (value: number) => void;
@@ -24,6 +25,7 @@ interface beachDescriptionState {
     setBeginnerScore: (value: number) => void;
     setFreestyleScore: (value: number) => void;
     setWaveScore: (value: number) => void;
+    setWindDirectionDescriptions: (value: WindDirectionDescriptions[]) => void;
 }
 
 const defaultBeachCoordinate = beachCoordinates.find((coordinate) => coordinate.nameId === "SELE"); // Choose the default coordinate
@@ -38,6 +40,7 @@ const useBeachDescriptionStore = create<beachDescriptionState>((set) => ({
   beginnerScore: defaultBeachCoordinate?.beginnerScore || undefined,
   freestyleScore: defaultBeachCoordinate?.freestyleScore || undefined,
   waveScore: defaultBeachCoordinate?.waveScore || undefined,
+  windDirectionDescriptions: defaultBeachCoordinate?.windDirectionDescriptions || undefined,
   setId: (updateId?: number) => {
     set(()=> ({
       id: updateId
@@ -82,7 +85,12 @@ const useBeachDescriptionStore = create<beachDescriptionState>((set) => ({
     set(()=> ({
       waveScore: updateWaveScore
     }))
-  }
+  },
+  setWindDirectionDescriptions: (updateWindDirectionDescriptions?: WindDirectionDescriptions[]) => {
+    set(()=> ({
+      windDirectionDescriptions: updateWindDirectionDescriptions
+    }))
+  },
 }));
 
 export default useBeachDescriptionStore;

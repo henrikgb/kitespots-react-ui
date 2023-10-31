@@ -20,7 +20,8 @@ export default function Home() {
     image,
     beginnerScore,
     freestyleScore,
-    waveScore} = useBeachDescriptionStore();
+    waveScore,
+    windDirectionDescriptions} = useBeachDescriptionStore();
 
   useEffect(() => {
     axios.get('/api/meteomaticsData')
@@ -95,7 +96,7 @@ export default function Home() {
         )}
         {windDirection10ms && windDirection10ms[0] && (
           <div className={`${styleClasses.windDirectionGraph as string} p-5`}>
-            <WindDirection data={windDirection10ms[0].dates} />
+            <WindDirection data={windDirection10ms[0].dates} windDirectionDescriptions={windDirectionDescriptions ? windDirectionDescriptions : []} />
           </div>
         )}
       </div>

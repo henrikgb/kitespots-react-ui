@@ -14,13 +14,15 @@ const MyMap = () => {
     setImage,
     setBeginnerScore,
     setFreestyleScore,
-    setWaveScore} = useBeachDescriptionStore();
+    setWaveScore,
+    setWindDirectionDescriptions} = useBeachDescriptionStore();
   const handleMarkerClick = (beachCoordinate: BeachCoordinateProp) => {
     setNameId(beachCoordinate.nameId);
     setImage(beachCoordinate.image);
     setBeginnerScore(beachCoordinate.beginnerScore);
     setFreestyleScore(beachCoordinate.freestyleScore);
     setWaveScore(beachCoordinate.waveScore);
+    setWindDirectionDescriptions(beachCoordinate.windDirectionDescriptions);
 
     // Make sure the Meteomatics weather data is showing data from the coordinate the user clicks on
     setSelectedLocation(beachCoordinate.nameId);

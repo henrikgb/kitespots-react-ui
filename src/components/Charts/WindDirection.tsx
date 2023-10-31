@@ -1,6 +1,7 @@
 import {EChartsOption} from "echarts";
 import React from "react";
 import {EChartsBase} from "@/components/Charts/EChartsBase";
+import {WindDirectionDescriptions} from "@/assets/beachCoordinates";
 
 interface DataObject {
     date: string;
@@ -9,9 +10,10 @@ interface DataObject {
 
 interface WindDirectionProps extends EChartsOption {
     data?: DataObject[];
+    windDirectionDescriptions: WindDirectionDescriptions[];
 }
 
-const WindDirection = ({ data, ...opts }: WindDirectionProps) => {
+const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirectionProps) => {
   const options: EChartsOption = {
     title: {
       text: 'Wind Direction',
@@ -56,53 +58,11 @@ const WindDirection = ({ data, ...opts }: WindDirectionProps) => {
     visualMap: {
       top: 30,
       right: 10,
-      pieces: [
-        {
-          gt: 0,
-          lte: 22,
-          color: "#ffa500"
-        },
-        {
-          gt: 22,
-          lte: 150,
-          color: '#FD0100'
-        },
-        {
-          gt: 150,
-          lte: 170,
-          color: "#ffa500"
-        },
-        {
-          gt: 170,
-          lte: 210,
-          color: "#45a3ff"
-        },
-        {
-          gt: 210,
-          lte: 240,
-          color: '#00bb00'
-        },
-        {
-          gt: 240,
-          lte: 280,
-          color: '#008000'
-        },
-        {
-          gt: 280,
-          lte: 330,
-          color: '#00bb00'
-        },
-        {
-          gt: 330,
-          lte: 350,
-          color: '#45a3ff'
-        },
-        {
-          gt: 350,
-          lte: 360,
-          color: '#ffa500'
-        }
-      ],
+      pieces: windDirectionDescriptions.map((description) => ({
+        gt: description.intervalStart,
+        lte: description.intervalStop,
+        color: description.colorCode
+      })),
       outOfRange: {
         color: '#999'
       }
@@ -116,32 +76,9 @@ const WindDirection = ({ data, ...opts }: WindDirectionProps) => {
         lineStyle: {
           color: '#333'
         },
-        data: [
-          {
-            yAxis: 22
-          },
-          {
-            yAxis: 150
-          },
-          {
-            yAxis: 170
-          },
-          {
-            yAxis: 210
-          },
-          {
-            yAxis: 240
-          },
-          {
-            yAxis: 280
-          },
-          {
-            yAxis: 330
-          },
-          {
-            yAxis: 350
-          }
-        ]
+        data: windDirectionDescriptions.map((description) => ({
+          yAxis: description.intervalStop
+        }))
       }
     },
     ...opts,
