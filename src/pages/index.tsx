@@ -32,7 +32,7 @@ export default function Home() {
       .catch((error) => {
         console.error('Error fetching Meteomatics data:', error);
       });
-  }, []);
+  }, [setMeteomaticsData, setSelectedLocation]);
 
   return (
     <div className="flex flex-col">
