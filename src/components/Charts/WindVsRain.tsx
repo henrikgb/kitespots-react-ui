@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { EChartsOption } from 'echarts';
 import { EChartsBase } from '@/components/Charts/EChartsBase';
 
@@ -17,6 +17,25 @@ interface WindVsRainProps extends EChartsOption {
 }
 
 const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
+  const [gridRight, setGridRight] = useState('15%');
+  const [gridLeft, setGridLeft] = useState('10%');
+
+  useEffect(() => {
+    const handleResize = () => {
+      setGridRight(window.innerWidth <= 850 ? '25%' : '15%');
+      setGridLeft(window.innerWidth <= 850 ? "15%" : "10%");
+    };
+
+    // Set the grid right value on component mount
+    handleResize();
+
+    // Add event listener for screen resize
+    window.addEventListener('resize', handleResize);
+
+    // Remove event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Extracting dates for x-axis
   const dates = data?.windSpeed.map((d) => d.date) ?? [];
 
@@ -28,12 +47,13 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
 
   const options: EChartsOption = {
     title: {
-      text: 'Rainfall and Wind',
+      text: 'Wind and Rain',
       left: 'center',
     },
     grid: {
-      bottom: 80,
-      right: '15%',
+      left: gridLeft,
+      bottom: '25%',
+      right: gridRight,
     },
     toolbox: {
       feature: {
@@ -55,7 +75,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
       },
     },
     legend: {
-      data: ['Wind', 'Rain Probability'],
+      data: ['Wind', 'Rain'],
       left: 1,
     },
     dataZoom: [
@@ -85,11 +105,11 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     ],
     yAxis: [
       {
-        name: 'Wind Speed(m/s)',
+        name: 'Wind Speed (m/s)',
         type: 'value',
       },
       {
-        name: 'Rain Probability',
+        name: 'Rain (mm)',
         nameLocation: 'start',
         alignTicks: true,
         type: 'value',
@@ -111,7 +131,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         data: windSpeedValues,
       },
       {
-        name: 'Rain Probability',
+        name: 'Rain',
         type: 'line',
         yAxisIndex: 1,
         areaStyle: {},
