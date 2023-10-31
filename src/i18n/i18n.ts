@@ -1,32 +1,27 @@
 import i18n from 'i18next';
-import Backend from 'i18next-http-backend';
-import LanguageDetector from 'i18next-browser-languagedetector';
 import { initReactI18next } from 'react-i18next';
+import HttpApi from 'i18next-http-backend';
+import LanguageDetector from 'i18next-browser-languagedetector';
 
 i18n
-  .use(Backend) // load translation using http (default public/assets/locales)
-  .use(LanguageDetector) // detect user language
-  .use(initReactI18next) // pass the i18n instance to react-i18next.
+  .use(HttpApi) // use HttpApi for backend loading
+  .use(LanguageDetector) // use LanguageDetector to detect the user language
+  .use(initReactI18next) // init i18next with the plugin for react
   .init({
     lng: "nb",
     supportedLngs: ['en', 'nb'],  // add supported languages here
-    nonExplicitSupportedLngs: true, // if true will pass eg. en-US if finding en in supportedLngs
     fallbackLng: {
       'nb': ['en'],
       'default': ['en']
     },
-    debug: false,
+    debug: false, // set to false in production
     detection: {
-      order: ['queryString', 'cookie'],
-      caches: ['cookie'],
-    },
-    interpolation: {
-      escapeValue: false, // not needed for React as it escapes by default
+      order: ['queryString', 'cookie', 'localStorage', 'sessionStorage', 'navigator'],
+      caches: ['localStorage', 'cookie'],
     },
     backend: {
-      // for all available options read the backend's repository readme file
-      loadPath: '/locales/{{lng}}/{{ns}}.json'
-    }
+      loadPath: '/locales/{{lng}}/{{ns}}.json', // path to your translation files
+    },
   });
 
 export default i18n;
