@@ -17,14 +17,14 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
   const options: EChartsOption = {
     title: {
       text: 'Wind Direction',
-      left: 'center'
+      left: 'left'
     },
     tooltip: {
       trigger: 'axis'
     },
     grid: {
       left: '10%',
-      right: '15%',
+      right: '22%',
       bottom: '30%'
     },
     xAxis: {
