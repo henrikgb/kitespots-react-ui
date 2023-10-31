@@ -1,36 +1,48 @@
-import {EChartsOption} from "echarts";
-import React from "react";
-import {EChartsBase} from "@/components/Charts/EChartsBase";
+import React from 'react';
+import { EChartsOption } from 'echarts';
+import { EChartsBase } from '@/components/Charts/EChartsBase';
+
+interface DataObjectProps {
+  date: string;
+  value: number;
+}
 
 interface DataObject {
-    time: string;
-    windSpeed: number;
-    windDirection: number;
-    rainProbability: number;
+  windSpeed: DataObjectProps[];
+  precipitation: DataObjectProps[];
 }
 
 interface WindVsRainProps extends EChartsOption {
-    data?: DataObject[];
+  data?: DataObject;
 }
 
-const WindVsRain = ({ data, ...opts }: WindVsRainProps) => {
+const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
+  // Extracting dates for x-axis
+  const dates = data?.windSpeed.map((d) => d.date) ?? [];
+
+  // Extracting windSpeed values
+  const windSpeedValues = data?.windSpeed.map((d) => d.value) ?? [];
+
+  // Extracting precipitation values
+  const precipitationValues = data?.precipitation.map((d) => d.value) ?? [];
+
   const options: EChartsOption = {
     title: {
       text: 'Rainfall and Wind',
-      left: 'center'
+      left: 'center',
     },
     grid: {
       bottom: 80,
-      right: "15%"
+      right: '15%',
     },
     toolbox: {
       feature: {
         dataZoom: {
-          yAxisIndex: 'none'
+          yAxisIndex: 'none',
         },
         restore: {},
-        saveAsImage: {}
-      }
+        saveAsImage: {},
+      },
     },
     tooltip: {
       trigger: 'axis',
@@ -38,52 +50,51 @@ const WindVsRain = ({ data, ...opts }: WindVsRainProps) => {
         type: 'cross',
         animation: false,
         label: {
-          backgroundColor: '#505765'
-        }
-      }
+          backgroundColor: '#505765',
+        },
+      },
     },
     legend: {
       data: ['Wind', 'Rain Probability'],
-      left: 1
+      left: 1,
     },
     dataZoom: [
       {
         show: true,
         realtime: true,
         start: 0,
-        end: 100
+        end: 100,
       },
       {
         type: 'inside',
         realtime: true,
         start: 0,
-        end: 100
-      }
+        end: 100,
+      },
     ],
     xAxis: [
       {
         type: 'category',
         boundaryGap: false,
         axisLine: { onZero: false },
-        // prettier-ignore
-        data: data?.map((item) => item.time) || [],
+        data: dates,
         axisLabel: {
           formatter: (value: string) => value.replace(' ', '\n'), // Format the xAxis labels
         },
-      }
+      },
     ],
     yAxis: [
       {
         name: 'Wind Speed(m/s)',
-        type: 'value'
+        type: 'value',
       },
       {
         name: 'Rain Probability',
         nameLocation: 'start',
         alignTicks: true,
         type: 'value',
-        inverse: true
-      }
+        inverse: true,
+      },
     ],
     series: [
       {
@@ -91,14 +102,13 @@ const WindVsRain = ({ data, ...opts }: WindVsRainProps) => {
         type: 'line',
         areaStyle: {},
         lineStyle: {
-          width: 1
+          width: 1,
         },
         emphasis: {
-          focus: 'series'
+          focus: 'series',
         },
-        color: "#5f9ea0",
-        // prettier-ignore
-        data: data?.map((item) => item.windSpeed) || [],
+        color: '#5f9ea0',
+        data: windSpeedValues,
       },
       {
         name: 'Rain Probability',
@@ -106,24 +116,19 @@ const WindVsRain = ({ data, ...opts }: WindVsRainProps) => {
         yAxisIndex: 1,
         areaStyle: {},
         lineStyle: {
-          width: 1
+          width: 1,
         },
         emphasis: {
-          focus: 'series'
+          focus: 'series',
         },
-        color: "#80ccff",
-        // prettier-ignore
-        data: data?.map((item) => item.rainProbability) || [],
-      }
+        color: '#80ccff',
+        data: precipitationValues,
+      },
     ],
     ...opts,
   };
 
-  return (
-    <>
-      <EChartsBase option={options} style={{ width: "100%", height: "100%" }} />
-    </>
-  );
+  return <EChartsBase option={options} style={{ width: '100%', height: '100%' }} />;
 };
 
 export default WindVsRain;

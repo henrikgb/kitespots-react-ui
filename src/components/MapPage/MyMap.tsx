@@ -2,11 +2,19 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import {Icon} from "leaflet";
 import {BeachCoordinateProp, beachCoordinates} from "@/assets/beachCoordinates";
-import React from "react";
+import React, {useEffect} from "react";
 import styleClasses from "@/pages/index.module.css";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
+import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
 
 const MyMap = () => {
+  const { meteomaticsData,
+    selectedLocation,
+    windSpeed10ms,
+    windDirection10ms,
+    windGusts10ms,
+    precipitation,
+    setSelectedLocation } = useMeteomaticsWeatherDataStore();
   const {
     setNameId,
     setImage,
@@ -19,6 +27,9 @@ const MyMap = () => {
     setBeginnerScore(beachCoordinate.beginnerScore);
     setFreestyleScore(beachCoordinate.freestyleScore);
     setWaveScore(beachCoordinate.waveScore);
+
+    // Make sure the Meteomatics weather data is showing data from the coordinate the user clicks on
+    setSelectedLocation(beachCoordinate.nameId);
   }
 
   const markers = beachCoordinates.map((beachCoordinate) => (

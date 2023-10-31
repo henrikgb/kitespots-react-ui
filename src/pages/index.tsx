@@ -7,9 +7,14 @@ import styleClasses from "@/pages/index.module.css";
 import WindDirection from "@/components/Charts/WindDirection";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {StarRating} from "@/util/StarRating";
+import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
 
 export default function Home() {
-  const [meteomaticsData, setMeteomaticsData] = useState(null);
+  const { setMeteomaticsData,
+    setSelectedLocation,
+    windDirection10ms,
+    windSpeed10ms,
+    precipitation } = useMeteomaticsWeatherDataStore();
   const [hourlyData, setHourlyData] = useState(null);
   const {
     nameId,
@@ -32,7 +37,7 @@ export default function Home() {
       .then((response) => {
         const data = response.data.data;
         setMeteomaticsData(data);
-        console.log('Meteomatics data:', data);
+        setSelectedLocation("SELE"); // Set default location to Selestranden
       })
       .catch((error) => {
         console.error('Error fetching Meteomatics data:', error);
@@ -48,7 +53,7 @@ export default function Home() {
         <div className={`${styleClasses.descriptionContainer} bg-white`} >
           <Image src={image ? image : ""} alt="Beach Wind Directions" style={{ width: '54vh' }} />
           <div className="bg-white p-5 flex flex-col gap-12 justify-center">
-            <p className={"font-bold text-3xl"}>{nameId} Beach</p>
+            <p className={"font-bold text-3xl"}>{nameId ? (nameId?.charAt(0).toUpperCase() + nameId?.slice(1).toLowerCase()) : undefined} Beach</p>
             <div className={styleClasses.textList}>
               <ul className="flex flex-col justify-center ">
                 <li>
@@ -93,14 +98,14 @@ export default function Home() {
         </div>
       </div>
       <div  className={`${styleClasses.bottomCraphContainer}`}>
-        {hourlyData && (
+        {(windSpeed10ms && precipitation) && (
           <div className={`${styleClasses.windVsRainGraph as string}`}>
-            <WindVsRain data={hourlyData} />
+            <WindVsRain data={{ windSpeed: windSpeed10ms[0].dates, precipitation: precipitation[0].dates }} />
           </div>
         )}
-        {hourlyData && (
+        {windDirection10ms && windDirection10ms[0] && (
           <div className={`${styleClasses.windDirectionGraph as string} p-5`}>
-            <WindDirection data={hourlyData} />
+            <WindDirection data={windDirection10ms[0].dates} />
           </div>
         )}
       </div>
