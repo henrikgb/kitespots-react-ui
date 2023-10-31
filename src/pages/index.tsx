@@ -15,7 +15,6 @@ export default function Home() {
     windDirection10ms,
     windSpeed10ms,
     precipitation } = useMeteomaticsWeatherDataStore();
-  const [hourlyData, setHourlyData] = useState(null);
   const {
     nameId,
     image,
@@ -24,15 +23,6 @@ export default function Home() {
     waveScore} = useBeachDescriptionStore();
 
   useEffect(() => {
-    axios.get('/api/data')
-      .then((response) => {
-        const { hourly } = response.data.data;  // Destructure the hourly and daily data
-        setHourlyData(hourly);
-      })
-      .catch((error) => {
-        console.error('Error fetching data:', error);
-      });
-
     axios.get('/api/meteomaticsData')
       .then((response) => {
         const data = response.data.data;
