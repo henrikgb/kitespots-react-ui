@@ -1,5 +1,5 @@
 import Image from "next/image";
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import axios from "axios";
 import {KiteSpotsMap} from "@/components/MapPage/KiteSpotsMap";
 import WindVsRain from "@/components/Charts/WindVsRain";
