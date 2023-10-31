@@ -39,8 +39,6 @@ export default function Home() {
       });
   }, []);
 
-  console.log(meteomaticsData);
-
   return (
     <div className="flex flex-col">
       <div className={`${styleClasses.flexWrap1000}`}>
