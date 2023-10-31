@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import { EChartsOption } from 'echarts';
 import { EChartsBase } from '@/components/Charts/EChartsBase';
 
@@ -17,6 +17,25 @@ interface WindVsRainProps extends EChartsOption {
 }
 
 const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
+  const [gridRight, setGridRight] = useState('15%');
+  const [gridLeft, setGridLeft] = useState('10%');
+
+  useEffect(() => {
+    const handleResize = () => {
+      setGridRight(window.innerWidth <= 850 ? '25%' : '15%');
+      setGridLeft(window.innerWidth <= 850 ? "15%" : "10%");
+    };
+
+    // Set the grid right value on component mount
+    handleResize();
+
+    // Add event listener for screen resize
+    window.addEventListener('resize', handleResize);
+
+    // Remove event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Extracting dates for x-axis
   const dates = data?.windSpeed.map((d) => d.date) ?? [];
 
@@ -32,8 +51,9 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
       left: 'center',
     },
     grid: {
-      bottom: 80,
-      right: '15%',
+      left: gridLeft,
+      bottom: '25%',
+      right: gridRight,
     },
     toolbox: {
       feature: {
