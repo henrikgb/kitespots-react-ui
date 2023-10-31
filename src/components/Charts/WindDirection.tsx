@@ -1,5 +1,5 @@
 import {EChartsOption} from "echarts";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {EChartsBase} from "@/components/Charts/EChartsBase";
 import {WindDirectionDescriptions} from "@/assets/beachCoordinates";
 
@@ -14,6 +14,25 @@ interface WindDirectionProps extends EChartsOption {
 }
 
 const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirectionProps) => {
+  const [gridRight, setGridRight] = useState('15%');
+  const [gridLeft, setGridLeft] = useState('10%');
+
+  useEffect(() => {
+    const handleResize = () => {
+      setGridRight(window.innerWidth <= 850 ? '25%' : '15%');
+      setGridLeft(window.innerWidth <= 850 ? "15%" : "10%");
+    };
+
+    // Set the grid right value on component mount
+    handleResize();
+
+    // Add event listener for screen resize
+    window.addEventListener('resize', handleResize);
+
+    // Remove event listener on component unmount
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const options: EChartsOption = {
     title: {
       text: 'Wind Direction',
@@ -23,16 +42,16 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
       trigger: 'axis'
     },
     grid: {
-      left: '10%',
-      right: '22%',
-      bottom: '30%'
+      left: gridLeft,
+      bottom: '25%',
+      right: gridRight,
     },
     xAxis: {
       data: data?.map((item) => item.date) || [],
     },
     yAxis: {},
     toolbox: {
-      right: 10,
+      right: 0,
       feature: {
         dataZoom: {
           yAxisIndex: 'none'
@@ -57,7 +76,7 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     ],
     visualMap: {
       top: 30,
-      right: 10,
+      right: 0,
       pieces: windDirectionDescriptions.map((description) => ({
         gt: description.intervalStart,
         lte: description.intervalStop,
