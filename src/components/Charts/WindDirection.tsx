@@ -3,10 +3,8 @@ import React from "react";
 import {EChartsBase} from "@/components/Charts/EChartsBase";
 
 interface DataObject {
-    time: string;
-    windSpeed: number;
-    windDirection: number;
-    rainProbability: number;
+    date: string;
+    value: number;
 }
 
 interface WindDirectionProps extends EChartsOption {
@@ -28,7 +26,7 @@ const WindDirection = ({ data, ...opts }: WindDirectionProps) => {
       bottom: '30%'
     },
     xAxis: {
-      data: data?.map((item) => item.time) || [],
+      data: data?.map((item) => item.date) || [],
     },
     yAxis: {},
     toolbox: {
@@ -112,7 +110,7 @@ const WindDirection = ({ data, ...opts }: WindDirectionProps) => {
     series: {
       name: 'Wind Direction',
       type: 'line',
-      data: data?.map((item) => item.windDirection) || [],
+      data: data?.map((item) => item.value) || [],
       markLine: {
         silent: true,
         lineStyle: {

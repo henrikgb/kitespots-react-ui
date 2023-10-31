@@ -26,7 +26,7 @@ interface beachDescriptionState {
     setWaveScore: (value: number) => void;
 }
 
-const defaultBeachCoordinate = beachCoordinates.find((coordinate) => coordinate.nameId === "Sele"); // Choose the default coordinate
+const defaultBeachCoordinate = beachCoordinates.find((coordinate) => coordinate.nameId === "SELE"); // Choose the default coordinate
 
 const useBeachDescriptionStore = create<beachDescriptionState>((set) => ({
   id: defaultBeachCoordinate?.id || undefined,
