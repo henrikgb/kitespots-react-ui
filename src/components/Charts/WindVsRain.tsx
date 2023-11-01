@@ -53,6 +53,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     title: {
       text: 'Wind and Rain',
       left: 'center',
+      top: "6%"
     },
     grid: {
       left: gridLeft,

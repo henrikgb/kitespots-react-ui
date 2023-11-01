@@ -36,7 +36,8 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
   const options: EChartsOption = {
     title: {
       text: 'Wind Direction',
-      left: 'left'
+      left: 'center',
+      top: "6%"
     },
     tooltip: {
       trigger: 'axis'
