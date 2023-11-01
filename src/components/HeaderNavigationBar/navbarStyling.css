@@ -80,6 +80,7 @@ text-decoration: none;
         height: calc(100vh - 8vh);
         background-color: white;
         border-top: 1px solid black;
+    max-height: 50vh;
     }
     .navigation-menu li {
     text-align: center; /*// centers link text and strips off margin*/
