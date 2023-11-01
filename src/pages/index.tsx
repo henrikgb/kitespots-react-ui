@@ -12,6 +12,7 @@ import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStor
 export default function Home() {
   const { setMeteomaticsData,
     setSelectedLocation,
+    windGusts10ms,
     windDirection10ms,
     windSpeed10ms,
     precipitation } = useMeteomaticsWeatherDataStore();
@@ -89,9 +90,9 @@ export default function Home() {
         </div>
       </div>
       <div  className={`${styleClasses.bottomCraphContainer}`}>
-        {(windSpeed10ms && precipitation) && (
+        {(windGusts10ms && windSpeed10ms && precipitation) && (
           <div className={`${styleClasses.windVsRainGraph as string}`}>
-            <WindVsRain data={{ windSpeed: windSpeed10ms[0].dates, precipitation: precipitation[0].dates }} />
+            <WindVsRain data={{ windGust: windGusts10ms[0].dates, windSpeed: windSpeed10ms[0].dates, precipitation: precipitation[0].dates }} />
           </div>
         )}
         {windDirection10ms && windDirection10ms[0] && (

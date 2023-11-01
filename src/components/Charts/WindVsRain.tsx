@@ -8,6 +8,7 @@ interface DataObjectProps {
 }
 
 interface DataObject {
+  windGust: DataObjectProps[];
   windSpeed: DataObjectProps[];
   precipitation: DataObjectProps[];
 }
@@ -38,6 +39,9 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
 
   // Extracting dates for x-axis
   const dates = data?.windSpeed.map((d) => d.date) ?? [];
+
+  // Extracting windGust values
+  const windGustValues = data?.windGust.map((d) => d.value) ?? [];
 
   // Extracting windSpeed values
   const windSpeedValues = data?.windSpeed.map((d) => d.value) ?? [];
@@ -75,7 +79,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
       },
     },
     legend: {
-      data: ['Wind', 'Rain'],
+      data: ['Gust', 'Wind', 'Rain'],
       left: 1,
     },
     dataZoom: [
@@ -117,6 +121,19 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
       },
     ],
     series: [
+      {
+        name: 'Gust',
+        type: 'line',
+        areaStyle: {},
+        lineStyle: {
+          width: 1,
+        },
+        emphasis: {
+          focus: 'series',
+        },
+        color: '#ff6666',
+        data: windGustValues,
+      },
       {
         name: 'Wind',
         type: 'line',
