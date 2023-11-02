@@ -50,7 +50,9 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     xAxis: {
       data: data?.map((item) => item.date) || [],
     },
-    yAxis: {},
+    yAxis: {
+      max: 360
+    },
     toolbox: {
       right: 0,
       feature: {

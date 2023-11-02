@@ -112,6 +112,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
       {
         name: 'Wind Speed (m/s)',
         type: 'value',
+        max: 30,
       },
       {
         name: 'Rain (mm)',
@@ -119,6 +120,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         alignTicks: true,
         type: 'value',
         inverse: true,
+        max: 3,
       },
     ],
     series: [
