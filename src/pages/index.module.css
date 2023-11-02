@@ -15,7 +15,6 @@
     justify-content: center;
 }
 .bottomCraphContainer{
-    border: 1px solid grey;
     width: 100vw;
     height: 36.5vh;
     display: flex;
