@@ -1,6 +1,6 @@
-# Kite Surf Weather Forecast in Rogaland
+# kitespots-react-ui: Kite Surf Weather Forecast in Rogaland
 
-Welcome to the Kite Surf Weather Forecast application for Rogaland. This application utilizes a combination of technologies to provide kite surfers with accurate wind and rain forecasts for various locations in Rogaland, ensuring a great kite surfing experience.
+Welcome to kitespots-react-ui, the Kite Surf Weather Forecast application for Rogaland. This application utilizes a combination of technologies to provide kite surfers with accurate wind and rain forecasts for various locations in Rogaland, ensuring a great kite surfing experience.
 
 ## Table of Contents
 - [Technologies](#technologies)
@@ -24,11 +24,11 @@ This project uses a mix of technologies to ensure efficient and smooth operation
 
 ### Backend:
 - Written in C#.
-- Utilizes Azure Function App to fetch data from OpenWeatherMap API once every hour.
+- Utilizes Azure Function App to fetch data from Meteomatics API (https://www.meteomatics.com/) once every hour.
 - Saves the fetched data in Azure blob storage.
+- Link to repository: https://github.com/henrikgb/FetchMeteomaticsWeatherData
 
 ## Setup
-
 To get the project up and running:
 
 1. **Frontend Setup**:
@@ -38,7 +38,7 @@ To get the project up and running:
    npm install
    npm run dev
 2. **Backend Setup**:
-- Set up Azure Function App and configure it with your OpenWeatherMap API key.
+- Set up Azure Function App and configure it with your Meteomatics API username and password.
 - Ensure the Azure blob storage connection is properly set up.
 
 ## Features
