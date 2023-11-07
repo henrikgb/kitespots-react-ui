@@ -45,7 +45,7 @@ export default function Home() {
         <div className={`${styleClasses.descriptionContainer}`} >
           <Image src={image ? image : ""} alt="Beach Wind Directions" style={{ width: '54vh' }} />
           <div className="p-5 flex flex-col gap-12 justify-center">
-            <p className={"font-bold text-3xl"}>{nameId ? (nameId?.charAt(0).toUpperCase() + nameId?.slice(1).toLowerCase()) : undefined} Beach</p>
+            <p className={"font-bold text-3xl"}>{nameId ? (nameId?.charAt(0).toUpperCase() + nameId?.slice(1).toLowerCase()) : undefined}</p>
             <div className={styleClasses.textList}>
               <ul className="flex flex-col justify-center ">
                 <li>
