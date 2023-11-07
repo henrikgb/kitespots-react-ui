@@ -4,13 +4,19 @@
   "Contact": "Kontakt",
   "Settings": "Innstillinger",
   "contactInfoHeader": "Kontaktinformasjon",
-  "contactInfoMessagePart1": "Har du spørsmål angående nettsiden, <br>eller ønsker du å legge til koordinater og værdata for flere lokasjoner? <br>Ikke nøl med å ta kontakt.<br>",
-  "contactInfoEmail": "Send en epost til: <0>{{email}}</0>",
+  "contactInfoMessagePart1": "Har du spørsmål angående nettsiden, eller ønsker du å legge til koordinater og værdata for flere lokasjoner?<br>",
+  "contactInfoEmail": "Ikke nøl med å ta kontakt. Send en epost til: <0>{{email}}</0>",
   "contactInfoMessagePart2": "Jeg vil svare deg så snart som mulig.",
   "changeLanguage": "Endre språk",
   "changeStyleTheme": "Endre stiltema for nettapplikasjon",
   "norwegian": "Norsk",
   "english": "Engelsk",
   "weatherDataFromOpenWeatherMap": "Vær data fra OpenWeatherMap",
-  "updatedDataStoredInAzure": "Vær dataen hentes fra OpenWeatherMap en gang i timen og lagres i Azure Blob Storage"
+  "updatedDataStoredInAzure": "Vær dataen hentes fra OpenWeatherMap en gang i timen og lagres i Azure Blob Storage",
+  "aboutPageHeader": "Velkommen til Kitespots.no – Din guide til Kitesurfing i Rogaland",
+  "aboutPageTextSection1": "Kitespots.no er skapt med en lidenskap for kitesurfing og teknologi. Dette ikke-kommersielle prosjektet tjener som et levende laboratorium for webutvikling, hvor jeg som utvikler kan eksperimentere og forbedre mine ferdigheter med ulike teknologier. Prosjektet er open source og kildekoden er fritt tilgjengelig for alle som ønsker å bidra eller lære. Her er link til GitHub-repositoriet: <0>kitespots-react-ui</0>",
+  "aboutPageTextSection2": "På Kitespots.no finner du oppdaterte værmeldinger spesifikt tilrettelagt for strender i Rogaland som egner seg for kitesurfing. Ved et enkelt klikk på koordinatene i det interaktive kartet vil du kunne utforske værdata fra de ulike strendene, og se detaljerte værmeldinger for vindstyrke, vindkast, nedbør og vindretning – alt du trenger for å planlegge din neste kitesurfing-økt.",
+  "aboutPageTextSection3": "Oppdatert værdata hentes en gang i timen fra <0>Meteomatics</0> som utmerker seg med sin presise værinformasjon, levert gjennom et brukervennlig API. Med data fra en rekke ulike kilder sikrer de nøyaktighet som er essensiell for kitesurfing. Dette sikrer at informasjonen du mottar ikke bare er nøyaktig, men også så aktuell som mulig",
+  "aboutPageTextSection4": "<0>Stavanger Kiteklubb</0> har levert verdifulle bidrag gjennom sine grundige analyser av strendene, hvor de har gitt score for egnethet for nybegynnere, freestyle- og wave kiting. Deres detaljerte arbeid omfatter også bilder av alle strendene med en oversikt over hvordan forskjellige vindretninger påvirker forholdene for kiting på hver strand. Med hjelp og inspirasjon fra analysen til Stavanger Kiteklubb, for å assistere i din vurdering av vindforholdene, er det implementert kategorier som beskriver vindretningene: Side Onshore (ideelt), Onshore (vanskelig for nybegynnere), Over Land (gusty), Side Offshore (farlig), og Offshore (veldig farlig). Disse kategoriene er intuitivt fargekodet i grafen for vindretning, noe som gjør det enkelt for deg å vurdere om forholdene er optimale for kiting. ",
+  "aboutPageTextSection5": "Jeg håper Kitespots.no blir et nyttig verktøy for deg til å utforske, planlegge og nyte tiden på vannet langs Rogalands fantastiske strender."
 }

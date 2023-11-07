@@ -9,7 +9,7 @@ export const ContactContent: React.FC = () => {
 
   return (
     <div className={`text-container ${theme}`}>
-      <p className="font-bold text-2xl">{t('contactInfoHeader')}</p>
+      <p className="font-bold text-2xl mb-4">{t('contactInfoHeader')}</p>
       <Trans i18nKey="contactInfoMessagePart1" components={{ br: <br /> }}></Trans>
       <Trans i18nKey="contactInfoEmail" values={{ email }}>
         <a href={`mailto:${email}`} className={`font-bold text-link-color ${theme}`}></a>
