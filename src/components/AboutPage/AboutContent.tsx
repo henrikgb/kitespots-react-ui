@@ -7,7 +7,7 @@ export function AboutContent() {
 
   return (
     <div className={`text-container ${theme}`}>
-      <p className={"font-bold text-3xl"}>{t("weatherDataFromOpenWeatherMap")}</p>
+      <p className={"font-bold text-2xl"}>{t("aboutPageHeader")}</p>
     </div>
   )
 }
