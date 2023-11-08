@@ -75,7 +75,7 @@ export const useMeteomaticsWeatherDataStore = create<MeteomaticsWeatherDataState
       },
     }),
     {
-      name: "peacock-interactive-depositional-environment-map",
+      name: "meteomatics-weather",
       storage: createJSONStorage(() => sessionStorage),
     }
   )
