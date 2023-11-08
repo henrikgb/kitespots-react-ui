@@ -49,6 +49,24 @@ body {
     padding: 5rem;
 }
 
+.settings-container {
+    &.normal-mode {
+        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
+        --tw-bg-opacity: 1;
+        background-color: rgb(252 211 77 / var(--tw-bg-opacity));
+    }
+    &.dark-mode {
+        box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
+        --tw-bg-opacity: 1;
+        background-color: #4E587E;
+    }
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem/* 16px */;
+    padding: 2rem/* 32px */;
+}
+
 .page-body {
     &.normal-mode {
         --tw-bg-opacity: 1;
