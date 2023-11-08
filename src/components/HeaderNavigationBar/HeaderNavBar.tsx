@@ -1,13 +1,19 @@
 import * as React from "react";
 import Link from "next/link";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useTranslation} from 'next-i18next';
 import KitespotsLogo from '@/assets/images/KitespotsLogo';
+import usei18LanguageStore from "@/store/i18languageStore";
 
 
 export default function HeaderNavBar() {
   const [isNavExpanded, setIsNavExpanded] = useState(false)
-  const { t } = useTranslation(["translation"]);
+  const { t, i18n } = useTranslation();
+  const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
+
+  useEffect(() => {
+    i18n.changeLanguage(activeLanguage);
+  }, [i18n, activeLanguage]);
 
   return (
     <nav className="navigation">
@@ -47,12 +53,9 @@ export default function HeaderNavBar() {
           <li>
             <Link suppressHydrationWarning href="/Contact">{t("Contact")}</Link>
           </li>
-          {/* TODO: Activate Settings when i18n is fixed */}  
-          {/*}
-            <li>
+          <li>
             <Link suppressHydrationWarning href="/Settings">{t("Settings")}</Link>
           </li>
-          {*/}
         </ul>
       </div>
     </nav>

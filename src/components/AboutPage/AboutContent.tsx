@@ -1,13 +1,19 @@
 import useThemeStore from "@/store/themeStore";
 import {Trans, useTranslation} from 'next-i18next'
-import React from "react";
+import React, {useEffect} from "react";
+import usei18LanguageStore from "@/store/i18languageStore";
 
 export function AboutContent() {
   const { theme } = useThemeStore();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const kitespotsGithubRepo = 'https://github.com/henrikgb/kitespots-react-ui';
   const linkMeteomatics = 'https://www.meteomatics.com/';
   const linkStavangerKiteklubb = 'https://www.stavangerkiteklubb.com/';
+  const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
+
+  useEffect(() => {
+    i18n.changeLanguage(activeLanguage);
+  }, [i18n, activeLanguage]);
 
   return (
     <div className={`text-container ${theme}`}>

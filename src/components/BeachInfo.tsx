@@ -1,16 +1,23 @@
 import styleClasses from "@/pages/index.module.css";
 import {StarRating} from "@/util/StarRating";
-import React from "react";
+import React, {useEffect} from "react";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useTranslation} from 'next-i18next';
+import usei18LanguageStore from "@/store/i18languageStore";
 
 export const BeachInfo = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const {
     nameId,
     beginnerScore,
     freestyleScore,
     waveScore} = useBeachDescriptionStore();
+  const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
+
+  useEffect(() => {
+    i18n.changeLanguage(activeLanguage);
+  }, [i18n, activeLanguage]);
+
   return (
     <div className="p-5 flex flex-col gap-12 justify-center">
       <p className={"font-bold text-3xl"}>{nameId ? (nameId?.charAt(0).toUpperCase() + nameId?.slice(1).toLowerCase()) : undefined}</p>
