@@ -9,7 +9,7 @@ import usei18LanguageStore from "@/store/i18languageStore";
 export default function HeaderNavBar() {
   const [isNavExpanded, setIsNavExpanded] = useState(false)
   const { t, i18n } = useTranslation();
-  const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
+  const {activeLanguage} = usei18LanguageStore();
 
   useEffect(() => {
     i18n.changeLanguage(activeLanguage);

@@ -12,7 +12,7 @@ export const BeachInfo = () => {
     beginnerScore,
     freestyleScore,
     waveScore} = useBeachDescriptionStore();
-  const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
+  const {activeLanguage} = usei18LanguageStore();
 
   useEffect(() => {
     i18n.changeLanguage(activeLanguage);

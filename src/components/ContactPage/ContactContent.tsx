@@ -7,7 +7,7 @@ export const ContactContent: React.FC = () => {
   const {theme} = useThemeStore();
   const { t, i18n } = useTranslation();
   const email = 'henrik.busengdal@kitespots.no';
-  const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
+  const {activeLanguage} = usei18LanguageStore();
 
   useEffect(() => {
     i18n.changeLanguage(activeLanguage);

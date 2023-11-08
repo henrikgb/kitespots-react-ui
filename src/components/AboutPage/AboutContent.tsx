@@ -9,7 +9,7 @@ export function AboutContent() {
   const kitespotsGithubRepo = 'https://github.com/henrikgb/kitespots-react-ui';
   const linkMeteomatics = 'https://www.meteomatics.com/';
   const linkStavangerKiteklubb = 'https://www.stavangerkiteklubb.com/';
-  const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
+  const {activeLanguage} = usei18LanguageStore();
 
   useEffect(() => {
     i18n.changeLanguage(activeLanguage);
