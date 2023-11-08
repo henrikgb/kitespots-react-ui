@@ -28,22 +28,26 @@ export const SettingsContent: React.FC = () => {
   return (
     <div className={`text-container flex flex-col gap-4 ${theme}`}>
       <p className="font-bold text-2xl">{t("Settings")}</p>
-      <div className="flex gap-4">
-        <p>{t('changeLanguage')}</p>
-        <div className={`w-fit px-3 border-2 border-black cursor-pointer ${activeLanguage === 'en' ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
-          <button onClick={() => changeLanguage('en')}>{t("english")}</button>
-        </div>
-        <div className={`w-fit px-3 border-2 border-black cursor-pointer ${activeLanguage === 'nb' ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
-          <button onClick={() => changeLanguage('nb')}>{t("norwegian")}</button>
+      <div className={`settings-container ${theme}`}>
+        <p className="whitespace-nowrap">{t('changeLanguage')}</p>
+        <div className="flex flex-wrap gap-4">
+          <div className={`w-fit px-3 border-2 border-black cursor-pointer ${activeLanguage === 'en' ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
+            <button onClick={() => changeLanguage('en')}>{t("english")}</button>
+          </div>
+          <div className={`w-fit px-3 border-2 border-black cursor-pointer ${activeLanguage === 'nb' ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
+            <button onClick={() => changeLanguage('nb')}>{t("norwegian")}</button>
+          </div>
         </div>
       </div>
-      <div className="flex gap-4">
+      <div className={`settings-container ${theme}`}>
         <p>{t('changeStyleTheme')}</p>
-        <div className={`w-fit px-3 border-2 border-black cursor-pointer ${theme === "normal-mode" ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
-          <button onClick={setNormalMode}>Normal Mode</button>
-        </div>
-        <div className={`w-fit px-3 border-2 border-black cursor-pointer ${theme === "dark-mode" ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
-          <button onClick={setDarkMode}>Dark Mode</button>
+        <div className="flex flex-wrap gap-4">
+          <div className={`w-fit px-3 border-2 border-black cursor-pointer ${theme === "normal-mode" ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
+            <button className="whitespace-nowrap" onClick={setNormalMode}>Normal Mode</button>
+          </div>
+          <div className={`w-fit px-3 border-2 border-black cursor-pointer ${theme === "dark-mode" ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
+            <button className="whitespace-nowrap" onClick={setDarkMode}>Dark Mode</button>
+          </div>
         </div>
       </div>
     </div>
