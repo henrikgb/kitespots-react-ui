@@ -47,9 +47,12 @@ export default function HeaderNavBar() {
           <li>
             <Link suppressHydrationWarning href="/Contact">{t("Contact")}</Link>
           </li>
-          <li>
+          {/* TODO: Activate Settings when i18n is fixed */}  
+          {/*}
+            <li>
             <Link suppressHydrationWarning href="/Settings">{t("Settings")}</Link>
           </li>
+          {*/}
         </ul>
       </div>
     </nav>
