@@ -22,7 +22,7 @@ export const SettingsContent: React.FC = () => {
 
   return (
     <div className={`text-container flex flex-col gap-4 ${theme}`}>
-      <p className="font-bold text-3xl">{t("Settings")}</p>
+      <p className="font-bold text-2xl">{t("Settings")}</p>
       <div className="flex gap-4">
         <p>{t('changeLanguage')}</p>
         <div className={`w-fit px-3 border-2 border-black cursor-pointer ${activeLang === 'en' ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>

@@ -8,7 +8,6 @@ interface beachDescriptionState {
     id: number | undefined,
     latitude: number | undefined,
     longitude: number | undefined,
-    info: string | undefined,
     nameId: string | undefined,
     image: StaticImageData | undefined,
     beginnerScore: number | undefined,
@@ -19,7 +18,6 @@ interface beachDescriptionState {
     setId: (value: number) => void;
     setLatitude: (value: number) => void;
     setLongitude: (value: number) => void;
-    setInfo: (value: string) => void;
     setNameId: (value: string) => void;
     setImage: (value: StaticImageData) => void;
     setBeginnerScore: (value: number) => void;
@@ -34,7 +32,6 @@ const useBeachDescriptionStore = create<beachDescriptionState>((set) => ({
   id: defaultBeachCoordinate?.id || undefined,
   latitude: defaultBeachCoordinate?.latitude || undefined,
   longitude: defaultBeachCoordinate?.longitude || undefined,
-  info: defaultBeachCoordinate?.info || undefined,
   nameId: defaultBeachCoordinate?.nameId || undefined,
   image: defaultBeachCoordinate?.image || undefined,
   beginnerScore: defaultBeachCoordinate?.beginnerScore || undefined,
@@ -54,11 +51,6 @@ const useBeachDescriptionStore = create<beachDescriptionState>((set) => ({
   setLongitude: (updateLongitude?: number) => {
     set(()=> ({
       longitude: updateLongitude
-    }))
-  },
-  setInfo: (updateInfo?: string) => {
-    set(()=> ({
-      info: updateInfo
     }))
   },
   setNameId: (updateNameId?: string) => {

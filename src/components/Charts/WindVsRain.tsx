@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { EChartsOption } from 'echarts';
 import { EChartsBase } from '@/components/Charts/EChartsBase';
+import {useTranslation} from 'next-i18next';
 
 interface DataObjectProps {
   date: string;
@@ -18,6 +19,7 @@ interface WindVsRainProps extends EChartsOption {
 }
 
 const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
+  const { t } = useTranslation();
   const [gridRight, setGridRight] = useState('15%');
   const [gridLeft, setGridLeft] = useState('10%');
 
@@ -51,7 +53,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
 
   const options: EChartsOption = {
     title: {
-      text: 'Wind and Rain',
+      text: t('windAndRain'),
       left: 'center',
       top: "6%"
     },
@@ -80,7 +82,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
       },
     },
     legend: {
-      data: ['Gust', 'Wind', 'Rain'],
+      data: [t("gust"), t("wind"), t("rain")],
       left: 1,
     },
     dataZoom: [
@@ -110,12 +112,12 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     ],
     yAxis: [
       {
-        name: 'Wind Speed (m/s)',
+        name: t("windSpeed") + " " + "(m/s)",
         type: 'value',
         max: 30,
       },
       {
-        name: 'Rain (mm)',
+        name: t("rain") + " " + "(mm)",
         nameLocation: 'start',
         alignTicks: true,
         type: 'value',
@@ -125,7 +127,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     ],
     series: [
       {
-        name: 'Gust',
+        name: t("gust"),
         type: 'line',
         areaStyle: {},
         lineStyle: {
@@ -138,7 +140,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         data: windGustValues,
       },
       {
-        name: 'Wind',
+        name: t("wind"),
         type: 'line',
         areaStyle: {},
         lineStyle: {
@@ -151,7 +153,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         data: windSpeedValues,
       },
       {
-        name: 'Rain',
+        name: t("rain"),
         type: 'line',
         yAxisIndex: 1,
         areaStyle: {},

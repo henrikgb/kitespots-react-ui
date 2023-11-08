@@ -41,7 +41,7 @@ const MyMap = () => {
         click: () => handleMarkerClick(beachCoordinate),
       }}
     >
-      <Popup>{beachCoordinate.info}</Popup>
+      <Popup>{beachCoordinate.nameId.charAt(0).toUpperCase() + beachCoordinate.nameId.slice(1).toLowerCase()}</Popup>
     </Marker>
   ));
 

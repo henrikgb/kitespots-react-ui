@@ -1,8 +1,8 @@
 import * as React from "react";
 import Link from "next/link";
 import {useState} from "react";
-import {useTranslation} from "react-i18next";
-
+import {useTranslation} from 'next-i18next';
+import KitespotsLogo from '@/assets/images/KitespotsLogo';
 
 
 export default function HeaderNavBar() {
@@ -11,9 +11,10 @@ export default function HeaderNavBar() {
 
   return (
     <nav className="navigation">
-      <Link href="/" className="brand-name">
-                Kite Spots
-      </Link>
+      <div className="mx-4">
+        <KitespotsLogo />
+      </div>
+      <Link href="/" className="brand-name">Kite Spots</Link>
       <button className="hamburger"
         onClick={() => {
           setIsNavExpanded(!isNavExpanded);
@@ -46,9 +47,12 @@ export default function HeaderNavBar() {
           <li>
             <Link suppressHydrationWarning href="/Contact">{t("Contact")}</Link>
           </li>
-          <li>
+          {/* TODO: Activate Settings when i18n is fixed */}  
+          {/*}
+            <li>
             <Link suppressHydrationWarning href="/Settings">{t("Settings")}</Link>
           </li>
+          {*/}
         </ul>
       </div>
     </nav>
