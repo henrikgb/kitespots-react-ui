@@ -1,11 +1,17 @@
-import React from 'react';
-import { Trans, useTranslation } from 'next-i18next'
+import React, {useEffect} from 'react';
+import {Trans, useTranslation} from 'next-i18next'
 import useThemeStore from "@/store/themeStore";
+import usei18LanguageStore from "@/store/i18languageStore";
 
 export const ContactContent: React.FC = () => {
   const {theme} = useThemeStore();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const email = 'henrik.busengdal@kitespots.no';
+  const {activeLanguage} = usei18LanguageStore();
+
+  useEffect(() => {
+    i18n.changeLanguage(activeLanguage);
+  }, [i18n, activeLanguage]);
 
   return (
     <div className={`text-container ${theme}`}>
