@@ -2,6 +2,7 @@ import {EChartsOption} from "echarts";
 import React, {useEffect, useState} from "react";
 import {EChartsBase} from "@/components/Charts/EChartsBase";
 import {WindDirectionDescriptions} from "@/assets/beachCoordinates";
+import {useTranslation} from "react-i18next";
 
 interface DataObject {
     date: string;
@@ -14,6 +15,7 @@ interface WindDirectionProps extends EChartsOption {
 }
 
 const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirectionProps) => {
+  const { t } = useTranslation();
   const [gridRight, setGridRight] = useState('15%');
   const [gridLeft, setGridLeft] = useState('10%');
 
@@ -35,7 +37,7 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
 
   const options: EChartsOption = {
     title: {
-      text: 'Wind Direction',
+      text: t('windDirection'),
       left: 'center',
       top: "6%"
     },
