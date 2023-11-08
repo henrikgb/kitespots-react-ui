@@ -18,5 +18,19 @@
   "aboutPageTextSection2": "På Kitespots.no finner du oppdaterte værmeldinger spesifikt tilrettelagt for strender i Rogaland som egner seg for kitesurfing. Ved et enkelt klikk på koordinatene i det interaktive kartet vil du kunne utforske værdata fra de ulike strendene, og se detaljerte værmeldinger for vindstyrke, vindkast, nedbør og vindretning – alt du trenger for å planlegge din neste kitesurfing-økt.",
   "aboutPageTextSection3": "Oppdatert værdata hentes en gang i timen fra <0>Meteomatics</0> som utmerker seg med sin presise værinformasjon, levert gjennom et brukervennlig API. Med data fra en rekke ulike kilder sikrer de nøyaktighet som er essensiell for kitesurfing. Dette sikrer at informasjonen du mottar ikke bare er nøyaktig, men også så aktuell som mulig",
   "aboutPageTextSection4": "<0>Stavanger Kiteklubb</0> har levert verdifulle bidrag gjennom sine grundige analyser av strendene, hvor de blant annet har gitt score for egnethet for nybegynnere, freestyle- og wave kiting. Deres detaljerte arbeid omfatter også bilder av alle strendene med en oversikt over hvordan forskjellige vindretninger påvirker forholdene for kiting. For å assistere i din vurdering av vindforholdene, er det implementert kategorier som beskriver vindretningene. Disse kategoriene er intuitivt fargekodet, noe som gjør det enkelt for deg å vurdere om forholdene er optimale for kiting.",
-  "aboutPageTextSection5": "Jeg håper Kitespots.no blir et nyttig verktøy for deg til å utforske, planlegge og nyte tiden på vannet langs Rogalands fantastiske strender."
+  "aboutPageTextSection5": "Jeg håper Kitespots.no blir et nyttig verktøy for deg til å utforske, planlegge og nyte tiden på vannet langs Rogalands fantastiske strender.",
+  "windDirection": "Vindretning",
+  "windAndRain": "Vind & Regn",
+  "gust": "Vindkast",
+  "wind": "Vind",
+  "windSpeed": "Vindhastighet",
+  "rain": "Regn",
+  "sideOnshore": "Side Onshore - Ideelt",
+  "onshore": "Onshore - Vanskelig for nybegynnere",
+  "overLand": "Over Land - Gusty",
+  "sideOffshore": "Side Offshore - Farlig",
+  "offshore": "Offshore - Veldig farlig",
+  "beginner": "Nybegynner",
+  "freestyle": "Freestyle",
+  "wave": "Wave"
 }
