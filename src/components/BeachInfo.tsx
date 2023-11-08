@@ -2,7 +2,7 @@ import styleClasses from "@/pages/index.module.css";
 import {StarRating} from "@/util/StarRating";
 import React from "react";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
-import {useTranslation} from "react-i18next";
+import {useTranslation} from 'next-i18next';
 
 export const BeachInfo = () => {
   const { t } = useTranslation();

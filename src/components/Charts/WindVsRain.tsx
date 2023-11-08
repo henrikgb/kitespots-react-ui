@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { EChartsOption } from 'echarts';
 import { EChartsBase } from '@/components/Charts/EChartsBase';
-import {useTranslation} from "react-i18next";
+import {useTranslation} from 'next-i18next';
 
 interface DataObjectProps {
   date: string;

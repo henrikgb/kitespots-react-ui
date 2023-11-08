@@ -8,8 +8,10 @@ import WindDirection from "@/components/Charts/WindDirection";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
 import {BeachInfo} from "@/components/BeachInfo";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'; // Import this
+import { GetStaticPropsContext } from 'next';
 
-export default function Home() {
+function Home() {
   const { setMeteomaticsData,
     setSelectedLocation,
     windGusts10ms,
@@ -58,3 +60,15 @@ export default function Home() {
     </div>
   )
 }
+
+// Add getStaticProps at the bottom of your pages/index.tsx file
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const { locale } = context;
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common', 'home'])), // 'en' is the default locale
+    },
+  };
+}
+
+export default Home;

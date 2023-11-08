@@ -1,5 +1,5 @@
 import useThemeStore from "@/store/themeStore";
-import {Trans, useTranslation} from "react-i18next";
+import {Trans, useTranslation} from 'next-i18next'
 import React from "react";
 
 export function AboutContent() {
