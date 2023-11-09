@@ -4,7 +4,6 @@ import {EChartsBase} from "@/components/Charts/EChartsBase";
 import {WindDirectionDescriptions} from "@/assets/beachCoordinates";
 import {useTranslation} from 'next-i18next';
 import useThemeStore from "@/store/themeStore";
-import line from "zrender/src/graphic/shape/Line";
 
 interface DataObject {
     date: string;
