@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { EChartsOption } from 'echarts';
 import { EChartsBase } from '@/components/Charts/EChartsBase';
 import {useTranslation} from 'next-i18next';
+import useThemeStore from "@/store/themeStore";
 
 interface DataObjectProps {
   date: string;
@@ -19,9 +20,20 @@ interface WindVsRainProps extends EChartsOption {
 }
 
 const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
+  const {theme} = useThemeStore();
   const { t } = useTranslation();
   const [gridRight, setGridRight] = useState('15%');
   const [gridLeft, setGridLeft] = useState('10%');
+  const [textColour, setTextColour] = useState<string>();
+
+  useEffect(() => {
+    if(theme === "normal-mode"){
+      setTextColour("black");
+    }
+    else{
+      setTextColour("white");
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -55,7 +67,10 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     title: {
       text: t('windAndRain'),
       left: 'center',
-      top: "6%"
+      top: "6%",
+      textStyle: {
+        color: textColour,
+      },
     },
     grid: {
       left: gridLeft,
@@ -84,6 +99,9 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     legend: {
       data: [t("gust"), t("wind"), t("rain")],
       left: 1,
+      textStyle: {
+        color: textColour,
+      },
     },
     dataZoom: [
       {
@@ -106,7 +124,10 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         axisLine: { onZero: false },
         data: dates,
         axisLabel: {
-          formatter: (value: string) => value.replace(' ', '\n'), // Format the xAxis labels
+          formatter: (value: string) => value.replace(' ', '\n'),
+        },
+        nameTextStyle: {
+          color: textColour,
         },
       },
     ],
@@ -115,6 +136,9 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         name: t("windSpeed") + " " + "(m/s)",
         type: 'value',
         max: 30,
+        nameTextStyle: {
+          color: textColour,
+        },
       },
       {
         name: t("rain") + " " + "(mm)",
@@ -123,6 +147,9 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         type: 'value',
         inverse: true,
         max: 3,
+        nameTextStyle: {
+          color: textColour,
+        },
       },
     ],
     series: [
