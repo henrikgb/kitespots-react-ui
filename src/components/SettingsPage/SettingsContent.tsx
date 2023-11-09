@@ -39,6 +39,8 @@ export const SettingsContent: React.FC = () => {
           </div>
         </div>
       </div>
+      {/*}
+      {/* TODO: Enable this section when the styling of the dark mode looks nice
       <div className={`settings-container ${theme}`}>
         <p>{t('changeStyleTheme')}</p>
         <div className="flex flex-wrap gap-4">
@@ -50,6 +52,7 @@ export const SettingsContent: React.FC = () => {
           </div>
         </div>
       </div>
+      {*/}
     </div>
   );
 };
