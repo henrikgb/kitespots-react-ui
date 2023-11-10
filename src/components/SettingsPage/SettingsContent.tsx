@@ -5,7 +5,7 @@ import usei18LanguageStore from "@/store/i18languageStore";
 
 export const SettingsContent: React.FC = () => {
   const { t, i18n } = useTranslation();
-  const {theme, toggleTheme} = useThemeStore();
+  const {theme} = useThemeStore();
   const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
 
   useEffect(() => {
@@ -17,6 +17,8 @@ export const SettingsContent: React.FC = () => {
     setActiveLanguage(activeLanguage);
   };
 
+  /*
+  TODO: Enable these when style-theme-mode is enabled
   const setNormalMode = () => {
     if (theme !== 'normal-mode') toggleTheme();
   };
@@ -24,6 +26,7 @@ export const SettingsContent: React.FC = () => {
   const setDarkMode = () => {
     if (theme !== 'dark-mode') toggleTheme();
   };
+   */
 
   return (
     <div className={`text-container flex flex-col gap-4 ${theme}`}>
@@ -39,6 +42,8 @@ export const SettingsContent: React.FC = () => {
           </div>
         </div>
       </div>
+      {/*}
+      {/* TODO: Enable this section when the styling of the dark mode looks nice
       <div className={`settings-container ${theme}`}>
         <p>{t('changeStyleTheme')}</p>
         <div className="flex flex-wrap gap-4">
@@ -50,6 +55,7 @@ export const SettingsContent: React.FC = () => {
           </div>
         </div>
       </div>
+      {*/}
     </div>
   );
 };

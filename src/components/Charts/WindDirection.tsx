@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {EChartsBase} from "@/components/Charts/EChartsBase";
 import {WindDirectionDescriptions} from "@/assets/beachCoordinates";
 import {useTranslation} from 'next-i18next';
+import useThemeStore from "@/store/themeStore";
 
 interface DataObject {
     date: string;
@@ -15,9 +16,23 @@ interface WindDirectionProps extends EChartsOption {
 }
 
 const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirectionProps) => {
+  const {theme} = useThemeStore();
+  const [textColour, setTextColour] = useState<string>();
+  const [lineColour, setLineColour] = useState<string>();
   const { t } = useTranslation();
   const [gridRight, setGridRight] = useState('15%');
   const [gridLeft, setGridLeft] = useState('10%');
+
+  useEffect(() => {
+    if(theme === "normal-mode"){
+      setTextColour("black");
+      setLineColour("black");
+    }
+    else{
+      setTextColour("white");
+      setLineColour("#d9d9d9");
+    }
+  }, [theme]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -39,7 +54,10 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     title: {
       text: t('windDirection'),
       left: 'center',
-      top: "6%"
+      top: "6%",
+      textStyle: {
+        color: textColour,
+      },
     },
     tooltip: {
       trigger: 'axis'
@@ -57,6 +75,9 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     },
     toolbox: {
       right: 0,
+      textStyle: {
+        color: textColour,
+      },
       feature: {
         dataZoom: {
           yAxisIndex: 'none'
@@ -80,6 +101,9 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
       }
     ],
     visualMap: {
+      textStyle: {
+        color: textColour,
+      },
       top: 30,
       right: 0,
       pieces: windDirectionDescriptions.map((description) => ({
@@ -98,7 +122,7 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
       markLine: {
         silent: true,
         lineStyle: {
-          color: '#333'
+          color: lineColour
         },
         data: windDirectionDescriptions.map((description) => ({
           yAxis: description.intervalStop
