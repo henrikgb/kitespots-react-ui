@@ -24,13 +24,13 @@
     padding: 0;
 }
 .navigation-menu li {
-/* removes default disc bullet for li tags and applies margin to left & right side */
-list-style-type: none;
+    /* removes default disc bullet for li tags and applies margin to left & right side */
+    list-style-type: none;
     margin: 0 1rem;
 }
 .navigation-menu li a {
-/* increases the surface area of the anchor tag to span more than just the anchor text */
-text-decoration: none;
+    /* increases the surface area of the anchor tag to span more than just the anchor text */
+    text-decoration: none;
     display: block;
     width: 100%;
 }
@@ -71,23 +71,22 @@ text-decoration: none;
 
 @media screen and (max-width: 768px) {
     .navigation-menu ul {
-    position: absolute; /* navigation menu is positioned to start 60px from the top of the document (which is directly below the navbar) */
+        position: absolute; /* navigation menu is positioned to start 60px from the top of the document (which is directly below the navbar) */
         top: 8vh;
         left: 0;
-    flex-direction: column; /*stacks the li tags vertically*/
-    width: 100%; /*makes menu span full height and width */
+        flex-direction: column; /*stacks the li tags vertically*/
+        width: 100%; /*makes menu span full height and width */
         height: calc(100vh - 8vh);
         background-color: white;
         border-top: 1px solid black;
-    max-height: 50vh;
     }
     .navigation-menu li {
-    text-align: center; /*// centers link text and strips off margin*/
+        text-align: center; /*// centers link text and strips off margin*/
         margin: 0;
     }
     .navigation-menu li a {
         color: black;
-    width: 100%; /*increases the surface area of the anchor tag to span the full width of the menu*/
+        width: 100%; /*increases the surface area of the anchor tag to span the full width of the menu*/
         padding: 1.5rem 0;
     }
     .navigation-menu li:hover {
