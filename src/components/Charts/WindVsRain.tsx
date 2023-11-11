@@ -37,8 +37,8 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
 
   useEffect(() => {
     const handleResize = () => {
-      setGridRight(window.innerWidth <= 850 ? '25%' : '15%');
-      setGridLeft(window.innerWidth <= 850 ? "15%" : "10%");
+      setGridRight(window.innerWidth <= 850 ? '10%' : '10%');
+      setGridLeft(window.innerWidth <= 850 ? "20%" : "10%");
     };
 
     // Set the grid right value on component mount
@@ -67,7 +67,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     title: {
       text: t('windAndRain'),
       left: 'center',
-      top: "6%",
+      top: "8.5%",
       textStyle: {
         color: textColour,
       },
@@ -133,7 +133,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     ],
     yAxis: [
       {
-        name: t("windSpeed") + " " + "(m/s)",
+        name: t("wind") + " " + "(m/s)",
         type: 'value',
         max: 30,
         nameTextStyle: {
