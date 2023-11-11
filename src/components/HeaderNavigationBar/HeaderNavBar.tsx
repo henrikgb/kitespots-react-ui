@@ -15,6 +15,13 @@ export default function HeaderNavBar() {
     i18n.changeLanguage(activeLanguage);
   }, [i18n, activeLanguage]);
 
+  const closeNav = () => {
+    // Use setTimeout to close the menu after 1 second
+    setTimeout(() => {
+      setIsNavExpanded(false);
+    }, 500); // 1000 milliseconds = 1 second
+  }
+
   return (
     <nav className="navigation">
       <div className="mx-4">
@@ -45,16 +52,16 @@ export default function HeaderNavBar() {
         }>
         <ul>
           <li>
-            <Link suppressHydrationWarning href="/">{t("Home")}</Link>
+            <Link onClick={closeNav} href="/">{t("Home")}</Link>
           </li>
           <li>
-            <Link suppressHydrationWarning href="/About">{t("About")}</Link>
+            <Link onClick={closeNav} href="/About">{t("About")}</Link>
           </li>
           <li>
-            <Link suppressHydrationWarning href="/Contact">{t("Contact")}</Link>
+            <Link onClick={closeNav} href="/Contact">{t("Contact")}</Link>
           </li>
           <li>
-            <Link suppressHydrationWarning href="/Settings">{t("Settings")}</Link>
+            <Link onClick={closeNav} href="/Settings">{t("Settings")}</Link>
           </li>
         </ul>
       </div>
