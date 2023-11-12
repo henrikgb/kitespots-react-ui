@@ -3,7 +3,6 @@
     flex-wrap: nowrap;
 }
 .mapContainer{
-    border: 1px solid grey;
     width: 50vw;
     height: 55vh;
 }
@@ -14,18 +13,17 @@
     flex-direction: row;
 }
 .windVsRainGraph {
-    border: 1px solid grey;
     padding: 1.25rem;
     width: 50vw;
 }
 .windDirectionGraph{
-    border: 1px solid grey;
+    border-left: 1px solid grey;
+    border-top: 1px solid grey;
     padding: 1.25rem;
     width: 50vw;
 }
 .beachInfoContainer {
     display: flex;
-    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
     width: 100%;
@@ -38,19 +36,24 @@
     }
     .mapContainer{
         width: 100vw;
-        height: 50vh;
+        height: 40vh;
     }
     .bottomCraphContainer{
         height: 100vh;
         flex-direction: column;
     }
     .windVsRainGraph {
+        border-top: 1px solid grey;
         height: 50vh;
         width: 100vw;
     }
     .windDirectionGraph{
+        border-left: 0;
         height: 50vh;
         width: 100vw;
+    }
+    .beachInfoContainer{
+        flex-wrap: wrap;
     }
 }
 
