@@ -18,11 +18,11 @@ body {
     &.normal-mode {
         --tw-bg-opacity: 1;
         background-color: rgb(254 243 199 / var(--tw-bg-opacity));
-        color: black;
+        color: black; !important;
     }
     &.dark-mode {
         background-color: #1A2421;
-        color: whitesmoke;
+        color: whitesmoke; !important;
     }
 
     display: flex;
