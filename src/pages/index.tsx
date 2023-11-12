@@ -1,4 +1,3 @@
-import Image from "next/image";
 import React, {useEffect} from "react";
 import axios from "axios";
 import {KiteSpotsMap} from "@/components/MapPage/KiteSpotsMap";
@@ -7,7 +6,7 @@ import styleClasses from "@/pages/index.module.css";
 import WindDirection from "@/components/Charts/WindDirection";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
-import {BeachInfo} from "@/components/BeachInfo";
+import {BeachInfo} from "@/components/BeachInfo/BeachInfo";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'; // Import this
 import { GetStaticPropsContext } from 'next';
 
@@ -18,9 +17,7 @@ function Home() {
     windDirection10ms,
     windSpeed10ms,
     precipitation } = useMeteomaticsWeatherDataStore();
-  const {
-    image,
-    windDirectionDescriptions} = useBeachDescriptionStore();
+  const {windDirectionDescriptions} = useBeachDescriptionStore();
 
   useEffect(() => {
     axios.get('/api/meteomaticsData')
@@ -40,12 +37,9 @@ function Home() {
         <div className={`${styleClasses.mapContainer}`}>
           <KiteSpotsMap />
         </div>
-        <div className={`${styleClasses.descriptionContainer}`} >
-          <Image src={image ? image : ""} alt="Beach Wind Directions" style={{ width: '54vh' }} />
-          <BeachInfo />
-        </div>
+        <BeachInfo />
       </div>
-      <div  className={`${styleClasses.bottomCraphContainer}`}>
+      <div className={`${styleClasses.bottomCraphContainer}`}>
         {(windGusts10ms && windSpeed10ms && precipitation) && (
           <div className={`${styleClasses.windVsRainGraph as string}`}>
             <WindVsRain data={{ windGust: windGusts10ms[0].dates, windSpeed: windSpeed10ms[0].dates, precipitation: precipitation[0].dates }} />

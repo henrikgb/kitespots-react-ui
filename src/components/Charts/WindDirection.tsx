@@ -36,8 +36,8 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
 
   useEffect(() => {
     const handleResize = () => {
-      setGridRight(window.innerWidth <= 850 ? '25%' : '15%');
-      setGridLeft(window.innerWidth <= 850 ? "15%" : "10%");
+      setGridRight(window.innerWidth <= 850 ? '10%' : '10%');
+      setGridLeft(window.innerWidth <= 850 ? "20%" : "10%");
     };
 
     // Set the grid right value on component mount
@@ -54,7 +54,7 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     title: {
       text: t('windDirection'),
       left: 'center',
-      top: "6%",
+      top: "8.5%",
       textStyle: {
         color: textColour,
       },
@@ -113,7 +113,8 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
       })),
       outOfRange: {
         color: '#999'
-      }
+      },
+      show: false,
     },
     series: {
       name: 'Wind Direction',
