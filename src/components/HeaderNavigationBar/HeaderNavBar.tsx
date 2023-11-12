@@ -4,7 +4,8 @@ import {useEffect, useState} from "react";
 import {useTranslation} from 'next-i18next';
 import usei18LanguageStore from "@/store/i18languageStore";
 import Image from "next/image";
-import KitespotsLogo from "@/assets/images/KitespotsLogoIcon.svg";
+import KitespotsLogoSvg from "@/assets/images/KitespotsLogoIcon.svg";
+import KitespotsLogo from "@/assets/images/KitespotsLogo";
 
 
 export default function HeaderNavBar() {
@@ -23,10 +24,20 @@ export default function HeaderNavBar() {
     }, 500); // 1000 milliseconds = 1 second
   }
 
+  // When launching kitespots.no as standalone app on iphone I sometimes experience that the logo does not show.
+  // To solve this issue I am trying to render the logo as svg file as a backup if rendering it as tsx file fails.
+  let logoItem;
+  try{
+    logoItem = <KitespotsLogo />
+  }
+  catch{
+    logoItem = <Image className="flex items-start" src={KitespotsLogoSvg ? KitespotsLogoSvg : ""} alt="Kitespots logo" />;
+  }
+
   return (
     <nav className="navigation">
       <div className="mx-4">
-        <Image className="flex items-start" src={KitespotsLogo ? KitespotsLogo : ""} alt="Kitespots logo" />
+        {logoItem}
       </div>
       <Link href="/" className="brand-name">Kite Spots</Link>
       <button className="hamburger"
