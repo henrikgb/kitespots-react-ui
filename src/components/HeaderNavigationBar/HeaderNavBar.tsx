@@ -4,7 +4,7 @@ import {useEffect, useState} from "react";
 import {useTranslation} from 'next-i18next';
 import usei18LanguageStore from "@/store/i18languageStore";
 import Image from "next/image";
-import KitespotsLogo from "@/assets/images/KitespotsLogoIconSVG.svg";
+import KitespotsLogo from "@/assets/images/KitespotsLogoIcon.svg";
 
 
 export default function HeaderNavBar() {
