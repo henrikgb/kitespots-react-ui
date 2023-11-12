@@ -44,7 +44,7 @@ export const BeachInfo = () => {
       <div className={styleClasses.beachInfoContainer}>
         <Image className="flex items-start" src={image ? image : ""} alt="Beach Wind Directions" style={{ width: '34vh' }} />
         <div className={styleClasses.textList}>
-          <ul className="flex flex-col justify-center ">
+          <ul className="flex flex-col justify-center ml-4">
             <li>
               <p>{t("sideOnshore")}</p>
               <span className={styleClasses.square} style={{ backgroundColor: '#00bb00' }}></span>
