@@ -10,7 +10,7 @@ export const PuffDataLoader = () => {
         aria-label="Loading Spinner"
         data-testid="loader"
       />
-      <p className={"font-bold text-sm"} style={{color: "cadetblue"}}>Data is loading</p>
+      <p className={"font-bold text-sm"} style={{color: "cadetblue"}}>Loading data</p>
     </div>
   )
 }
