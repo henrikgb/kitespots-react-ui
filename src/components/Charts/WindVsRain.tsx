@@ -67,7 +67,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     title: {
       text: t('windAndRain'),
       left: 'center',
-      top: "8.5%",
+      top: "7%",
       textStyle: {
         color: textColour,
       },

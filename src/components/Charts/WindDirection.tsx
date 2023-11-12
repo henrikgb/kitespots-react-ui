@@ -54,7 +54,7 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     title: {
       text: t('windDirection'),
       left: 'center',
-      top: "8.5%",
+      top: "7%",
       textStyle: {
         color: textColour,
       },
