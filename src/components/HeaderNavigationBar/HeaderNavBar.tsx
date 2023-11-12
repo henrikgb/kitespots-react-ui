@@ -2,8 +2,9 @@ import * as React from "react";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useTranslation} from 'next-i18next';
-import KitespotsLogo from '@/assets/images/KitespotsLogo';
 import usei18LanguageStore from "@/store/i18languageStore";
+import Image from "next/image";
+import KitespotsLogo from "@/assets/images/KitespotsLogoIcon.svg";
 
 
 export default function HeaderNavBar() {
@@ -25,7 +26,7 @@ export default function HeaderNavBar() {
   return (
     <nav className="navigation">
       <div className="mx-4">
-        <KitespotsLogo />
+        <Image className="flex items-start" src={KitespotsLogo ? KitespotsLogo : ""} alt="Kitespots logo" />
       </div>
       <Link href="/" className="brand-name">Kite Spots</Link>
       <button className="hamburger"
