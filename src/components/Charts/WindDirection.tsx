@@ -71,7 +71,11 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
       data: data?.map((item) => item.date) || [],
     },
     yAxis: {
-      max: 360
+      name: "[" + t('degrees') + "]",
+      max: 360,
+      nameTextStyle: {
+        color: textColour,
+      },
     },
     toolbox: {
       right: 0,

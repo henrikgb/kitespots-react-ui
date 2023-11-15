@@ -133,7 +133,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     ],
     yAxis: [
       {
-        name: t("wind") + " " + "(m/s)",
+        name: "[m/s]",
         type: 'value',
         max: 30,
         nameTextStyle: {
@@ -141,7 +141,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         },
       },
       {
-        name: t("rain") + " " + "(mm)",
+        name: "[mm]",
         nameLocation: 'start',
         alignTicks: true,
         type: 'value',
