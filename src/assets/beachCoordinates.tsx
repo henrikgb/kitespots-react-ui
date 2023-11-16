@@ -611,7 +611,7 @@ export const beachCoordinates: BeachCoordinateProp[] = [
       },
       {
         intervalStart: 315,
-        intervalStop: 315,
+        intervalStop: 360,
         colorCode: '#FD0100',
         category: "very dangerous"
       }
