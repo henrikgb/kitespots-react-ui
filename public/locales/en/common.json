@@ -33,5 +33,6 @@
   "beginner": "Beginner",
   "freestyle": "Freestyle",
   "wave": "Wave",
-  "degrees": "Degrees"
+  "degrees": "Degrees",
+  "description": "Description"
 }

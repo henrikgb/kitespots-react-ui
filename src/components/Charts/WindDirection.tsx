@@ -4,6 +4,7 @@ import {EChartsBase} from "@/components/Charts/EChartsBase";
 import {WindDirectionDescriptions} from "@/assets/beachCoordinates";
 import {useTranslation} from 'next-i18next';
 import useThemeStore from "@/store/themeStore";
+import {TooltipFormatterCallback} from "echarts/types/dist/shared";
 
 interface DataObject {
     date: string;
@@ -50,6 +51,48 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  /**
+   * Retrieves the wind direction description based on the given value.
+   *
+   * This function searches through the `windDirectionDescriptions` array to find a matching
+   * description where the given value falls within the defined intervals (intervalStart and intervalStop).
+   * It then returns the localized category name for the found description.
+   *
+   * @param {number} value - The wind direction value to find the description for.
+   * @returns {string} The localized description of the wind direction or an empty string if not found.
+   */
+  const getWindDirectionDescription = (value: number) => {
+    const description = windDirectionDescriptions.find(d =>
+      value >= d.intervalStart && value <= d.intervalStop
+    );
+    // Assuming description.category holds values like "sideOnshore", "offshore", etc.
+    return description ? t(description.category) : '';
+  };
+
+  /**
+   * Tooltip formatter function for the ECharts chart.
+   *
+   * This function formats the tooltip content to be displayed when hovering over the chart.
+   * It uses the first parameter of the tooltip data to obtain the value and then fetches the
+   * corresponding wind direction description. The tooltip displays the series name, value, and
+   * the localized description of the wind direction on separate lines.
+   *
+   * @param {any[]} params - Array of parameters for the tooltip, provided by ECharts.
+   * @returns {string} Formatted HTML string for the tooltip content.
+   */
+  const tooltipFormatter: TooltipFormatterCallback<any> = (params) => {
+    const param = params[0];
+    const value = param.value as number;
+    const description = getWindDirectionDescription(value);
+
+    // Translate series name and other static texts if needed
+    const translatedSeriesName = t(param.seriesName);
+    const descriptionText = t("description");
+
+    return `${param.axisValueLabel}<br/>${param.marker}${translatedSeriesName}: ${value} <br/> ${descriptionText}: ${description}`;
+  };
+
+
   const options: EChartsOption = {
     title: {
       text: t('windDirection'),
@@ -60,7 +103,8 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
       },
     },
     tooltip: {
-      trigger: 'axis'
+      trigger: 'axis',
+      formatter: tooltipFormatter
     },
     grid: {
       left: gridLeft,
