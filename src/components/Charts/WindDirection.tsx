@@ -89,7 +89,7 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     const translatedSeriesName = t(param.seriesName);
     const descriptionText = t("description");
 
-    return `${param.axisValueLabel}<br/>${param.marker}${translatedSeriesName}: ${value} <br/> ${descriptionText}: ${description}`;
+    return `${param.axisValueLabel}<br/>${param.marker}${translatedSeriesName}: ${value} <br/> ${description}`;
   };
 
 
