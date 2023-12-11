@@ -87,7 +87,6 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
 
     // Translate series name and other static texts if needed
     const translatedSeriesName = t(param.seriesName);
-    const descriptionText = t("description");
 
     return `${param.axisValueLabel}<br/>${param.marker}${translatedSeriesName}: ${value} <br/> ${description}`;
   };
