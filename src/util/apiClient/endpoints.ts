@@ -1,3 +1,0 @@
-require('dotenv').config();
-
-export const AZURE_KITESPOTSAD77_CONNECTION_STRING = process.env.AZURE_KITESPOTSAD77_CONNECTION_STRING;

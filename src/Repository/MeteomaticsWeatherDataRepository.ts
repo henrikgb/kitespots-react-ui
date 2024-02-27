@@ -1,9 +1,9 @@
-import {AZURE_KITESPOTSAD77_CONNECTION_STRING} from "@/util/apiClient/endpoints";
-import {MeteomaticsWeatherData} from "@/model/MeteomaticsWeatherData";
-import {MeteomaticsJsonResponseDTO} from "@/Repository/dto/MeteomaticsJsonResponseDTO";
+import {MeteomaticsWeatherData} from "@/types/model/MeteomaticsWeatherData";
+import {MeteomaticsJsonResponseDTO} from "@/types/dto/MeteomaticsJsonResponseDTO";
 const { BlobServiceClient } = require('@azure/storage-blob');
 
 const METEOMATICS_AZURE_BLOB_CONTAINER = "weatherdata";
+const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_KITESPOTSAD77_CONNECTION_STRING);
 
 const blobClients = {
   BORE: "Bore_MeteomaticsWeatherData.json",
@@ -16,8 +16,6 @@ const blobClients = {
   SOLA: "Sola_MeteomaticsWeatherData.json",
   X: "X_MeteomaticsWeatherData.json",
 };
-
-const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_KITESPOTSAD77_CONNECTION_STRING);
 
 export const fetchMeteomaticsWeatherData = async (): Promise<MeteomaticsWeatherData[]> => {
   const containerClient = blobServiceClient.getContainerClient(METEOMATICS_AZURE_BLOB_CONTAINER);
