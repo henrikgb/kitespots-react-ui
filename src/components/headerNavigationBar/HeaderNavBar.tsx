@@ -53,16 +53,16 @@ export default function HeaderNavBar() {
         }>
         <ul>
           <li>
-            <Link onClick={closeNav} href="/">{t("Home")}</Link>
+            <Link onClick={closeNav} href="/">{t("home")}</Link>
           </li>
           <li>
-            <Link onClick={closeNav} href="/aboutPage/About">{t("About")}</Link>
+            <Link onClick={closeNav} href="/aboutPage/About">{t("about")}</Link>
           </li>
           <li>
-            <Link onClick={closeNav} href="/contactPage/Contact">{t("Contact")}</Link>
+            <Link onClick={closeNav} href="/contactPage/Contact">{t("contact")}</Link>
           </li>
           <li>
-            <Link onClick={closeNav} href="/settingsPage/Settings">{t("Settings")}</Link>
+            <Link onClick={closeNav} href="/settingsPage/Settings">{t("settings")}</Link>
           </li>
         </ul>
       </div>

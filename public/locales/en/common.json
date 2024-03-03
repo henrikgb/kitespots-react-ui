@@ -1,8 +1,8 @@
 {
-  "Home": "Home",
-  "About": "About",
-  "Contact": "Contact",
-  "Settings": "Settings",
+  "home": "Home",
+  "about": "About",
+  "contact": "Contact",
+  "settings": "Settings",
   "contactInfoHeader": "Contact Info",
   "contactInfoMessagePart1": "Do you have any questions regarding the website, or would you like to add coordinates and weather data for more locations?<br>",
   "contactInfoEmail": "Do not hesitate to contact. Send an email to: <0>{{email}}</0>",
