@@ -3,7 +3,7 @@ import "leaflet/dist/leaflet.css";
 import {Icon} from "leaflet";
 import {BeachCoordinateProp, beachCoordinates} from "@/assets/beachCoordinates";
 import React from "react";
-import styleClasses from "@/pages/index.module.css";
+import styleClasses from "@/pages/landingPage/Home.module.css";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
 

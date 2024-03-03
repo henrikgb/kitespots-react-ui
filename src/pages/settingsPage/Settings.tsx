@@ -1,4 +1,4 @@
-import {SettingsContent} from "@/components/settingsPage/SettingsContent";
+import {SettingsContent} from "@/pages/settingsPage/SettingsContent";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 

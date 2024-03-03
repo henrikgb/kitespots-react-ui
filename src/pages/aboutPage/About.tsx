@@ -1,12 +1,12 @@
-// Contact.tsx
-import {ContactContent} from "@/components/contactPage/ContactContent";
-import {GetStaticPropsContext} from "next";
+// About.tsx
+import {AboutContent} from "@/pages/aboutPage/AboutContent";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import {GetStaticPropsContext} from "next";
 
-function Contact() {
+function About() {
   return (
     <div>
-      <ContactContent />
+      <AboutContent />
     </div>
   )
 }
@@ -21,4 +21,4 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   };
 }
 
-export default Contact;
+export default About;

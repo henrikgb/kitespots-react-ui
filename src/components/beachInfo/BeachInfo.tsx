@@ -1,4 +1,4 @@
-import styleClasses from "@/pages/index.module.css";
+import styleClasses from "@/pages/landingPage/Home.module.css";
 import {StarRating} from "@/util/StarRating";
 import React, {useEffect} from "react";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
