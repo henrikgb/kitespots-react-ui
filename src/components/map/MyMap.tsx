@@ -6,6 +6,8 @@ import React from "react";
 import styleClasses from "@/pages/landingPage/Home.module.css";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
+import MarkerClusterGroup from 'react-leaflet-cluster'
+import 'leaflet/dist/leaflet.css'
 
 const MyMap = () => {
   const { setSelectedLocation } = useMeteomaticsWeatherDataStore();
@@ -53,7 +55,7 @@ const MyMap = () => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        {markers}
+        <MarkerClusterGroup chunkedLoading>{markers}</MarkerClusterGroup>
       </MapContainer>
     </div>
   );
