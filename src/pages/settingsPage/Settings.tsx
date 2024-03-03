@@ -4,7 +4,7 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 function Settings() {
   return (
-    <div>
+    <div className="p-5">
       <SettingsContent />
     </div>
   )

@@ -5,7 +5,7 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
 function Contact() {
   return (
-    <div>
+    <div className="p-5">
       <ContactContent />
     </div>
   )

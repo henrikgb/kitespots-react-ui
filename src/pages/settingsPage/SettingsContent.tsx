@@ -38,44 +38,42 @@ export const SettingsContent= () => {
   };
 
   return (
-    <div className="p-5">
-      <Card className= "mt-6 w-full bg-webPageContainerBody">
-        <CardHeader
-          color="blue-gray"
-          className="flex h-full justify-center items-center"
-          style={{ height: 300 }}
-        >
-          <Image
-            src={shoreBreak}
-            alt="shorebreak"
-            className="w-full h-full object-cover"
-            style={{ height: "100%", width: "100%" }}
-          />
-        </CardHeader>
-        <CardBody className="flex flex-row flex-wrap gap-4 justify-start">
-          <Typography variant="h4">
-            {t("changeLanguage")}
-          </Typography>
-          <div className="flex flex-row gap-4">
-            <Button
-              variant="filled"
-              placeholder=""
-              onClick={() => updateLanguage("en")}
-              color={englishButtonColor}
-            >
-              {t("english")}
-            </Button>
-            <Button
-              variant="filled"
-              placeholder=""
-              onClick={() => updateLanguage("nb")}
-              color={norwegianButtonColor}
-            >
-              {t("norwegian")}
-            </Button>
-          </div>
-        </CardBody>
-      </Card>
-    </div>
+    <Card className="mt-6 w-full bg-webPageContainerBody">
+      <CardHeader
+        color="blue-gray"
+        className="flex h-full justify-center items-center"
+        style={{ height: 300 }}
+      >
+        <Image
+          src={shoreBreak}
+          alt="shorebreak"
+          className="w-full h-full object-cover"
+          style={{ height: "100%", width: "100%" }}
+        />
+      </CardHeader>
+      <CardBody className="flex flex-col gap-4 justify-start">
+        <Typography variant="h4">
+          {t("changeLanguage")}
+        </Typography>
+        <div className="flex flex-row gap-4">
+          <Button
+            variant="filled"
+            placeholder=""
+            onClick={() => updateLanguage("en")}
+            color={englishButtonColor}
+          >
+            {t("english")}
+          </Button>
+          <Button
+            variant="filled"
+            placeholder=""
+            onClick={() => updateLanguage("nb")}
+            color={norwegianButtonColor}
+          >
+            {t("norwegian")}
+          </Button>
+        </div>
+      </CardBody>
+    </Card>
   );
 };
