@@ -1,4 +1,4 @@
-import styleClasses from "@/pages/index.module.css";
+import styleClasses from "@/pages/landingPage/Home.module.css";
 
 interface StarRatingProps {
   score: number;
@@ -7,7 +7,6 @@ interface StarRatingProps {
 export const StarRating = ({ score }: StarRatingProps) => {
   const renderStars = () => {
     const stars = [];
-    // Calculate the number of yellow stars (up to 5)
     const yellowStars = Math.min(5, Math.max(0, score));
 
     for (let i = 0; i < yellowStars; i++) {
@@ -18,7 +17,6 @@ export const StarRating = ({ score }: StarRatingProps) => {
       );
     }
 
-    // Calculate the number of gray stars (up to 5)
     const greyStars = Math.max(0, 5 - yellowStars);
     for (let i = 0; i < greyStars; i++) {
       stars.push(

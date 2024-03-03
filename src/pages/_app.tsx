@@ -1,4 +1,3 @@
-// Importing global styles that will be applied across all pages.
 import "@/styles/styles.css";
 import '@/styles/globals.css';
 import "@/components/headerNavigationBar/navbarStyling.css";
