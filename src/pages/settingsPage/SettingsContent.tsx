@@ -17,17 +17,6 @@ export const SettingsContent: React.FC = () => {
     setActiveLanguage(activeLanguage);
   };
 
-  /*
-  TODO: Enable these when style-theme-mode is enabled
-  const setNormalMode = () => {
-    if (theme !== 'normal-mode') toggleTheme();
-  };
-
-  const setDarkMode = () => {
-    if (theme !== 'dark-mode') toggleTheme();
-  };
-   */
-
   return (
     <div className={`text-container flex flex-col gap-4 ${theme}`}>
       <p className="font-bold text-2xl">{t("Settings")}</p>
@@ -42,20 +31,6 @@ export const SettingsContent: React.FC = () => {
           </div>
         </div>
       </div>
-      {/*}
-      {/* TODO: Enable this section when the styling of the dark mode looks nice
-      <div className={`settings-container ${theme}`}>
-        <p>{t('changeStyleTheme')}</p>
-        <div className="flex flex-wrap gap-4">
-          <div className={`w-fit px-3 border-2 border-black cursor-pointer ${theme === "normal-mode" ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
-            <button className="whitespace-nowrap" onClick={setNormalMode}>Normal Mode</button>
-          </div>
-          <div className={`w-fit px-3 border-2 border-black cursor-pointer ${theme === "dark-mode" ? `selected-button-color ${theme}` : `button-color ${theme}`} button-hover ${theme}`}>
-            <button className="whitespace-nowrap" onClick={setDarkMode}>Dark Mode</button>
-          </div>
-        </div>
-      </div>
-      {*/}
     </div>
   );
 };
