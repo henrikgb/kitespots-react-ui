@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getMeteomaticsWeatherData } from '@/Service/MeteomaticsWeatherDataService'; // Import the correct service
+import { getMeteomaticsWeatherData } from '@/service/MeteomaticsWeatherDataService'; // Import the correct service
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

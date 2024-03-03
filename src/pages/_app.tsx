@@ -1,8 +1,8 @@
 // Importing global styles that will be applied across all pages.
 import "@/styles/styles.css";
 import '@/styles/globals.css';
-import "@/components/HeaderNavigationBar/navbarStyling.css";
-import HeaderNavBar from "@/components/HeaderNavigationBar/HeaderNavBar";
+import "@/components/headerNavigationBar/navbarStyling.css";
+import HeaderNavBar from "@/components/headerNavigationBar/HeaderNavBar";
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import useThemeStore from "@/store/themeStore";

@@ -1,5 +1,5 @@
 // About.tsx
-import {AboutContent} from "@/components/AboutPage/AboutContent";
+import {AboutContent} from "@/components/aboutPage/AboutContent";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {GetStaticPropsContext} from "next";
 

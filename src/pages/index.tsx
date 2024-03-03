@@ -1,15 +1,15 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
-import {KiteSpotsMap} from "@/components/MapPage/KiteSpotsMap";
-import WindVsRain from "@/components/Charts/WindVsRain";
+import {KiteSpotsMap} from "@/components/mapPage/KiteSpotsMap";
+import WindVsRain from "@/components/charts/WindVsRain";
 import styleClasses from "@/pages/index.module.css";
-import WindDirection from "@/components/Charts/WindDirection";
+import WindDirection from "@/components/charts/WindDirection";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
-import {BeachInfo} from "@/components/BeachInfo/BeachInfo";
+import {BeachInfo} from "@/components/beachInfo/BeachInfo";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticPropsContext } from 'next';
-import {PuffDataLoader} from "@/components/LoadingSpinners/PuffDataLoader";
+import {PuffDataLoader} from "@/components/loadingSpinners/PuffDataLoader";
 
 function Home() {
   const { setMeteomaticsData,

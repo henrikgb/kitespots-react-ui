@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 
 export const KiteSpotsMap = () => {
   const DynamicMap = React.useMemo(() => dynamic(
-    () => import("@/components/MapPage/MyMap"),
+    () => import("@/components/mapPage/MyMap"),
     {
       loading: () => <p>A map is loading</p>,
       ssr: false // This line is important. It's what prevents server-side render

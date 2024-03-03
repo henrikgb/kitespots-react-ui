@@ -1,5 +1,5 @@
 // Contact.tsx
-import {ContactContent} from "@/components/ContactPage/ContactContent";
+import {ContactContent} from "@/components/contactPage/ContactContent";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 
