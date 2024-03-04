@@ -17,7 +17,7 @@ export default function AboutContent() {
   const { t, i18n } = useTranslation();
   const {activeLanguage} = usei18LanguageStore();
   const kitespotsGithubRepo =
-        "https://github.com/henrikgb/kitespots-react-ui-vite";
+        "https://github.com/henrikgb/kitespots-react-ui";
   const linkMeteomatics =
         "https://www.meteomatics.com/en/weather-api/?msclkid=85e0b029dcb111d13bc7d5e280cfcaa6&utm_source=bing&utm_medium=cpc&utm_campaign=Weather%20API%20(englisch%20ausser%20USA)&utm_term=meteomatics&utm_content=Weather%20Api";
   const linkStavangerKiteklubb = "https://www.stavangerkiteklubb.com/";
