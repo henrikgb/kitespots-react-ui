@@ -3,7 +3,7 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useTranslation} from 'next-i18next';
 import usei18LanguageStore from "@/store/i18languageStore";
-import KitespotsLogoSvg from "@/assets/images/KitespotsLogoIconLarge.svg";
+import KitespotsLogoSvg from "@/assets/images/KitespotsLogoIconLarge.png";
 import Image from "next/image";
 
 

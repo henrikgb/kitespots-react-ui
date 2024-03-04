@@ -4,7 +4,7 @@ import usei18LanguageStore from "@/store/i18languageStore";
 import {Card, CardBody, CardHeader, Carousel, IconButton} from "@material-tailwind/react";
 import {TextBox} from "@/components/TextBox";
 import githubLogo from "@/assets/images/github.png";
-import kitespotsLogo from "@/assets/images/KitespotsLogoIconLarge.svg";
+import kitespotsLogo from "@/assets/images/KitespotsLogoIconLarge.png";
 import StavangerKiteklubbLogo from "@/assets/images/stavangerKiteklubb.svg";
 import meteomaticsLogo from "@/assets/images/meteomatics.png";
 import seleBeach from "@/assets/images/06-Sele-North-Bore-800.png";
@@ -115,7 +115,6 @@ export function AboutContent() {
           <Image
             src={kitespotsLogo}
             alt="kitespots-logo"
-            style={{width: 180}}
           />
         </CardHeader>
         <CardBody className="flex h-[250px] justify-center">
