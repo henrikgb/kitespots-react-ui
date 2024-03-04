@@ -15,16 +15,7 @@ body {
 }
 
 .main {
-    &.normal-mode {
-        --tw-bg-opacity: 1;
-        background-color: rgb(254 243 199 / var(--tw-bg-opacity));
-        color: black !important;
-    }
-    &.dark-mode {
-        background-color: #1A2421;
-        color: whitesmoke !important;
-    }
-
+    background-color: var(--webPageBodyBackground);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,92 +23,11 @@ body {
     height: fit-content;
 }
 
-.text-container {
-    &.normal-mode {
-        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-        --tw-bg-opacity: 1;
-        background-color: rgb(253 230 138 / var(--tw-bg-opacity));
-    }
-    &.dark-mode {
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
-        --tw-bg-opacity: 1;
-        background-color: #4E586E;
-    }
-
-    width: 80vw;
-    height: fit-content;
-    margin: 10vh auto 10vh auto;
-    padding: 1rem;
-}
-
-.settings-container {
-    &.normal-mode {
-        box-shadow: 0 3px 10px rgb(0 0 0 / 0.2);
-        background-color: rgb(254 243 199);
-    }
-    &.dark-mode {
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 1);
-        --tw-bg-opacity: 1;
-        background-color: #4E587E;
-    }
-
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem/* 16px */;
-    padding: 2rem/* 32px */;
-}
-
 .page-body {
-    &.normal-mode {
-        --tw-bg-opacity: 1;
-        background-color: rgb(254 243 199 / var(--tw-bg-opacity));
-    }
-    &.dark-mode {
-        background-color: #1A2421;
-        color: whitesmoke;
-    }
-
+    background-color: var(--webPageBodyBackground);
     max-height: 100%;
     height: fit-content;
     width: 100vw;
 }
 
-.button-color {
-    &.normal-mode {
-        --tw-bg-opacity: 1;
-        background-color: rgb(245 245 244 / var(--tw-bg-opacity));
-    }
-    &.dark-mode {
-        --tw-bg-opacity: 1;
-        background-color: rgb(245 245 244 / var(--tw-bg-opacity));
-        color: black;
-    }
-}
 
-.selected-button-color {
-    &.normal-mode {
-        background-color: #5f9ea0;
-    }
-    &.dark-mode {
-        background-color: #5f9ea0;
-    }
-}
-
-.button-hover {
-    &.normal-mode:hover {
-        background-color: #DAA520;
-    }
-    &.dark-mode:hover {
-        background-color: #F54B64;
-    }
-}
-
-.text-link-color {
-    &.normal-mode {
-        --tw-text-opacity: 1;
-        color: rgb(21 128 61 / var(--tw-text-opacity));
-    }
-    &.dark-mode {
-        color: #F54B64;
-    }
-}
