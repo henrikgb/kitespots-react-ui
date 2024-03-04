@@ -115,7 +115,7 @@ export function AboutContent() {
           <Image
             src={kitespotsLogo}
             alt="kitespots-logo"
-            style={{ width: 200 }}
+            style={{width: 180}}
           />
         </CardHeader>
         <CardBody className="flex h-[250px] justify-center">
