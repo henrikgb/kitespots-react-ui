@@ -3,7 +3,7 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useTranslation} from 'next-i18next';
 import usei18LanguageStore from "@/store/i18languageStore";
-import KitespotsLogoSvg from "@/assets/images/KitespotsLogoIcon.svg";
+import KitespotsLogoSvg from "@/assets/images/KitespotsLogoIconLarge.png";
 import Image from "next/image";
 
 
@@ -26,7 +26,7 @@ export default function HeaderNavBar() {
   return (
     <nav className="navigation">
       <div className="flex mx-4">
-        <Image src={KitespotsLogoSvg || ""} alt="Beach Wind Directions" />
+        <Image src={KitespotsLogoSvg || ""} alt="Beach Wind Directions" style={{height: 50, width: 50}}/>
       </div>
       <Link href="/" className="brand-name">Kite Spots</Link>
       <button className="hamburger"
@@ -53,16 +53,16 @@ export default function HeaderNavBar() {
         }>
         <ul>
           <li>
-            <Link onClick={closeNav} href="/">{t("Home")}</Link>
+            <Link onClick={closeNav} href="/">{t("home")}</Link>
           </li>
           <li>
-            <Link onClick={closeNav} href="/About">{t("About")}</Link>
+            <Link onClick={closeNav} href="/aboutPage/About">{t("about")}</Link>
           </li>
           <li>
-            <Link onClick={closeNav} href="/Contact">{t("Contact")}</Link>
+            <Link onClick={closeNav} href="/contactPage/Contact">{t("contact")}</Link>
           </li>
           <li>
-            <Link onClick={closeNav} href="/Settings">{t("Settings")}</Link>
+            <Link onClick={closeNav} href="/settingsPage/Settings">{t("settings")}</Link>
           </li>
         </ul>
       </div>

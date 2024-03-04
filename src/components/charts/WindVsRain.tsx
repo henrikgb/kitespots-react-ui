@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { EChartsOption } from 'echarts';
-import { EChartsBase } from '@/components/Charts/EChartsBase';
+import { EChartsBase } from '@/components/charts/EChartsBase';
 import {useTranslation} from 'next-i18next';
 import useThemeStore from "@/store/themeStore";
 

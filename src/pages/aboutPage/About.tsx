@@ -1,13 +1,12 @@
 // About.tsx
-import {AboutContent} from "@/components/AboutPage/AboutContent";
+import {AboutContent} from "@/pages/aboutPage/AboutContent";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import {GetStaticPropsContext} from "next";
+import PageWrapper from "@/components/PageWrapper";
 
 function About() {
   return (
-    <div>
-      <AboutContent />
-    </div>
+    <PageWrapper><AboutContent /></PageWrapper>
   )
 }
 

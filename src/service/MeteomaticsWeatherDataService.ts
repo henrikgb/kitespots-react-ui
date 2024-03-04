@@ -1,4 +1,4 @@
-import {fetchMeteomaticsWeatherData} from "@/Repository/MeteomaticsWeatherDataRepository";
+import {fetchMeteomaticsWeatherData} from "@/repository/MeteomaticsWeatherDataRepository";
 import {MeteomaticsWeatherData} from "@/types/model/MeteomaticsWeatherData";
 
 export const getMeteomaticsWeatherData = async(): Promise<MeteomaticsWeatherData[]> => {

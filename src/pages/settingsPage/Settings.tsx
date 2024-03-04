@@ -1,13 +1,11 @@
-// Contact.tsx
-import {ContactContent} from "@/components/ContactPage/ContactContent";
+import {SettingsContent} from "@/pages/settingsPage/SettingsContent";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import PageWrapper from "@/components/PageWrapper";
 
-function Contact() {
+function Settings() {
   return (
-    <div>
-      <ContactContent />
-    </div>
+    <PageWrapper> <SettingsContent /></PageWrapper>
   )
 }
 
@@ -21,4 +19,4 @@ export async function getStaticProps(context: GetStaticPropsContext) {
   };
 }
 
-export default Contact;
+export default Settings;
