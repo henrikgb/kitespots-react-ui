@@ -1,12 +1,11 @@
 import {SettingsContent} from "@/pages/settingsPage/SettingsContent";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import PageWrapper from "@/components/PageWrapper";
 
 function Settings() {
   return (
-    <div className="p-5">
-      <SettingsContent />
-    </div>
+    <PageWrapper> <SettingsContent /></PageWrapper>
   )
 }
 

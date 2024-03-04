@@ -2,12 +2,11 @@
 import {ContactContent} from "@/pages/contactPage/ContactContent";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import PageWrapper from "@/components/PageWrapper";
 
 function Contact() {
   return (
-    <div className="p-5">
-      <ContactContent />
-    </div>
+    <PageWrapper><ContactContent /></PageWrapper>
   )
 }
 
