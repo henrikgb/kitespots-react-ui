@@ -1,4 +1,4 @@
-import styleClasses from "@/pages/landingPage/Home.module.css";
+import styleClasses from "@/pages/index.module.css";
 
 interface StarRatingProps {
   score: number;
