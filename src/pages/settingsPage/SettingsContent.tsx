@@ -10,8 +10,11 @@ import {
 } from "@material-tailwind/react";
 import shoreBreak from "@/assets/images/shoreBreak.jpg";
 import Image from "next/image";
+import {GetStaticPropsContext} from "next";
+import {serverSideTranslations} from "next-i18next/serverSideTranslations";
+import PageWrapper from "@/components/PageWrapper";
 
-export const SettingsContent= () => {
+export default function SettingsContent() {
   const {
     t,
     i18n,
@@ -38,7 +41,7 @@ export const SettingsContent= () => {
   };
 
   return (
-    <Card className="mt-6 w-full bg-webPageContainerBody">
+    <PageWrapper><Card className="mt-6 w-full bg-webPageContainerBody">
       <CardHeader
         color="blue-gray"
         className="flex h-full justify-center items-center"
@@ -74,6 +77,16 @@ export const SettingsContent= () => {
           </Button>
         </div>
       </CardBody>
-    </Card>
+    </Card></PageWrapper>
   );
 };
+
+// Add getStaticProps at the bottom of your pages/index.tsx file
+export async function getStaticProps(context: GetStaticPropsContext) {
+  const { locale } = context;
+  return {
+    props: {
+      ...(await serverSideTranslations(locale || 'en', ['common', 'home'])), // 'en' is the default locale
+    },
+  };
+}
