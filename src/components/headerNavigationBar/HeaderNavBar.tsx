@@ -3,7 +3,7 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {useTranslation} from 'next-i18next';
 import usei18LanguageStore from "@/store/i18languageStore";
-import KitespotsLogoSvg from "@/assets/images/KitespotsLogoIcon.svg";
+import KitespotsLogoSvg from "@/assets/images/KitespotsLogoIconLarge.svg";
 import Image from "next/image";
 
 
@@ -26,7 +26,7 @@ export default function HeaderNavBar() {
   return (
     <nav className="navigation">
       <div className="flex mx-4">
-        <Image src={KitespotsLogoSvg || ""} alt="Beach Wind Directions" />
+        <Image src={KitespotsLogoSvg || ""} alt="Beach Wind Directions" style={{height: 50, width: 50}}/>
       </div>
       <Link href="/" className="brand-name">Kite Spots</Link>
       <button className="hamburger"
