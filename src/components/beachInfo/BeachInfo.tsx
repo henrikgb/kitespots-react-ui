@@ -10,7 +10,6 @@ export const BeachInfo = () => {
   const { t, i18n } = useTranslation();
   const {
     image,
-    nameId,
     beginnerScore,
     freestyleScore,
     waveScore} = useBeachDescriptionStore();
