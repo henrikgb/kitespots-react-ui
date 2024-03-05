@@ -107,7 +107,7 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     },
     grid: {
       left: gridLeft,
-      bottom: '25%',
+      bottom: '30%',
       right: gridRight,
     },
     xAxis: {
@@ -126,10 +126,6 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
         color: textColour,
       },
       feature: {
-        dataZoom: {
-          yAxisIndex: 'none'
-        },
-        restore: {},
         saveAsImage: {}
       }
     },

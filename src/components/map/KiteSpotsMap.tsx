@@ -10,7 +10,7 @@ export const KiteSpotsMap = () => {
     }
   ), [/* list variables which should trigger a re-render here */]);
   return (
-    <div>
+    <div className="w-full">
       <DynamicMap />
     </div>
   )

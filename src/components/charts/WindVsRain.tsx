@@ -74,15 +74,11 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     },
     grid: {
       left: gridLeft,
-      bottom: '25%',
+      bottom: '30%',
       right: gridRight,
     },
     toolbox: {
       feature: {
-        dataZoom: {
-          yAxisIndex: 'none',
-        },
-        restore: {},
         saveAsImage: {},
       },
     },
@@ -135,7 +131,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
       {
         name: "[m/s]",
         type: 'value',
-        max: 30,
+        max: 18,
         nameTextStyle: {
           color: textColour,
         },

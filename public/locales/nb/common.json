@@ -3,6 +3,8 @@
   "about": "Om",
   "contact": "Kontakt",
   "settings": "Innstillinger",
+  "info": "info",
+  "weather": "vær",
   "contactInfoHeader": "Kontaktinformasjon",
   "contactInfoMessagePart1": "Har du spørsmål angående nettsiden, eller ønsker du å legge til koordinater og værdata for flere lokasjoner?<br>",
   "contactInfoEmail": "Ikke nøl med å ta kontakt. Send en epost til: <0>{{email}}</0>",
