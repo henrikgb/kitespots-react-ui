@@ -85,6 +85,25 @@ export default function AboutContent() {
             className="flex h-full justify-center items-center"
             style={{ height: 300 }}
           >
+            <Image
+              src={kitespotsLogo}
+              alt="kitespots-logo"
+            />
+          </CardHeader>
+          <CardBody className="flex h-[250px] justify-center">
+            <TextBox>
+              <div className="text-start">
+                <p>{t("aboutPageTextSection2")}</p>
+              </div>
+            </TextBox>
+          </CardBody>
+        </Card>
+        <Card className="mt-6 w-full h-full bg-webPageContainerBody">
+          <CardHeader
+            color="blue-gray"
+            className="flex h-full justify-center items-center"
+            style={{ height: 300 }}
+          >
             <a
               href={`${kitespotsGithubRepo}`}
               target="_blank"
@@ -107,25 +126,6 @@ export default function AboutContent() {
                   className={`font-bold text-black`}
                 ></a>
               </Trans>
-            </TextBox>
-          </CardBody>
-        </Card>
-        <Card className="mt-6 w-full h-full bg-webPageContainerBody">
-          <CardHeader
-            color="blue-gray"
-            className="flex h-full justify-center items-center"
-            style={{ height: 300 }}
-          >
-            <Image
-              src={kitespotsLogo}
-              alt="kitespots-logo"
-            />
-          </CardHeader>
-          <CardBody className="flex h-[250px] justify-center">
-            <TextBox>
-              <div className="text-start">
-                <p>{t("aboutPageTextSection2")}</p>
-              </div>
             </TextBox>
           </CardBody>
         </Card>
