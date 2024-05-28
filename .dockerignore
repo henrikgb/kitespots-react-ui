@@ -1,0 +1,11 @@
+**/.DS_Store
+**/.git
+**/.gitignore
+**/.vscode
+**/docker-compose*
+**/compose.y*ml
+**/Dockerfile*
+**/node_modules
+**/npm-debug.log
+LICENSE
+README.md
