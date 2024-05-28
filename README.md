@@ -41,6 +41,18 @@ To get the project up and running:
 - Set up Azure Function App and configure it with your Meteomatics API username and password.
 - Ensure the Azure blob storage connection is properly set up.
 
+3. **Run using docker**:
+
+3.1. Make sure you have docker installed locally
+3.2. Navigate to the root of the project where the Dockerfile is located.
+3.3. Then run
+
+```
+docker build -t NAME-OF-IMAGE_HERE .
+```
+
+3.4. Start a container using Docker Desktop and the image you just created.
+
 ## Features
 - Kite Surf Locations: Display various kite surfing locations in Rogaland on a map.
 - Weather Forecast: Fetch and display wind and rain forecasts for kite surf spots.
