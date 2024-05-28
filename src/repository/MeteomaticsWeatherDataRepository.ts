@@ -3,7 +3,7 @@ import {MeteomaticsJsonResponseDTO} from "@/types/dto/MeteomaticsJsonResponseDTO
 const { BlobServiceClient } = require('@azure/storage-blob');
 
 const METEOMATICS_AZURE_BLOB_CONTAINER = "weatherdata";
-const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_KITESPOTSAD77_CONNECTION_STRING);
+const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.NEXT_PUBLIC_AZURE_KITESPOTSAD77_CONNECTION_STRING);
 
 const blobClients = {
   BORE: "Bore_MeteomaticsWeatherData.json",
