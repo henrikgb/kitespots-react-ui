@@ -20,17 +20,7 @@ export default function SettingsContent() {
     t,
     i18n,
   } = useTranslation();
-  const {activeLanguage, norwegianButtonColor, englishButtonColor, setNorwegianButtonColor, setEnglishButtonColor, setActiveLanguage} = usei18LanguageStore();
-
-  useEffect(() => {
-    if (i18n.language === "nb") {
-      setNorwegianButtonColor("blue-gray");
-      setEnglishButtonColor("white");
-    } else {
-      setNorwegianButtonColor("white");
-      setEnglishButtonColor("blue-gray");
-    }
-  }, [i18n, activeLanguage, englishButtonColor, norwegianButtonColor, setNorwegianButtonColor, setEnglishButtonColor]);
+  const {activeLanguage, setActiveLanguage} = usei18LanguageStore();
 
   useActiveLanguage();
 
@@ -62,7 +52,7 @@ export default function SettingsContent() {
             variant="filled"
             placeholder=""
             onClick={() => updateLanguage("en")}
-            color={englishButtonColor}
+            color={activeLanguage === "en" ? "blue-gray" : "white"}
           >
             {t("english")}
           </Button>
@@ -70,7 +60,7 @@ export default function SettingsContent() {
             variant="filled"
             placeholder=""
             onClick={() => updateLanguage("nb")}
-            color={norwegianButtonColor}
+            color={activeLanguage === "nb" ? "blue-gray" : "white"}
           >
             {t("norwegian")}
           </Button>
