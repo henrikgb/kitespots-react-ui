@@ -13,9 +13,7 @@ function App({ Component, pageProps }: AppProps) {
   const {theme} = useThemeStore();
   return (
     <div className={`main ${theme}`}>
-      {/* The HeaderNavBar is included here to be available on all pages. */}
       <HeaderNavBar />
-      {/* Render the current page component. */}
       <div className="page-body">
         <Component {...pageProps} />
       </div>
