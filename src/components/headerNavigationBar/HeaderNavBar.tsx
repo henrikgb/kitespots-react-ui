@@ -14,10 +14,9 @@ export default function HeaderNavBar() {
   useActiveLanguage();
 
   const closeNav = () => {
-    // Use setTimeout to close the menu after 1 second
     setTimeout(() => {
       setIsNavExpanded(false);
-    }, 500); // 1000 milliseconds = 1 second
+    }, 500);
   }
 
   return (
@@ -32,7 +31,6 @@ export default function HeaderNavBar() {
             onClick={() => {
               setIsNavExpanded(!isNavExpanded);
             }}>
-            {/* icon from heroicons.com */}
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-5 w-5"
