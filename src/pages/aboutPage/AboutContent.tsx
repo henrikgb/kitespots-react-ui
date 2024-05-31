@@ -2,24 +2,15 @@ import {Trans, useTranslation} from 'next-i18next'
 import React from "react";
 import {Card, CardBody, CardHeader, Carousel, IconButton} from "@material-tailwind/react";
 import {TextBox} from "@/components/TextBox";
-import githubLogo from "@/assets/images/github.png";
-import kitespotsLogo from "@/assets/images/KitespotsLogoIconLarge.png";
-import StavangerKiteklubbLogo from "@/assets/images/stavangerKiteklubb.svg";
-import meteomaticsLogo from "@/assets/images/meteomatics.png";
-import seleBeach from "@/assets/images/06-Sele-North-Bore-800.png";
-import Image from "next/image";
+import Image, {StaticImageData} from "next/image";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
+import {aboutContentList} from "@/pages/aboutPage/AboutContentObjectList";
 
 export default function AboutContent() {
   const { t} = useTranslation();
-  const kitespotsGithubRepo =
-        "https://github.com/henrikgb/kitespots-react-ui";
-  const linkMeteomatics =
-        "https://www.meteomatics.com/en/weather-api/?msclkid=85e0b029dcb111d13bc7d5e280cfcaa6&utm_source=bing&utm_medium=cpc&utm_campaign=Weather%20API%20(englisch%20ausser%20USA)&utm_term=meteomatics&utm_content=Weather%20Api";
-  const linkStavangerKiteklubb = "https://www.stavangerkiteklubb.com/";
 
   useActiveLanguage();
 
@@ -76,132 +67,53 @@ export default function AboutContent() {
           </IconButton>
         )}
       >
-        <Card className="mt-6 w-full h-full bg-webPageContainerBody">
-          <CardHeader
-            color="blue-gray"
-            className="flex h-full justify-center items-center"
-            style={{ height: 300 }}
-          >
-            <Image
-              src={kitespotsLogo}
-              alt="kitespots-logo"
-            />
-          </CardHeader>
-          <CardBody className="flex h-[250px] justify-center">
-            <TextBox>
-              <div className="text-start">
-                <p>{t("aboutPageTextSection2")}</p>
-              </div>
-            </TextBox>
-          </CardBody>
-        </Card>
-        <Card className="mt-6 w-full h-full bg-webPageContainerBody">
-          <CardHeader
-            color="blue-gray"
-            className="flex h-full justify-center items-center"
-            style={{ height: 300 }}
-          >
-            <a
-              href={`${kitespotsGithubRepo}`}
-              target="_blank"
-              rel="noopener noreferrer"
+        {aboutContentList.map((content) => (
+          <Card key={content.text} className="mt-6 w-full h-full bg-webPageContainerBody">
+            <CardHeader
+              color="blue-gray"
+              className="flex h-full justify-center items-center"
+              style={{ height: 300 }}
             >
-              <Image
-                src={githubLogo}
-                alt="github-logo"
-                style={{ maxHeight: 200 }}
-              ></Image>
-            </a>
-          </CardHeader>
-          <CardBody className="flex h-[250px] justify-center">
-            <TextBox>
-              <Trans i18nKey="aboutPageTextSection1">
+              {!content.link ? (
+                <Image
+                  src={content.imageSrc}
+                  alt="aboutImage"
+                  style={{height: content.imgHeight, width: content.imgWidth, maxHeight: content.imgMaxHeight}}
+                />
+              ): (
                 <a
-                  href={`${kitespotsGithubRepo}`}
+                  href={`${content.link}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className={`font-bold text-black`}
-                ></a>
-              </Trans>
-            </TextBox>
-          </CardBody>
-        </Card>
-        <Card className="mt-6 w-full h-full bg-webPageContainerBody">
-          <CardHeader
-            color="blue-gray"
-            className="flex h-full justify-center items-center"
-            style={{ height: 300 }}
-          >
-            <a
-              href={`${linkMeteomatics}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                src={meteomaticsLogo}
-                alt="meteomatics-logo"
-                style={{ maxWidth: 300 }}
-              />
-            </a>
-          </CardHeader>
-          <CardBody className="flex h-[250px] justify-center">
-            <TextBox>
-              <Trans i18nKey="aboutPageTextSection3">
-                <a
-                  href={`${linkMeteomatics}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`font-bold text-black`}
-                ></a>
-              </Trans>
-            </TextBox>
-          </CardBody>
-        </Card>
-        <Card className="mt-6 w-full h-full bg-webPageContainerBody">
-          <CardHeader
-            color="blue-gray"
-            className="flex h-full justify-center items-center"
-            style={{ height: 300 }}
-          >
-            <a
-              href={`${linkStavangerKiteklubb}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Image
-                src={StavangerKiteklubbLogo}
-                alt="Stavanger kiteklubb logo"
-                style={{ height: 200 }}
-              ></Image>
-            </a>
-          </CardHeader>
-          <CardBody className="flex h-[250px] justify-center">
-            <TextBox>
-              <Trans i18nKey="aboutPageTextSection4">
-                <a
-                  href={`${linkStavangerKiteklubb}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`font-bold text-black`}
-                ></a>
-              </Trans>
-            </TextBox>
-          </CardBody>
-        </Card>
-        <Card className="mt-6 w-full h-full bg-webPageContainerBody">
-          <CardHeader
-            color="blue-gray"
-            className="flex h-full justify-center items-center"
-            style={{ height: 300 }}
-          >
-            <Image src={seleBeach} alt="sele beach" style={{ height: 220, width: 220 }}></Image>
-          </CardHeader>
-          <CardBody className="flex h-[250px] justify-center">
-            <TextBox>
-              <p>{t("aboutPageTextSection5")}</p>
-            </TextBox>
-          </CardBody>
-        </Card>
+                >
+                  <Image
+                    src={content.imageSrc}
+                    alt="aboutImage"
+                    style={{height: content.imgHeight, width: content.imgWidth, maxHeight: content.imgMaxHeight, maxWidth: content.imgMaxWidth}}
+                  />
+                </a>
+              )}
+            </CardHeader>
+            <CardBody className="flex h-[250px] justify-center">
+              <TextBox>
+                {!content.link ? (
+                  <div className="text-start">
+                    <p>{t(content.text)}</p>
+                  </div>
+                ) : (
+                  <Trans i18nKey={content.text}>
+                    <a
+                      href={`${content.link}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`font-bold text-black`}
+                    ></a>
+                  </Trans>
+                )}
+              </TextBox>
+            </CardBody>
+          </Card>
+        ))}
       </Carousel>
     </PageWrapper>
   );
