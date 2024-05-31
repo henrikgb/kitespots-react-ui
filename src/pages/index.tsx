@@ -13,31 +13,19 @@ import {Card, CardBody, CardHeader, IconButton} from "@material-tailwind/react";
 import PageWrapper from "@/components/PageWrapper";
 import {useTranslation} from "next-i18next";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
+import {useMeteomaticsWeatherData} from "@/util/axiosRequests/useMeteomaticsWeatherData";
 
 function Home() {
-  const { setMeteomaticsData,
-    setSelectedLocation,
+  const { isMeteomaticsDataLoading,
     windGusts10ms,
     windDirection10ms,
     windSpeed10ms,
     precipitation } = useMeteomaticsWeatherDataStore();
   const {nameId, windDirectionDescriptions} = useBeachDescriptionStore();
-  const [isloading, setIsLoading] = useState<boolean>(true);
   const [activeLandingPageView, setActiveLandingPageView] = useState<"info" | "weather">("info");
   const { t} = useTranslation();
 
-  useEffect(() => {
-    axios.get('/api/meteomaticsData')
-      .then((response) => {
-        const data = response.data.data;
-        setMeteomaticsData(data);
-        setSelectedLocation("SELE"); // Set default location to Selestranden
-        setIsLoading(false);
-      })
-      .catch((error) => {
-        console.error('Error fetching Meteomatics data:', error);
-      });
-  }, [setMeteomaticsData, setSelectedLocation]);
+  useMeteomaticsWeatherData();
 
   useActiveLanguage();
 
@@ -84,20 +72,20 @@ function Home() {
             </div>
           ): (
             <div className="flex flex-col gap-4">
-              {isloading && (
+              {isMeteomaticsDataLoading && (
                 <PuffDataLoader />
               )}
-              {(!isloading && windGusts10ms && windSpeed10ms && precipitation) && (
+              {(!isMeteomaticsDataLoading && windGusts10ms && windSpeed10ms && precipitation) && (
                 <Card placeholder="" className="h-[220px] bg-webPageBodyBackground">
                   <div className="h-[220px]">
                     <WindVsRain data={{ windGust: windGusts10ms[0].dates, windSpeed: windSpeed10ms[0].dates, precipitation: precipitation[0].dates }} />
                   </div>
                 </Card>
               )}
-              {isloading && (
+              {isMeteomaticsDataLoading && (
                 <PuffDataLoader />
               )}
-              {(!isloading && windDirection10ms && windDirection10ms[0]) && (
+              {(!isMeteomaticsDataLoading && windDirection10ms && windDirection10ms[0]) && (
                 <Card placeholder="" className="h-[220px] bg-webPageBodyBackground">
                   <div className="h-[220px]">
                     <WindDirection data={windDirection10ms[0].dates} windDirectionDescriptions={windDirectionDescriptions ? windDirectionDescriptions : []} />

@@ -15,6 +15,7 @@ interface MeteomaticsWeatherDataState {
     windDirection10ms: WindDirection10ms[] | undefined;
     windGusts10ms: WindGusts10ms[] | undefined;
     precipitation: Precipitation[] | undefined;
+    isMeteomaticsDataLoading: boolean;
 
     setMeteomaticsData: (value: MeteomaticsWeatherData[]) => void;
     setSelectedLocation: (locationName: string) => void;
@@ -22,6 +23,7 @@ interface MeteomaticsWeatherDataState {
     setWindDirection10ms: (value: WindDirection10ms[] | undefined) => void;
     setWindGusts10ms: (value: WindGusts10ms[] | undefined) => void;
     setPrecipitation: (value: Precipitation[] | undefined) => void;
+    setIsMeteomaticsDataLoading: (value: boolean) => void;
 }
 
 export const useMeteomaticsWeatherDataStore = create<MeteomaticsWeatherDataState>()(
@@ -33,6 +35,7 @@ export const useMeteomaticsWeatherDataStore = create<MeteomaticsWeatherDataState
       windDirection10ms: undefined,
       windGusts10ms: undefined,
       precipitation: undefined,
+      isMeteomaticsDataLoading: true,
       setMeteomaticsData: (value: MeteomaticsWeatherData[]) => {
         set(() => ({
           meteomaticsData: value,
@@ -73,6 +76,11 @@ export const useMeteomaticsWeatherDataStore = create<MeteomaticsWeatherDataState
           precipitation: value,
         }));
       },
+      setIsMeteomaticsDataLoading: (value: boolean) => {
+        set(() => ({
+          isMeteomaticsDataLoading: value
+        }))
+      }
     }),
     {
       name: "meteomatics-weather",
