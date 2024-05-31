@@ -1,5 +1,4 @@
-import React, {useEffect, useState} from "react";
-import axios from "axios";
+import React, {useState} from "react";
 import {KiteSpotsMap} from "@/components/map/KiteSpotsMap";
 import WindVsRain from "@/components/charts/WindVsRain";
 import WindDirection from "@/components/charts/WindDirection";
