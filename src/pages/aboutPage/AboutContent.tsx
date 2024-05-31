@@ -1,6 +1,5 @@
 import {Trans, useTranslation} from 'next-i18next'
-import React, {useEffect} from "react";
-import usei18LanguageStore from "@/store/i18languageStore";
+import React from "react";
 import {Card, CardBody, CardHeader, Carousel, IconButton} from "@material-tailwind/react";
 import {TextBox} from "@/components/TextBox";
 import githubLogo from "@/assets/images/github.png";
@@ -12,19 +11,17 @@ import Image from "next/image";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/PageWrapper";
+import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 
 export default function AboutContent() {
-  const { t, i18n } = useTranslation();
-  const {activeLanguage} = usei18LanguageStore();
+  const { t} = useTranslation();
   const kitespotsGithubRepo =
         "https://github.com/henrikgb/kitespots-react-ui";
   const linkMeteomatics =
         "https://www.meteomatics.com/en/weather-api/?msclkid=85e0b029dcb111d13bc7d5e280cfcaa6&utm_source=bing&utm_medium=cpc&utm_campaign=Weather%20API%20(englisch%20ausser%20USA)&utm_term=meteomatics&utm_content=Weather%20Api";
   const linkStavangerKiteklubb = "https://www.stavangerkiteklubb.com/";
 
-  useEffect(() => {
-    i18n.changeLanguage(activeLanguage);
-  }, [i18n, activeLanguage]);
+  useActiveLanguage();
 
   return (
     <PageWrapper>

@@ -1,21 +1,18 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {Trans, useTranslation} from 'next-i18next'
-import usei18LanguageStore from "@/store/i18languageStore";
 import {Card, CardBody, CardHeader, Typography} from "@material-tailwind/react";
 import sunsetImage from "@/assets/images/beachSunset.jpg";
 import Image from "next/image";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/PageWrapper";
+import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 
 export default function ContactContent() {
   const email = "henrik.busengdal@kitespots.no";
-  const { t, i18n } = useTranslation();
-  const {activeLanguage} = usei18LanguageStore();
+  const { t} = useTranslation();
 
-  useEffect(() => {
-    i18n.changeLanguage(activeLanguage);
-  }, [i18n, activeLanguage]);
+  useActiveLanguage();
 
   return (
     <PageWrapper>

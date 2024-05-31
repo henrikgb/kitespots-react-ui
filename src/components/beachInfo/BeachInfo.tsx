@@ -1,23 +1,20 @@
 import styleClasses from "@/pages/index.module.css";
 import {StarRating} from "@/util/StarRating";
-import React, {useEffect} from "react";
+import React from "react";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useTranslation} from 'next-i18next';
-import usei18LanguageStore from "@/store/i18languageStore";
 import Image from "next/image";
+import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 
 export const BeachInfo = () => {
-  const { t, i18n } = useTranslation();
+  const { t} = useTranslation();
   const {
     image,
     beginnerScore,
     freestyleScore,
     waveScore} = useBeachDescriptionStore();
-  const {activeLanguage} = usei18LanguageStore();
 
-  useEffect(() => {
-    i18n.changeLanguage(activeLanguage);
-  }, [i18n, activeLanguage]);
+  useActiveLanguage();
 
   return (
     <div className="flex flex-row gap-4 w-full h-full justify-center items-center flex-wrap">

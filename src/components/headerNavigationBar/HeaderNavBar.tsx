@@ -1,20 +1,17 @@
 import * as React from "react";
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {useTranslation} from 'next-i18next';
-import usei18LanguageStore from "@/store/i18languageStore";
 import KitespotsLogoSvg from "@/assets/images/KitespotsLogoIconLarge.png";
 import Image from "next/image";
+import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 
 
 export default function HeaderNavBar() {
   const [isNavExpanded, setIsNavExpanded] = useState(false)
-  const { t, i18n } = useTranslation();
-  const {activeLanguage} = usei18LanguageStore();
+  const { t} = useTranslation();
 
-  useEffect(() => {
-    i18n.changeLanguage(activeLanguage);
-  }, [i18n, activeLanguage]);
+  useActiveLanguage();
 
   const closeNav = () => {
     // Use setTimeout to close the menu after 1 second

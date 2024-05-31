@@ -12,7 +12,7 @@ import {PuffDataLoader} from "@/components/loadingSpinners/PuffDataLoader";
 import {Card, CardBody, CardHeader, IconButton} from "@material-tailwind/react";
 import PageWrapper from "@/components/PageWrapper";
 import {useTranslation} from "next-i18next";
-import usei18LanguageStore from "@/store/i18languageStore";
+import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 
 function Home() {
   const { setMeteomaticsData,
@@ -24,8 +24,7 @@ function Home() {
   const {nameId, windDirectionDescriptions} = useBeachDescriptionStore();
   const [isloading, setIsLoading] = useState<boolean>(true);
   const [activeLandingPageView, setActiveLandingPageView] = useState<"info" | "weather">("info");
-  const { t, i18n } = useTranslation();
-  const {activeLanguage} = usei18LanguageStore();
+  const { t} = useTranslation();
 
   useEffect(() => {
     axios.get('/api/meteomaticsData')
@@ -40,9 +39,7 @@ function Home() {
       });
   }, [setMeteomaticsData, setSelectedLocation]);
 
-  useEffect(() => {
-    i18n.changeLanguage(activeLanguage);
-  }, [i18n, activeLanguage]);
+  useActiveLanguage();
 
   const activateInfoPage = () => {
     setActiveLandingPageView("info");

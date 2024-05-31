@@ -13,6 +13,7 @@ import Image from "next/image";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/PageWrapper";
+import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 
 export default function SettingsContent() {
   const {
@@ -31,9 +32,7 @@ export default function SettingsContent() {
     }
   }, [i18n, activeLanguage, englishButtonColor, norwegianButtonColor, setNorwegianButtonColor, setEnglishButtonColor]);
 
-  useEffect(() => {
-    i18n.changeLanguage(activeLanguage);
-  }, [i18n, activeLanguage]);
+  useActiveLanguage();
 
   const updateLanguage = async (activeLanguage: "en" | "nb") => {
     await i18n.changeLanguage(activeLanguage);
