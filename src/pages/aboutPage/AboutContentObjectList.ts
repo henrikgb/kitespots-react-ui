@@ -14,7 +14,8 @@ interface AboutContent{
     imgMaxWidth: number | undefined;
     link: string | undefined;
 }
-export const aboutContentList: AboutContent[] = [
+
+const aboutContentList: AboutContent[] = [
   {
     text: "aboutKiteSpots",
     imageSrc: KitespotsLogo,
@@ -61,3 +62,5 @@ export const aboutContentList: AboutContent[] = [
     link: undefined,
   },
 ];
+
+export default aboutContentList;
