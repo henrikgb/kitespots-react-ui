@@ -7,9 +7,9 @@ import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
-import aboutContentList from "@/pages/aboutPage/AboutContentObjectList";
+import {aboutContentList} from "@/pages/aboutPage/AboutContentObjectList";
 
-function AboutContent() {
+export default function AboutContent() {
   const { t} = useTranslation();
 
   useActiveLanguage();
@@ -118,8 +118,6 @@ function AboutContent() {
     </PageWrapper>
   );
 }
-
-export default AboutContent;
 
 // Add getStaticProps at the bottom of your pages/index.tsx file
 export async function getStaticProps(context: GetStaticPropsContext) {

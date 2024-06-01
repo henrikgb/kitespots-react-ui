@@ -15,7 +15,7 @@ interface AboutContent{
     link: string | undefined;
 }
 
-const aboutContentList: AboutContent[] = [
+export const aboutContentList: AboutContent[] = [
   {
     text: "aboutKiteSpots",
     imageSrc: KitespotsLogo,
@@ -62,5 +62,3 @@ const aboutContentList: AboutContent[] = [
     link: undefined,
   },
 ];
-
-export default aboutContentList;
