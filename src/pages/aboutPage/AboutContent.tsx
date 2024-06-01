@@ -2,17 +2,79 @@ import {Trans, useTranslation} from 'next-i18next'
 import React from "react";
 import {Card, CardBody, CardHeader, Carousel, IconButton} from "@material-tailwind/react";
 import {TextBox} from "@/components/TextBox";
-import Image from "next/image";
+import Image, {StaticImageData} from "next/image";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
-import {aboutContentList} from "@/pages/aboutPage/AboutContentObjectList";
+import KitespotsLogo from "@/assets/images/KitespotsLogoIconLarge.png";
+import GithubLogo from "@/assets/images/github.png";
+import MeteomaticsLogo from "@/assets/images/meteomatics.png";
+import StavangerKiteklubbLogo from "@/assets/images/stavangerKiteklubb.svg";
+import SeleBeach from "@/assets/images/06-Sele-North-Bore-800.png";
 
 export default function AboutContent() {
   const { t} = useTranslation();
 
   useActiveLanguage();
+
+  interface AboutContent{
+    text: string;
+    imageSrc: StaticImageData;
+    imgHeight: number | undefined;
+    imgWidth: number | undefined;
+    imgMaxHeight: number | undefined;
+    imgMaxWidth: number | undefined;
+    link: string | undefined;
+  }
+
+  const aboutContentList: AboutContent[] = [
+    {
+      text: "aboutKiteSpots",
+      imageSrc: KitespotsLogo,
+      imgHeight: undefined,
+      imgWidth: undefined,
+      imgMaxHeight: undefined,
+      imgMaxWidth: undefined,
+      link: undefined,
+    },
+    {
+      text: "aboutTheProject",
+      imageSrc: GithubLogo,
+      imgHeight: undefined,
+      imgWidth: undefined,
+      imgMaxHeight: 200,
+      imgMaxWidth: undefined,
+      link: "https://github.com/henrikgb/kitespots-react-ui",
+    },
+    {
+      text: "aboutMeteomaticsWeatherAPI",
+      imageSrc: MeteomaticsLogo,
+      imgHeight: undefined,
+      imgWidth: undefined,
+      imgMaxHeight: undefined,
+      imgMaxWidth: 300,
+      link: "https://www.meteomatics.com/en/weather-api/?msclkid=85e0b029dcb111d13bc7d5e280cfcaa6&utm_source=bing&utm_medium=cpc&utm_campaign=Weather%20API%20(englisch%20ausser%20USA)&utm_term=meteomatics&utm_content=Weather%20Api",
+    },
+    {
+      text: "aboutStavangerKiteclub",
+      imageSrc: StavangerKiteklubbLogo,
+      imgHeight: 200,
+      imgWidth: undefined,
+      imgMaxHeight: undefined,
+      imgMaxWidth: undefined,
+      link: "https://www.stavangerkiteklubb.com/",
+    },
+    {
+      text: "aboutFinalGreetingToUsers",
+      imageSrc: SeleBeach,
+      imgHeight: 220,
+      imgWidth: 220,
+      imgMaxHeight: undefined,
+      imgMaxWidth: undefined,
+      link: undefined,
+    },
+  ];
 
   return (
     <PageWrapper>
