@@ -8,6 +8,7 @@ import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import 'leaflet/dist/leaflet.css'
+import pinIcon from "@/assets/icons/pin.png";
 
 const MyMap = () => {
   const { setSelectedLocation } = useMeteomaticsWeatherDataStore();
@@ -35,7 +36,7 @@ const MyMap = () => {
       key={beachCoordinate.id}
       position={[beachCoordinate.latitude, beachCoordinate.longitude]}
       icon={new Icon({
-        iconUrl: "pin.png",
+        iconUrl: pinIcon.src,
         iconSize: [25, 41],
         iconAnchor: [12, 41]
       })}
