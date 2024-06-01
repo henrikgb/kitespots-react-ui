@@ -9,7 +9,7 @@ import PageWrapper from "@/components/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 import aboutContentList from "@/pages/aboutPage/AboutContentObjectList";
 
-export default function AboutContent() {
+function AboutContent() {
   const { t} = useTranslation();
 
   useActiveLanguage();
@@ -118,6 +118,8 @@ export default function AboutContent() {
     </PageWrapper>
   );
 }
+
+export default AboutContent;
 
 // Add getStaticProps at the bottom of your pages/index.tsx file
 export async function getStaticProps(context: GetStaticPropsContext) {
