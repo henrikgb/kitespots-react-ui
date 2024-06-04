@@ -7,7 +7,7 @@ import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
-import {aboutContentList} from "@/pages/aboutPage/AboutContentList";
+import {aboutContentList} from "@/assets/AboutContentList";
 
 export default function AboutContent() {
   const { t} = useTranslation();
