@@ -36,5 +36,9 @@
   "freestyle": "Freestyle",
   "wave": "Wave",
   "degrees": "Degrees",
-  "description": "Description"
+  "description": "Description",
+  "login":"Login",
+  "logout": "Logout",
+  "updateKiteSpotLocations": "Update Kitespot locations",
+  "contentOnlyVisibleForAdmin": "This content should only be visible if you are logged in as an admin user."
 }

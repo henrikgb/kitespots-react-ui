@@ -36,5 +36,9 @@
   "freestyle": "Freestyle",
   "wave": "Wave",
   "degrees": "Grader",
-  "description": "Beskrivelse"
+  "description": "Beskrivelse",
+  "login": "Logg inn",
+  "logout": "Logg ut",
+  "updateKiteSpotLocations": "Oppdater Kitespot lokasjoner",
+  "contentOnlyVisibleForAdmin": "Dette innholdet skal bare være synlig hvis du er logget inn som admin-bruker."
 }
