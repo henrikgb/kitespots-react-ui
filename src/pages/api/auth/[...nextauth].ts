@@ -11,9 +11,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   secret: process.env.KITESPOTS_SECRET as string,
-  pages: {
-    signIn: `${process.env.NEXTAUTH_URL}/api/auth/signin`,
-  },
 };
 
 export default NextAuth(authOptions);
