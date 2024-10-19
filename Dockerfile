@@ -6,18 +6,17 @@ WORKDIR /app
 
 # Copy the `package.json` and `package-lock.json` files over to the container
 COPY package*.json ./
-COPY package-lock.json ./
+
+# Install the dependencies
+RUN npm install --only=production
 
 # Copy the application files over to the container
 COPY . .
 
-# Install the dependencies
-RUN npm install
-
-# Load the environment variables from the .env file
-ENV NODE_ENV=development
-ENV AZURE_STORAGE_CONNECTION_STRING $AZURE_STORAGE_CONNECTION_STRING
-ENV AZURE_KITESPOTSAD77_CONNECTION_STRING $AZURE_KITESPOTSAD77_CONNECTION_STRING
+# Set environment variables for production
+ENV NODE_ENV=production
+ENV AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING
+ENV AZURE_KITESPOTSAD77_CONNECTION_STRING=$AZURE_KITESPOTSAD77_CONNECTION_STRING
 
 # Build the Next.js app for production
 RUN npm run build
@@ -26,4 +25,4 @@ RUN npm run build
 EXPOSE 3000
 
 # Start the application
-CMD ["npm", "run", "dev"]
+CMD ["npm", "start"]
