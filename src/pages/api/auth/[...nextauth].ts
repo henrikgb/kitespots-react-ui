@@ -1,6 +1,5 @@
 import NextAuth, { NextAuthOptions, Session, User } from "next-auth";
 import AzureADProvider from "next-auth/providers/azure-ad";
-import { JWT } from "next-auth/jwt"; // Import the JWT type
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -11,23 +10,7 @@ export const authOptions: NextAuthOptions = {
       name: "Kitespots Login",
     }),
   ],
-  session: {
-    strategy: "jwt", // Optional, depending on your needs
-  },
-  callbacks: {
-    async jwt({ token, account }): Promise<JWT> {
-      // Custom token logic if needed
-      return token;
-    },
-    async session({ session, token }): Promise<Session> {
-      // Custom session logic if needed
-      return session;
-    },
-  },
-  pages: {
-    error: '/auth/error', // Redirect here on error
-  },
-  debug: true,
+  secret: process.env.KITESPOTS_SECRET as string,
 };
 
 export default NextAuth(authOptions);
