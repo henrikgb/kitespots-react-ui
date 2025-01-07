@@ -4,7 +4,7 @@
   #Copies the entire application code.
 
 # Base image
-FROM node:lts-alpine3.20 AS base
+FROM node:18.0.0-alpine AS base
 
 # Set the working directory
 WORKDIR /app
