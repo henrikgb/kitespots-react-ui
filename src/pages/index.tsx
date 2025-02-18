@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {KiteSpotsMap} from "@/components/map/KiteSpotsMap";
-import WindVsRain from "@/components/charts/WindVsRain";
-import WindDirection from "@/components/charts/WindDirection";
+import WindVsRain from "@/components/dataCharts/WindVsRain";
+import WindDirection from "@/components/dataCharts/WindDirection";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
 import {BeachInfo} from "@/components/layout/BeachInfo";
