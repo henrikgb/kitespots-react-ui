@@ -4,7 +4,7 @@ import WindVsRain from "@/components/dataCharts/WindVsRain";
 import WindDirection from "@/components/dataCharts/WindDirection";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
-import {BeachInfo} from "@/pages/layout/BeachInfo";
+import {BeachInfo} from "@/components/layouts/BeachInfo";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticPropsContext } from 'next';
 import {PuffDataLoader} from "@/components/common/PuffDataLoader";
