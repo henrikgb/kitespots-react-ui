@@ -16,7 +16,7 @@ import PageWrapper from "@/components/PageWrapper";
 import { useActiveLanguage } from "@/util/languageControl/useActiveLanguage";
 import { signIn, signOut, useSession } from "next-auth/react";
 
-export default function SettingsContent() {
+export default function Settings() {
   const {
     t,
     i18n,
