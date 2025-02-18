@@ -23,9 +23,12 @@ export default function Contact() {
           style={{ height: 300 }}
         >
           <Image
+            className="w-full h-full object-cover"
             src={sunsetImage}
             alt="sunset"
-            className="w-full h-full object-cover"
+            width={576}
+            height={384}
+            priority
             style={{ height: "100%", width: "100%" }}
           />
         </CardHeader>

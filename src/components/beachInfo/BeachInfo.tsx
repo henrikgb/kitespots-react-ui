@@ -34,7 +34,15 @@ export const BeachInfo = () => {
           </li>
         </ul>
       </div>
-      <Image className="flex items-start" src={image ? image : ""} alt="Beach Wind Directions" style={{ width: '34vh' }} />
+      <Image
+        className="flex items-start"
+        src={image || ""}
+        alt="Beach Wind Directions"
+        width={200}
+        height={200}
+        priority
+        style={{ width: '34vh' }}
+      />
       <div className={styleClasses.textList}>
         <ul className="flex flex-col justify-center ml-4">
           <li>

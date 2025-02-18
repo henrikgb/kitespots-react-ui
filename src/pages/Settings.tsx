@@ -46,9 +46,12 @@ export default function Settings() {
           style={{ height: 300 }}
         >
           <Image
+            className="w-full h-full object-cover"
             src={shoreBreak}
             alt="shorebreak"
-            className="w-full h-full object-cover"
+            width={399}
+            height={299}
+            priority
             style={{ height: "100%", width: "100%" }}
           />
         </CardHeader>
