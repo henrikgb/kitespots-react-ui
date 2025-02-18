@@ -1,11 +1,11 @@
 import {Trans, useTranslation} from 'next-i18next'
 import React from "react";
 import {Card, CardBody, CardHeader, Carousel, IconButton} from "@material-tailwind/react";
-import {TextBox} from "@/components/TextBox";
+import {TextBox} from "@/components/common/TextBox";
 import Image from "next/image";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import PageWrapper from "@/components/PageWrapper";
+import PageWrapper from "@/components/common/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 import {aboutContentList} from "@/assets/AboutContentList";
 

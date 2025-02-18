@@ -1,6 +1,6 @@
 import {EChartsOption} from "echarts";
 import React, {useEffect, useState} from "react";
-import {EChartsBase} from "@/components/charts/EChartsBase";
+import {EChartsBase} from "@/components/dataCharts/EChartsBase";
 import {WindDirectionDescriptions} from "@/assets/beachCoordinates";
 import {useTranslation} from 'next-i18next';
 import useThemeStore from "@/store/themeStore";

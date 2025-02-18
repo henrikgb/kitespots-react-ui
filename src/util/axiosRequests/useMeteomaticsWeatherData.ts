@@ -7,7 +7,7 @@ import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStor
  * The weather data in blob storage is updated once per hour by a function app that fetches data
  * from the Meteomatics API. The hook fetches data for all the available locations, but sets the default
  * selected location to Selestranden. When the user selects a location on the map setSelectedLocation will update
- * a new location to be in focus and displayed in the weather charts.
+ * a new location to be in focus and displayed in the weather dataCharts.
  */
 export function useMeteomaticsWeatherData() {
   const { setMeteomaticsData,

@@ -12,7 +12,7 @@ import shoreBreak from "@/assets/images/shoreBreak.jpg";
 import Image from "next/image";
 import {GetStaticPropsContext} from "next";
 import {serverSideTranslations} from "next-i18next/serverSideTranslations";
-import PageWrapper from "@/components/PageWrapper";
+import PageWrapper from "@/components/common/PageWrapper";
 import { useActiveLanguage } from "@/util/languageControl/useActiveLanguage";
 import { signIn, signOut, useSession } from "next-auth/react";
 
