@@ -9,7 +9,7 @@ import PageWrapper from "@/components/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 import {aboutContentList} from "@/assets/AboutContentList";
 
-export default function AboutContent() {
+export default function About() {
   const { t} = useTranslation();
 
   useActiveLanguage();

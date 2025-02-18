@@ -8,7 +8,7 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 
-export default function ContactContent() {
+export default function Contact() {
   const email = "henrik.busengdal@kitespots.no";
   const { t} = useTranslation();
 
