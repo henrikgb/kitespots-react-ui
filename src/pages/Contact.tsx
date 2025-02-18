@@ -26,8 +26,8 @@ export default function Contact() {
             className="w-full h-full object-cover"
             src={sunsetImage}
             alt="sunset"
-            width={576}
-            height={384}
+            width={1500}
+            height={1000}
             priority
             style={{ height: "100%", width: "100%" }}
           />

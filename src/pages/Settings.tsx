@@ -49,8 +49,8 @@ export default function Settings() {
             className="w-full h-full object-cover"
             src={shoreBreak}
             alt="shorebreak"
-            width={399}
-            height={299}
+            width={1334}
+            height={1000}
             priority
             style={{ height: "100%", width: "100%" }}
           />
