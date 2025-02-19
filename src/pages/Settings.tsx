@@ -15,6 +15,7 @@ import {serverSideTranslations} from "next-i18next/serverSideTranslations";
 import PageWrapper from "@/components/common/PageWrapper";
 import { useActiveLanguage } from "@/util/languageControl/useActiveLanguage";
 import { signIn, signOut, useSession } from "next-auth/react";
+import {PuffDataLoader} from "@/components/common/PuffDataLoader";
 
 export default function Settings() {
   const {
@@ -34,7 +35,11 @@ export default function Settings() {
 
   // Wait for session loading to avoid hydration issues
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="w-full flex justify-center" style={{ height: "60vh" }}>
+        <PuffDataLoader />
+      </div>
+    );
   }
 
   return (
