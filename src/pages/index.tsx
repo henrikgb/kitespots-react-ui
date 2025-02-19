@@ -13,6 +13,7 @@ import PageWrapper from "@/components/common/PageWrapper";
 import {useTranslation} from "next-i18next";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 import {useMeteomaticsWeatherData} from "@/util/axiosRequests/useMeteomaticsWeatherData";
+import styleClasses from "@/pages/index.module.css";
 
 function Home() {
   const { isMeteomaticsDataLoading,
@@ -40,8 +41,7 @@ function Home() {
       <Card className="mt-6 w-full bg-webPageContainerBody">
         <CardHeader
           color="blue-gray"
-          className="flex h-full justify-center items-center"
-          style={{ height: 230 }}
+          className={`${styleClasses.mapContainer}`}
         >
           <KiteSpotsMap />
         </CardHeader>
