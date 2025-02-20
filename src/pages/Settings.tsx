@@ -17,8 +17,6 @@ import { useActiveLanguage } from "@/util/languageControl/useActiveLanguage";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {PuffDataLoader} from "@/components/common/PuffDataLoader";
 
-// THis is a sentence to test commits using vs code source control
-
 export default function Settings() {
   const {
     t,
