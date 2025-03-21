@@ -15,6 +15,8 @@ import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 import {useMeteomaticsWeatherData} from "@/util/axiosRequests/useMeteomaticsWeatherData";
 import styleClasses from "@/pages/index.module.css";
 
+// Push to dev trigger test
+
 function Home() {
   const { isMeteomaticsDataLoading,
     windGusts10ms,
