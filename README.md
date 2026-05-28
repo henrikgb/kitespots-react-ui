@@ -1,6 +1,17 @@
 # kitespots-react-ui: Kite Surf Weather Forecast in Rogaland
 
+## 🚧 Maintenance Notice
+
+The weather forecast data shown in this application is currently outdated and has not been refreshed since December 2025.
+
+The backend Azure Function App originally relied on the free subscription tier from Meteomatics, which is no longer available. Because of this, automated weather data updates are currently disabled.
+
+I plan to migrate the backend to another weather data API when time permits.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Welcome to kitespots-react-ui, the Kite Surf Weather Forecast application for Rogaland. This application utilizes a combination of technologies to provide kite surfers with accurate wind and rain forecasts for various locations in Rogaland, ensuring a great kite surfing experience.
+
 
 # Table of Contents
 - [Technologies](#technologies)
@@ -20,7 +31,6 @@ This project uses a mix of technologies to ensure efficient and smooth operation
 - **HTTP Client**: Axios and Next.js to fetch weather data.
 - **Code Quality**: ESLint for code formatting and linting.
 - **Localization**: i18n for multilingual support, including English and Norwegian.
-- **Themes**: Switch toggle for transitioning between normal and dark mode styles.
 
 ## Backend:
 - Written in C#.
@@ -77,7 +87,6 @@ Notes:
 - Weather Forecast: Fetch and display wind and rain forecasts for kite surf spots.
 - Visualization: Use Apache Echarts for a clear and intuitive visualization of weather data.
 - Localization: Seamlessly switch between Norwegian and English languages.
-- Dark Mode: Comfortable viewing in all lighting conditions with a toggleable dark mode.
 
 ## Contribute
 I value contributions! Please review the issues for pending features or bugs. Feel free to open a new issue or send a pull request. Ensure your code follows our ESLint configurations for consistency.  
