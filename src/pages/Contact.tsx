@@ -9,7 +9,7 @@ import PageWrapper from "@/components/common/PageWrapper";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 
 export default function Contact() {
-  const email = "henrik.busengdal@kitespots.no";
+  const email = "henrik.g.busengdal@gmail.com";
   const { t} = useTranslation();
 
   useActiveLanguage();
