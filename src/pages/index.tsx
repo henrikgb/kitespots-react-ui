@@ -1,7 +1,6 @@
+import dynamic from "next/dynamic";
 import React, {useState} from "react";
 import {KiteSpotsMap} from "@/components/map/KiteSpotsMap";
-import WindVsRain from "@/components/dataCharts/WindVsRain";
-import WindDirection from "@/components/dataCharts/WindDirection";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
 import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
 import {BeachInfo} from "@/components/layouts/BeachInfo";
@@ -14,6 +13,13 @@ import {useTranslation} from "next-i18next";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
 import {useMeteomaticsWeatherData} from "@/util/axiosRequests/useMeteomaticsWeatherData";
 import styleClasses from "@/pages/index.module.css";
+
+const WindVsRain = dynamic(() => import("@/components/dataCharts/WindVsRain"), {
+  ssr: false,
+});
+const WindDirection = dynamic(() => import("@/components/dataCharts/WindDirection"), {
+  ssr: false,
+});
 
 // Push to dev trigger test
 
