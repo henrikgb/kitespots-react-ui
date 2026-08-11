@@ -6,7 +6,7 @@ The weather forecast data shown in this application is currently outdated and ha
 
 The backend Azure Function App originally relied on the free subscription tier from Meteomatics, which is no longer available. Because of this, automated weather data updates are currently disabled.
 
-I plan to migrate the backend to another weather data API when time permits.
+The plan is to migrate the backend to another weather data API when time permits.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
