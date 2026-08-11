@@ -18,7 +18,7 @@
   "aboutPageHeader": "Welcome to Kitespots.no - Your guide to Kitesurfing in Rogaland",
   "aboutTheProject": "Kitespots.no is created with a passion for kitesurfing and web development. This non-commercial project is open source and available on GitHub: <0>kitespots-react-ui</0>",
   "aboutKiteSpots": "At Kitespots.no, you'll find updated weather reports specifically tailored for beaches in Rogaland suitable for kitesurfing. Kitespots.no is everything you need to plan your next kitesurfing session.",
-  "aboutMeteomaticsWeatherAPI": "Updated weather data is fetched hourly from <0>Meteomatics</0> which excels with its precise weather information. With data from a variety of different sources, they ensure accuracy that is essential for kitesurfing.",
+  "aboutWeatherAPI": "Updated weather forecasts are fetched hourly from <0>Meteorologisk institutt / MET Norway (Yr)</0>, providing reliable and up-to-date weather data for each kite spot. The forecasts provide essential weather information to help you plan your kitesurfing sessions.",
   "aboutStavangerKiteclub": "<0>Stavanger Kiteklubb</0> has provided valuable contributions through their analyses of the beaches, including an overview of how different wind directions affect conditions for kiting.",
   "aboutFinalGreetingToUsers": "I hope Kitespots.no becomes a useful tool for you to explore, plan, and enjoy your time on the water along the fantastic beaches of Rogaland.",
   "windDirection": "Wind Direction",

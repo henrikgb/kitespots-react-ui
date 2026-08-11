@@ -1,7 +1,7 @@
 import {StaticImageData} from "next/image";
 import KitespotsLogo from "@/assets/images/KitespotsLogoIconLarge.png";
 import GithubLogo from "@/assets/images/github.png";
-import MeteomaticsLogo from "@/assets/images/meteomatics.png";
+import MetLogo from "@/assets/images/met-api.jpg";
 import StavangerKiteklubbLogo from "@/assets/images/stavangerKiteklubb.svg";
 import SeleBeach from "@/assets/images/06-Sele-North-Bore-800.png";
 
@@ -35,13 +35,13 @@ export const aboutContentList: AboutContent[] = [
     link: "https://github.com/henrikgb/kitespots-react-ui",
   },
   {
-    text: "aboutMeteomaticsWeatherAPI",
-    imageSrc: MeteomaticsLogo,
-    imgHeight: 100,
-    imgWidth: 400,
+    text: "aboutWeatherAPI",
+    imageSrc: MetLogo,
+    imgHeight: 150,
+    imgWidth: 300,
     imgMaxHeight: undefined,
     imgMaxWidth: 300,
-    link: "https://www.meteomatics.com/en/weather-api/?msclkid=85e0b029dcb111d13bc7d5e280cfcaa6&utm_source=bing&utm_medium=cpc&utm_campaign=Weather%20API%20(englisch%20ausser%20USA)&utm_term=meteomatics&utm_content=Weather%20Api",
+    link: "https://api.met.no/weatherapi/locationforecast/2.0/documentation",
   },
   {
     text: "aboutStavangerKiteclub",
