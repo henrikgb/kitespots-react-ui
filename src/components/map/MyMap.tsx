@@ -5,13 +5,13 @@ import {BeachCoordinateProp, beachCoordinates} from "@/assets/beachCoordinates";
 import React from "react";
 import styleClasses from "@/pages/index.module.css";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
-import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
+import {useWeatherDataStore} from "@/store/weatherDataStore";
 import MarkerClusterGroup from 'react-leaflet-cluster'
 import 'leaflet/dist/leaflet.css'
 import pinIcon from "@/assets/icons/pin.png";
 
 const MyMap = () => {
-  const { setSelectedLocation } = useMeteomaticsWeatherDataStore();
+  const { setSelectedLocation } = useWeatherDataStore();
   const {
     setNameId,
     setImage,
@@ -27,8 +27,10 @@ const MyMap = () => {
     setWaveScore(beachCoordinate.waveScore);
     setWindDirectionDescriptions(beachCoordinate.windDirectionDescriptions);
 
-    // Make sure the Meteomatics weather data is showing data from the coordinate the user clicks on
-    setSelectedLocation(beachCoordinate.nameId);
+    // Make sure the weather data is showing data from the coordinate the user clicks on.
+    // The weather blob contract keys locations by lowercase id (see WeatherDataRepository),
+    // while beachCoordinate.nameId stays uppercase for display purposes.
+    setSelectedLocation(beachCoordinate.nameId.toLowerCase());
   }
 
   const markers = beachCoordinates.map((beachCoordinate) => (

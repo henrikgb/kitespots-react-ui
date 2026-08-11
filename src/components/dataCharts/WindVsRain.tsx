@@ -6,7 +6,9 @@ import useThemeStore from "@/store/themeStore";
 
 interface DataObjectProps {
   date: string;
-  value: number;
+  // Gust and precipitation are null wherever Yr genuinely has no value for that point
+  // (see WeatherPoint) - ECharts renders those as a gap in the line, which is intentional.
+  value: number | null;
 }
 
 interface DataObject {
@@ -54,14 +56,19 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
   // Extracting dates for x-axis
   const dates = data?.windSpeed.map((d) => d.date) ?? [];
 
+  // ECharts renders `null` entries as a gap in the line (its documented mechanism for
+  // missing data points), but its published series.data typings don't include null in the
+  // value union - cast to bridge that gap without changing runtime behavior.
+  type ChartValue = number[];
+
   // Extracting windGust values
-  const windGustValues = data?.windGust.map((d) => d.value) ?? [];
+  const windGustValues = (data?.windGust.map((d) => d.value) ?? []) as unknown[] as ChartValue;
 
   // Extracting windSpeed values
-  const windSpeedValues = data?.windSpeed.map((d) => d.value) ?? [];
+  const windSpeedValues = (data?.windSpeed.map((d) => d.value) ?? []) as unknown[] as ChartValue;
 
   // Extracting precipitation values
-  const precipitationValues = data?.precipitation.map((d) => d.value) ?? [];
+  const precipitationValues = (data?.precipitation.map((d) => d.value) ?? []) as unknown[] as ChartValue;
 
   const options: EChartsOption = {
     title: {
