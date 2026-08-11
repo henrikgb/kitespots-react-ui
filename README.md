@@ -1,12 +1,10 @@
 # kitespots-react-ui: Kite Surf Weather Forecast in Rogaland
 
-## 🚧 Maintenance Notice
+## Weather data provider
 
-The weather forecast data shown in this application is currently outdated and has not been refreshed since December 2025.
+Weather forecasts are fetched hourly from the [MET Norway / Yr Locationforecast API](https://api.met.no/weatherapi/locationforecast/2.0/documentation) by a separate Azure Function App, and stored in Azure Blob Storage at `weather/<locationId>.json` per kite spot. This frontend reads that data server-side (see `src/repository/WeatherDataRepository.ts`) and never talks to Yr directly.
 
-The backend Azure Function App originally relied on the free subscription tier from Meteomatics, which is no longer available. Because of this, automated weather data updates are currently disabled.
-
-The plan is to migrate the backend to another weather data API when time permits.
+The backend previously used Meteomatics, but that integration relied on a free tier Meteomatics discontinued, which is why weather data was stale for a period. It has since been replaced with the Yr/MET Norway integration described above.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -34,8 +32,8 @@ This project uses a mix of technologies to ensure efficient and smooth operation
 
 ## Backend:
 - Written in C#.
-- Utilizes Azure Function App to fetch data from Meteomatics API (https://www.meteomatics.com/) once every hour.
-- Saves the fetched data in Azure blob storage.
+- Utilizes an Azure Function App to fetch data from the MET Norway / Yr Locationforecast API (https://api.met.no/weatherapi/locationforecast/2.0/documentation) once every hour.
+- Saves the fetched data in Azure blob storage as a provider-independent weather contract.
 - Link to repository: https://github.com/henrikgb/FetchMeteomaticsWeatherData
 
 ## Setup
@@ -50,7 +48,7 @@ To get the project up and running:
    npm run dev
 
 ### Backend Setup:
-- Set up Azure Function App and configure it with your Meteomatics API username and password.
+- Set up the Azure Function App (no API credentials needed for Yr/MET Norway, just an Azure Storage connection string).
 - Ensure the Azure blob storage connection is properly set up.
 
 ### Building and Running the Application in Docker

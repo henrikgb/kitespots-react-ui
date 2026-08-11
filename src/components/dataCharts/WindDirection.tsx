@@ -8,7 +8,7 @@ import {TooltipFormatterCallback} from "echarts/types/dist/shared";
 
 interface DataObject {
     date: string;
-    value: number;
+    value: number | null;
 }
 
 interface WindDirectionProps extends EChartsOption {
@@ -162,7 +162,10 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
     series: {
       name: 'Wind Direction',
       type: 'line',
-      data: data?.map((item) => item.value) || [],
+      // ECharts renders `null` entries as a gap in the line (its documented mechanism for
+      // missing data points), but its published series.data typings don't include null in
+      // the value union - cast to bridge that gap without changing runtime behavior.
+      data: (data?.map((item) => item.value) || []) as unknown[] as number[],
       markLine: {
         silent: true,
         lineStyle: {

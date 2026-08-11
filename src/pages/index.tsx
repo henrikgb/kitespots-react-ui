@@ -2,7 +2,7 @@ import dynamic from "next/dynamic";
 import React, {useState} from "react";
 import {KiteSpotsMap} from "@/components/map/KiteSpotsMap";
 import useBeachDescriptionStore from "@/store/beachDescriptionStore";
-import {useMeteomaticsWeatherDataStore} from "@/store/meteomaticsWeatherDataStore";
+import {useWeatherDataStore} from "@/store/weatherDataStore";
 import {BeachInfo} from "@/components/layouts/BeachInfo";
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { GetStaticPropsContext } from 'next';
@@ -11,7 +11,7 @@ import {Card, CardBody, CardHeader, IconButton} from "@material-tailwind/react";
 import PageWrapper from "@/components/common/PageWrapper";
 import {useTranslation} from "next-i18next";
 import {useActiveLanguage} from "@/util/languageControl/useActiveLanguage";
-import {useMeteomaticsWeatherData} from "@/util/axiosRequests/useMeteomaticsWeatherData";
+import {useWeatherData} from "@/util/axiosRequests/useWeatherData";
 import styleClasses from "@/pages/index.module.css";
 
 const WindVsRain = dynamic(() => import("@/components/dataCharts/WindVsRain"), {
@@ -24,16 +24,16 @@ const WindDirection = dynamic(() => import("@/components/dataCharts/WindDirectio
 // Push to dev trigger test
 
 function Home() {
-  const { isMeteomaticsDataLoading,
-    windGusts10ms,
-    windDirection10ms,
-    windSpeed10ms,
-    precipitation } = useMeteomaticsWeatherDataStore();
+  const { isWeatherDataLoading,
+    windGusts,
+    windDirection,
+    windSpeed,
+    precipitation } = useWeatherDataStore();
   const {nameId, windDirectionDescriptions} = useBeachDescriptionStore();
   const [activeLandingPageView, setActiveLandingPageView] = useState<"info" | "weather">("info");
   const { t} = useTranslation();
-  
-  useMeteomaticsWeatherData();
+
+  useWeatherData();
 
   useActiveLanguage();
 
@@ -80,23 +80,23 @@ function Home() {
           )}
           {(activeLandingPageView === "weather") && (
             <div className="flex flex-col gap-4">
-              {isMeteomaticsDataLoading && (
+              {isWeatherDataLoading && (
                 <PuffDataLoader />
               )}
-              {(!isMeteomaticsDataLoading && windGusts10ms && windSpeed10ms && precipitation) && (
+              {(!isWeatherDataLoading && windGusts && windSpeed && precipitation) && (
                 <Card placeholder="" className="h-[220px] bg-webPageBodyBackground">
                   <div className="h-[220px]">
-                    <WindVsRain data={{ windGust: windGusts10ms[0].dates, windSpeed: windSpeed10ms[0].dates, precipitation: precipitation[0].dates }} />
+                    <WindVsRain data={{ windGust: windGusts, windSpeed: windSpeed, precipitation: precipitation }} />
                   </div>
                 </Card>
               )}
-              {isMeteomaticsDataLoading && (
+              {isWeatherDataLoading && (
                 <PuffDataLoader />
               )}
-              {(!isMeteomaticsDataLoading && windDirection10ms && windDirection10ms[0]) && (
+              {(!isWeatherDataLoading && windDirection) && (
                 <Card placeholder="" className="h-[220px] bg-webPageBodyBackground">
                   <div className="h-[220px]">
-                    <WindDirection data={windDirection10ms[0].dates} windDirectionDescriptions={windDirectionDescriptions ? windDirectionDescriptions : []} />
+                    <WindDirection data={windDirection} windDirectionDescriptions={windDirectionDescriptions ? windDirectionDescriptions : []} />
                   </div>
                 </Card>
               )}
