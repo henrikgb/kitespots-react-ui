@@ -14,7 +14,7 @@ const makeLocation = (id: string): KiteSpotLocation => ({
   name: id,
   latitude: 58.5,
   longitude: 5.6,
-  imageUrl: `/api/locationImage/location-images/${id}.png`,
+  imageUrl: `https://teststorage.blob.core.windows.net/location-images/${id}.png`,
   beginnerScore: 1,
   freestyleScore: 1,
   waveScore: 1,
