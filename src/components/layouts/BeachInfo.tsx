@@ -1,6 +1,6 @@
 import styleClasses from "@/pages/index.module.css";
 import {StarRating} from "@/util/StarRating";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelectedLocation} from "@/store/useSelectedLocation";
 import {useLocationsStore} from "@/store/locationsStore";
 import {useTranslation} from 'next-i18next';
@@ -16,6 +16,12 @@ export const BeachInfo = () => {
   const [imageFailed, setImageFailed] = useState(false);
 
   useActiveLanguage();
+
+  // Reset the "image failed to load" state when the selected location changes, so a broken
+  // image for one spot doesn't stick around as a false placeholder for the next.
+  useEffect(() => {
+    setImageFailed(false);
+  }, [location?.id]);
 
   if (isLocationsLoading) {
     return (
@@ -51,7 +57,7 @@ export const BeachInfo = () => {
           </li>
         </ul>
       </div>
-      {!imageFailed ? (
+      {(location.imageUrl && !imageFailed) ? (
         <Image
           className="flex items-start"
           src={location.imageUrl}

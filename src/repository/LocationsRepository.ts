@@ -9,7 +9,7 @@ interface RawLocation {
   name: unknown;
   latitude: unknown;
   longitude: unknown;
-  image: unknown;
+  imageBlobName?: unknown;
   beginnerScore?: unknown;
   freestyleScore?: unknown;
   waveScore?: unknown;
@@ -35,7 +35,9 @@ const isValidRawLocation = (value: unknown): value is RawLocation => {
     typeof l.name === "string" && l.name.length > 0 &&
     typeof l.latitude === "number" && l.latitude >= -90 && l.latitude <= 90 &&
     typeof l.longitude === "number" && l.longitude >= -180 && l.longitude <= 180 &&
-    typeof l.image === "string" &&
+    // A location may not have its image uploaded yet - see toKiteSpotLocation, which leaves
+    // imageUrl undefined in that case rather than dropping the whole location.
+    (l.imageBlobName === undefined || typeof l.imageBlobName === "string") &&
     (l.windDirectionDescriptions === undefined ||
       (Array.isArray(l.windDirectionDescriptions) && l.windDirectionDescriptions.every(isValidWindDirectionDescription)))
   );
@@ -46,7 +48,7 @@ const toKiteSpotLocation = (raw: RawLocation): KiteSpotLocation => ({
   name: raw.name as string,
   latitude: raw.latitude as number,
   longitude: raw.longitude as number,
-  imageUrl: getLocationImageUrl(raw.image as string),
+  imageUrl: typeof raw.imageBlobName === "string" ? getLocationImageUrl(raw.imageBlobName) : undefined,
   beginnerScore: typeof raw.beginnerScore === "number" ? raw.beginnerScore : 0,
   freestyleScore: typeof raw.freestyleScore === "number" ? raw.freestyleScore : 0,
   waveScore: typeof raw.waveScore === "number" ? raw.waveScore : 0,

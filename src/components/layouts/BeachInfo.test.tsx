@@ -27,7 +27,7 @@ const dynamicLocation: KiteSpotLocation = {
   name: "Brand New Spot",
   latitude: 58.5,
   longitude: 5.6,
-  imageUrl: "/api/locationImage/location-images/brand-new-spot.png",
+  imageUrl: "https://teststorage.blob.core.windows.net/location-images/brand-new-spot.png",
   beginnerScore: 4,
   freestyleScore: 2,
   waveScore: 3,
@@ -83,5 +83,29 @@ describe("BeachInfo", () => {
     fireEvent.error(image);
 
     expect(screen.getByText("imageNotAvailableYet")).toBeTruthy();
+  });
+
+  it("shows the placeholder immediately, without attempting to load an image, when the location has no imageBlobName yet", () => {
+    useLocationsStore.setState({ locations: [{ ...dynamicLocation, imageUrl: undefined }] });
+
+    render(<BeachInfo />);
+
+    expect(screen.getByText("imageNotAvailableYet")).toBeTruthy();
+    expect(screen.queryByAltText("Brand New Spot")).toBeNull();
+  });
+
+  it("clears a stale image-failed state when switching to a location with a working image", () => {
+    const brokenLocation: KiteSpotLocation = { ...dynamicLocation, id: "broken-spot", name: "Broken Spot" };
+    useLocationsStore.setState({ locations: [brokenLocation, dynamicLocation] });
+    useWeatherDataStore.setState({ selectedLocation: "broken-spot" });
+    const { rerender } = render(<BeachInfo />);
+    fireEvent.error(screen.getByAltText("Broken Spot"));
+    expect(screen.getByText("imageNotAvailableYet")).toBeTruthy();
+
+    useWeatherDataStore.setState({ selectedLocation: "brand-new-spot" });
+    rerender(<BeachInfo />);
+
+    expect(screen.getByAltText("Brand New Spot")).toBeTruthy();
+    expect(screen.queryByText("imageNotAvailableYet")).toBeNull();
   });
 });
