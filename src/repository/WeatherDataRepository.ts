@@ -69,3 +69,17 @@ export const fetchWeatherData = async (): Promise<WeatherData[]> => {
 
   return collectAvailableWeatherData(results, locations.map((location) => location.id));
 };
+
+/**
+ * Deletes a location's weather blob, if it has one. Used when an admin deletes a location -
+ * locations.json is always the source of truth (see LocationsService.deleteLocation), so a
+ * weather blob must never be allowed to outlive its location and reappear as an orphan.
+ * A no-op (not an error) if the blob doesn't exist, e.g. the location never got its first
+ * forecast before being deleted.
+ */
+export const deleteWeatherData = async (locationId: string): Promise<void> => {
+  const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_KITESPOTSAD77_CONNECTION_STRING);
+  const containerClient = blobServiceClient.getContainerClient(WEATHER_AZURE_BLOB_CONTAINER);
+  const blockBlobClient = containerClient.getBlockBlobClient(`weather/${locationId}.json`);
+  await blockBlobClient.deleteIfExists();
+};

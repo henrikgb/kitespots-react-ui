@@ -1,5 +1,5 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { parseLocationsBlob } from "@/repository/LocationsRepository";
+import { parseLocationsBlob, parseLocationsDocument } from "@/repository/LocationsRepository";
 
 const validWindDirectionDescriptions = [
   { intervalStart: 0, intervalStop: 180, category: "offshore", colorCode: "#FD0100" },
@@ -149,5 +149,46 @@ describe("parseLocationsBlob", () => {
     });
 
     expect(() => parseLocationsBlob(json)).toThrow(/duplicate/i);
+  });
+});
+
+describe("parseLocationsDocument", () => {
+  it("parses a well-formed document, preserving fields the public parser would normalize", () => {
+    const json = JSON.stringify({
+      schemaVersion: 1,
+      locations: [
+        { id: "sande", name: "Sande", latitude: 59.02, longitude: 5.59, windDirectionDescriptions: [] },
+      ],
+    });
+
+    const document = parseLocationsDocument(json);
+
+    expect(document.schemaVersion).toBe(1);
+    expect(document.locations).toHaveLength(1);
+    expect(document.locations[0].id).toBe("sande");
+  });
+
+  it("does not silently drop an entry that the tolerant public parser would filter out", () => {
+    // Missing latitude/longitude - parseLocationsBlob would drop this entirely, which would
+    // be a data-loss bug if it happened during an admin read-modify-write round trip.
+    const json = JSON.stringify({
+      schemaVersion: 1,
+      locations: [{ id: "incomplete", name: "Incomplete", windDirectionDescriptions: [] }],
+    });
+
+    const document = parseLocationsDocument(json);
+
+    expect(document.locations).toHaveLength(1);
+    expect(document.locations[0].id).toBe("incomplete");
+  });
+
+  it("throws for a document missing the locations array", () => {
+    expect(() => parseLocationsDocument(JSON.stringify({ schemaVersion: 1 }))).toThrow();
+  });
+
+  it("throws when any entry is missing a string id", () => {
+    const json = JSON.stringify({ schemaVersion: 1, locations: [{ name: "No Id" }] });
+
+    expect(() => parseLocationsDocument(json)).toThrow(/missing a string id/);
   });
 });
