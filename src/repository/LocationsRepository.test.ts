@@ -1,0 +1,106 @@
+import { describe, expect, it } from "vitest";
+import { parseLocationsBlob } from "@/repository/LocationsRepository";
+
+const validWindDirectionDescriptions = [
+  { intervalStart: 0, intervalStop: 180, category: "offshore", colorCode: "#FD0100" },
+  { intervalStart: 180, intervalStop: 360, category: "onshore", colorCode: "#008000" },
+];
+
+describe("parseLocationsBlob", () => {
+  it("parses a document with an arbitrary number of locations (not assuming nine)", () => {
+    const json = JSON.stringify({
+      schemaVersion: 1,
+      locations: [
+        {
+          id: "sande",
+          name: "Sande",
+          latitude: 59.02,
+          longitude: 5.59,
+          image: "location-images/sande.png",
+          beginnerScore: 3,
+          freestyleScore: 5,
+          waveScore: 5,
+          windDirectionDescriptions: validWindDirectionDescriptions,
+        },
+        {
+          id: "newspot",
+          name: "New Spot",
+          latitude: 58.5,
+          longitude: 5.6,
+          image: "location-images/newspot.png",
+          beginnerScore: 2,
+          freestyleScore: 2,
+          waveScore: 2,
+          windDirectionDescriptions: validWindDirectionDescriptions,
+        },
+      ],
+    });
+
+    const result = parseLocationsBlob(json);
+
+    expect(result).toHaveLength(2);
+    expect(result[0].id).toBe("sande");
+    expect(result[0].imageUrl).toBe("/api/locationImage/location-images/sande.png");
+    expect(result[1].id).toBe("newspot");
+  });
+
+  it("returns an empty array for a document with zero locations", () => {
+    const json = JSON.stringify({ schemaVersion: 1, locations: [] });
+
+    expect(parseLocationsBlob(json)).toEqual([]);
+  });
+
+  it("throws for a document that is not the expected LocationsDocument shape", () => {
+    const malformed = JSON.stringify({ notLocations: [] });
+
+    expect(() => parseLocationsBlob(malformed)).toThrow();
+  });
+
+  it("throws for invalid JSON", () => {
+    expect(() => parseLocationsBlob("{not json")).toThrow();
+  });
+
+  it("skips individual locations missing required fields instead of failing the whole document", () => {
+    const json = JSON.stringify({
+      schemaVersion: 1,
+      locations: [
+        { id: "valid", name: "Valid", latitude: 58.5, longitude: 5.6, image: "location-images/valid.png" },
+        { id: "missing-name", latitude: 58.5, longitude: 5.6, image: "location-images/x.png" },
+        { id: "bad-lat", name: "Bad Lat", latitude: 200, longitude: 5.6, image: "location-images/x.png" },
+      ],
+    });
+
+    const result = parseLocationsBlob(json);
+
+    expect(result).toHaveLength(1);
+    expect(result[0].id).toBe("valid");
+  });
+
+  it("defaults missing optional scores to 0 and missing windDirectionDescriptions to an empty array", () => {
+    const json = JSON.stringify({
+      schemaVersion: 1,
+      locations: [
+        { id: "minimal", name: "Minimal", latitude: 58.5, longitude: 5.6, image: "location-images/minimal.png" },
+      ],
+    });
+
+    const result = parseLocationsBlob(json);
+
+    expect(result[0].beginnerScore).toBe(0);
+    expect(result[0].freestyleScore).toBe(0);
+    expect(result[0].waveScore).toBe(0);
+    expect(result[0].windDirectionDescriptions).toEqual([]);
+  });
+
+  it("throws when the document contains duplicate location ids", () => {
+    const json = JSON.stringify({
+      schemaVersion: 1,
+      locations: [
+        { id: "sele", name: "Sele", latitude: 58.5, longitude: 5.6, image: "location-images/sele.png" },
+        { id: "SELE", name: "Sele Again", latitude: 58.5, longitude: 5.6, image: "location-images/sele2.png" },
+      ],
+    });
+
+    expect(() => parseLocationsBlob(json)).toThrow(/duplicate/i);
+  });
+});

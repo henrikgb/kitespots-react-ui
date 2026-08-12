@@ -27,11 +27,11 @@
   "wind": "Vind",
   "windSpeed": "Vindhastighet",
   "rain": "Regn",
-  "sideOnshore": "Side Onshore - Ideelt",
-  "onshore": "Onshore - Vanskelig for nybegynnere",
-  "overLand": "Over Land - Gusty",
-  "sideOffshore": "Side Offshore - Farlig",
-  "offshore": "Offshore - Veldig farlig",
+  "side-onshore-ideal": "Side Onshore - Ideelt",
+  "onshore-hard-for-beginners": "Onshore - Vanskelig for nybegynnere",
+  "over-land-gusty": "Over Land - Gusty",
+  "side-offshore-dangerous": "Side Offshore - Farlig",
+  "offshore-very-dangerous": "Offshore - Veldig farlig",
   "beginner": "Nybegynner",
   "freestyle": "Freestyle",
   "wave": "Wave",
@@ -40,5 +40,9 @@
   "login": "Logg inn",
   "logout": "Logg ut",
   "updateKiteSpotLocations": "Oppdater Kitespot lokasjoner",
-  "contentOnlyVisibleForAdmin": "Dette innholdet skal bare være synlig hvis du er logget inn som admin-bruker."
+  "contentOnlyVisibleForAdmin": "Dette innholdet skal bare være synlig hvis du er logget inn som admin-bruker.",
+  "noKiteSpotsAvailable": "Ingen kitespots tilgjengelig.",
+  "failedToLoadLocations": "Kunne ikke laste kitespot-lokasjoner. Prøv igjen senere.",
+  "weatherDataNotAvailableYet": "Værdata er ikke tilgjengelig ennå for denne lokasjonen.",
+  "imageNotAvailableYet": "Bilde ikke tilgjengelig ennå"
 }

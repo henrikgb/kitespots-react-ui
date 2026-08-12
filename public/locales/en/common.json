@@ -27,11 +27,11 @@
   "wind": "Wind",
   "windSpeed": "Wind Speed",
   "rain": "Rain",
-  "sideOnshore": "Side Onshore - Ideal",
-  "onshore": "Onshore - Hard for beginners",
-  "overLand": "Over Land - Gusty",
-  "sideOffshore": "Side Offshore - Dangerous",
-  "offshore": "Offshore - Very dangerous",
+  "side-onshore-ideal": "Side onshore - ideal",
+  "onshore-hard-for-beginners": "Onshore - hard for beginners",
+  "over-land-gusty": "Over land - gusty",
+  "side-offshore-dangerous": "Side offshore - dangerous",
+  "offshore-very-dangerous": "Offshore - very dangerous",
   "beginner": "Beginner",
   "freestyle": "Freestyle",
   "wave": "Wave",
@@ -40,5 +40,9 @@
   "login":"Login",
   "logout": "Logout",
   "updateKiteSpotLocations": "Update Kitespot locations",
-  "contentOnlyVisibleForAdmin": "This content should only be visible if you are logged in as an admin user."
+  "contentOnlyVisibleForAdmin": "This content should only be visible if you are logged in as an admin user.",
+  "noKiteSpotsAvailable": "No kite spots available.",
+  "failedToLoadLocations": "Failed to load kite spot locations. Please try again later.",
+  "weatherDataNotAvailableYet": "Weather data is not available yet for this location.",
+  "imageNotAvailableYet": "Image not available yet"
 }
