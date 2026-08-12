@@ -118,7 +118,7 @@ function Home() {
                   )}
                   {!isWeatherDataLoading && !hasWeatherDataForSelectedLocation && (
                     <Card placeholder="" className="h-[220px] bg-webPageBodyBackground flex items-center justify-center">
-                      <p>{t("weatherDataNotAvailableYet")}</p>
+                      <p className="px-4 py-2">{t("weatherDataNotAvailableYet")}</p>
                     </Card>
                   )}
                 </div>
