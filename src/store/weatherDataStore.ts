@@ -4,7 +4,7 @@ import { WeatherData, WeatherSeriesPoint } from "@/types/model/WeatherData";
 
 interface WeatherDataState {
     weatherData: WeatherData[];
-    selectedLocation: string;
+    selectedLocation: string | undefined;
     windSpeed: WeatherSeriesPoint[] | undefined;
     windDirection: WeatherSeriesPoint[] | undefined;
     windGusts: WeatherSeriesPoint[] | undefined;
@@ -16,7 +16,7 @@ interface WeatherDataState {
     setIsWeatherDataLoading: (value: boolean) => void;
 }
 
-const seriesForLocation = (weatherData: WeatherData[], locationId: string) => {
+const seriesForLocation = (weatherData: WeatherData[], locationId: string | undefined) => {
   const location = weatherData.find((data) => data.locationId === locationId);
   return {
     windSpeed: location?.points.map((point) => ({ date: point.time, value: point.windSpeedMs })),
@@ -26,24 +26,22 @@ const seriesForLocation = (weatherData: WeatherData[], locationId: string) => {
   };
 };
 
-// Default location is Sele ("sele"), matching the lowercase locationId used across the
-// weather blob contract - kept in sync with beachCoordinates' "SELE" via nameId.toLowerCase().
-const DEFAULT_LOCATION_ID = "sele";
-
 export const useWeatherDataStore = create<WeatherDataState>()(
   persist(
     (set) => ({
       weatherData: [],
-      selectedLocation: DEFAULT_LOCATION_ID,
+      // No default location is assumed here - useLocations sets it to the first loaded
+      // location once GET /api/locations resolves, so this store never hardcodes an id.
+      selectedLocation: undefined,
       windSpeed: undefined,
       windDirection: undefined,
       windGusts: undefined,
       precipitation: undefined,
       isWeatherDataLoading: true,
       setWeatherData: (value: WeatherData[]) => {
-        set(() => ({
+        set((state) => ({
           weatherData: value,
-          ...seriesForLocation(value, DEFAULT_LOCATION_ID),
+          ...seriesForLocation(value, state.selectedLocation),
         }));
       },
       setSelectedLocation: (locationId: string) => {

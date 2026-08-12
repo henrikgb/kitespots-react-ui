@@ -1,7 +1,8 @@
 import {EChartsOption} from "echarts";
 import React, {useEffect, useState} from "react";
 import {EChartsBase} from "@/components/dataCharts/EChartsBase";
-import {WindDirectionDescriptions} from "@/assets/beachCoordinates";
+import {WindDirectionDescription} from "@/types/model/Location";
+import {findWindConditionForDirection} from "@/domain/windCondition";
 import {useTranslation} from 'next-i18next';
 import useThemeStore from "@/store/themeStore";
 import {TooltipFormatterCallback} from "echarts/types/dist/shared";
@@ -13,7 +14,7 @@ interface DataObject {
 
 interface WindDirectionProps extends EChartsOption {
     data?: DataObject[];
-    windDirectionDescriptions: WindDirectionDescriptions[];
+    windDirectionDescriptions: WindDirectionDescription[];
 }
 
 const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirectionProps) => {
@@ -52,21 +53,15 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
   }, []);
 
   /**
-   * Retrieves the wind direction description based on the given value.
-   *
-   * This function searches through the `windDirectionDescriptions` array to find a matching
-   * description where the given value falls within the defined intervals (intervalStart and intervalStop).
-   * It then returns the localized category name for the found description.
+   * Retrieves the localized wind-condition label for the given wind direction value, via
+   * the single canonical category->label mapping in @/domain/windCondition.
    *
    * @param {number} value - The wind direction value to find the description for.
    * @returns {string} The localized description of the wind direction or an empty string if not found.
    */
   const getWindDirectionDescription = (value: number) => {
-    const description = windDirectionDescriptions.find(d =>
-      value >= d.intervalStart && value <= d.intervalStop
-    );
-    // Assuming description.category holds values like "sideOnshore", "offshore", etc.
-    return description ? t(description.category) : '';
+    const condition = findWindConditionForDirection(value, windDirectionDescriptions);
+    return condition ? t(condition.id) : '';
   };
 
   /**
