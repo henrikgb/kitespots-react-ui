@@ -26,6 +26,29 @@ export interface WindDirectionDescription {
 }
 
 /**
+ * The raw, on-disk shape of one location as written to locations.json - as opposed to
+ * KiteSpotLocation, which is the resolved shape returned to the browser. Used for admin
+ * read-modify-write operations (add/delete), where the exact persisted fields matter (e.g.
+ * `imageBlobName`, not the resolved `imageUrl`).
+ */
+export interface LocationRecord {
+  id: string;
+  name: string;
+  latitude: number;
+  longitude: number;
+  imageBlobName?: string;
+  beginnerScore?: number;
+  freestyleScore?: number;
+  waveScore?: number;
+  windDirectionDescriptions: WindDirectionDescription[];
+}
+
+export interface LocationsDocument {
+  schemaVersion: number;
+  locations: LocationRecord[];
+}
+
+/**
  * Builds the public, read-only Blob Storage URL for a location's image
  * (e.g. "location-images/sande.png" -> "https://<account>.blob.core.windows.net/location-images/sande.png").
  *

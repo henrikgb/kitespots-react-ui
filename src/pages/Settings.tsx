@@ -16,6 +16,8 @@ import PageWrapper from "@/components/common/PageWrapper";
 import { useActiveLanguage } from "@/util/languageControl/useActiveLanguage";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {PuffDataLoader} from "@/components/common/PuffDataLoader";
+import {LocationsAdminPanel} from "@/components/admin/LocationsAdminPanel";
+import {isAuthorizedAdminEmail} from "@/domain/adminAuthorization";
 
 export default function Settings() {
   const {
@@ -101,8 +103,12 @@ export default function Settings() {
                     {t("logout")}
                   </Button>
                   {session.user && (
-                    <div className="flex flex-col gap-4 bg-webPageBodyBackground p-5">
-                      {t("contentOnlyVisibleForAdmin")}
+                    <div className="flex flex-col gap-4">
+                      {isAuthorizedAdminEmail(session.user.email) ? (
+                        <LocationsAdminPanel />
+                      ) : (
+                        <Typography>{t("notAuthorizedForAdmin")}</Typography>
+                      )}
                     </div>
                   )}
                 </div>
