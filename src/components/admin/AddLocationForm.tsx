@@ -110,8 +110,8 @@ export const AddLocationForm = () => {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4 bg-webPageBodyBackground p-5">
       <Typography variant="h5">{t("addLocation")}</Typography>
 
-      <div className="flex flex-row gap-4 flex-wrap">
-        <div className="w-64">
+      <div className="grid grid-cols-1 gap-4">
+        <div>
           <Input
             label={t("locationName")}
             value={name}
@@ -119,7 +119,10 @@ export const AddLocationForm = () => {
             data-testid="location-name-input"
           />
         </div>
-        <div className="w-40">
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
           <Input
             type="number"
             label={t("latitude")}
@@ -128,7 +131,7 @@ export const AddLocationForm = () => {
             data-testid="location-latitude-input"
           />
         </div>
-        <div className="w-40">
+        <div>
           <Input
             type="number"
             label={t("longitude")}
@@ -139,8 +142,8 @@ export const AddLocationForm = () => {
         </div>
       </div>
 
-      <div className="flex flex-row gap-4 flex-wrap">
-        <div className="w-40">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
           <Input
             type="number"
             label={t("beginnerScoreLabel")}
@@ -150,7 +153,7 @@ export const AddLocationForm = () => {
             max={5}
           />
         </div>
-        <div className="w-40">
+        <div>
           <Input
             type="number"
             label={t("freestyleScoreLabel")}
@@ -160,7 +163,7 @@ export const AddLocationForm = () => {
             max={5}
           />
         </div>
-        <div className="w-40">
+        <div>
           <Input
             type="number"
             label={t("waveScoreLabel")}

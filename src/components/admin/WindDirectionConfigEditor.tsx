@@ -44,8 +44,8 @@ export const WindDirectionConfigEditor = ({ rows, onChange }: WindDirectionConfi
   return (
     <div className="flex flex-col gap-3">
       {rows.map((row, index) => (
-        <div key={index} className="flex flex-row gap-2 items-end flex-wrap">
-          <div className="w-24">
+        <div key={index} className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 items-end border border-gray-400 p-3 rounded">
+          <div>
             <Input
               type="number"
               label={t("startDegrees")}
@@ -55,7 +55,7 @@ export const WindDirectionConfigEditor = ({ rows, onChange }: WindDirectionConfi
               max={360}
             />
           </div>
-          <div className="w-24">
+          <div>
             <Input
               type="number"
               label={t("endDegrees")}
@@ -65,7 +65,7 @@ export const WindDirectionConfigEditor = ({ rows, onChange }: WindDirectionConfi
               max={360}
             />
           </div>
-          <div className="w-64">
+          <div>
             <Select
               label={t("windCategory")}
               value={row.category}
@@ -81,7 +81,6 @@ export const WindDirectionConfigEditor = ({ rows, onChange }: WindDirectionConfi
           <Button
             variant="text"
             color="red"
-            className="mb-2"
             onClick={() => removeRow(index)}
             aria-label={t("removeInterval")}
           >
