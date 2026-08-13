@@ -6,6 +6,7 @@ import {findWindConditionForDirection} from "@/domain/windCondition";
 import {useTranslation} from 'next-i18next';
 import useThemeStore from "@/store/themeStore";
 import {TooltipFormatterCallback} from "echarts/types/dist/shared";
+import {formatAxisDateLabel, formatTooltipDateTime, getDayBoundaryTimestamps} from "@/domain/chartDateAxis";
 
 interface DataObject {
     date: string;
@@ -21,7 +22,7 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
   const {theme} = useThemeStore();
   const [textColour, setTextColour] = useState<string>();
   const [lineColour, setLineColour] = useState<string>();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [gridRight, setGridRight] = useState('15%');
   const [gridLeft, setGridLeft] = useState('10%');
 
@@ -82,10 +83,16 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
 
     // Translate series name and other static texts if needed
     const translatedSeriesName = t(param.seriesName);
+    const header = formatTooltipDateTime(param.axisValue, i18n.language);
 
-    return `${param.axisValueLabel}<br/>${param.marker}${translatedSeriesName}: ${value} <br/> ${description}`;
+    return `${header}<br/>${param.marker}${translatedSeriesName}: ${value} <br/> ${description}`;
   };
 
+
+  // Dates for the day-separator markLine - the x-axis itself is a `time` axis, so the
+  // series carries its own [date, value] pairs rather than indexing into a category list.
+  const dates = data?.map((item) => item.date) ?? [];
+  const dayBoundaries = getDayBoundaryTimestamps(dates);
 
   const options: EChartsOption = {
     title: {
@@ -106,7 +113,19 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
       right: gridRight,
     },
     xAxis: {
-      data: data?.map((item) => item.date) || [],
+      // `time` (not `category`) so points are spaced by actual elapsed time - the
+      // forecast's hourly near-term data and 6-hourly tail otherwise would have looked like
+      // they cover the same width per point, squeezing later days visually.
+      type: 'time',
+      axisLabel: {
+        formatter: (value: number) => formatAxisDateLabel(value, i18n.language),
+        hideOverlap: true,
+        color: textColour,
+        rich: {
+          day: { fontWeight: 'bold', color: textColour, lineHeight: 16 },
+          time: { color: textColour, fontSize: 10, lineHeight: 14 },
+        },
+      },
     },
     yAxis: {
       name: "[" + t('degrees') + "]",
@@ -160,15 +179,25 @@ const WindDirection = ({ data, windDirectionDescriptions, ...opts }: WindDirecti
       // ECharts renders `null` entries as a gap in the line (its documented mechanism for
       // missing data points), but its published series.data typings don't include null in
       // the value union - cast to bridge that gap without changing runtime behavior.
-      data: (data?.map((item) => item.value) || []) as unknown[] as number[],
+      data: (data?.map((item) => [item.date, item.value]) || []) as unknown[] as [string, number][],
       markLine: {
         silent: true,
         lineStyle: {
           color: lineColour
         },
-        data: windDirectionDescriptions.map((description) => ({
-          yAxis: description.intervalStop
-        }))
+        data: [
+          ...windDirectionDescriptions.map((description) => ({
+            yAxis: description.intervalStop
+          })),
+          // Thin vertical line at the first point of each day, so days stay visually
+          // distinguishable even where the axis itself only has room for a time label.
+          ...dayBoundaries.map((value: number) => ({
+            xAxis: value,
+            symbol: 'none',
+            label: { show: false },
+            lineStyle: { color: 'rgba(128, 128, 128, 0.35)', width: 1 },
+          })),
+        ],
       }
     },
     ...opts,
