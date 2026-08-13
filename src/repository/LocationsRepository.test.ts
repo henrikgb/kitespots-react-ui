@@ -1,5 +1,16 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { parseLocationsBlob, parseLocationsDocument } from "@/repository/LocationsRepository";
+import {
+  buildUploadConditions,
+  isBlobNotFoundError,
+  isConditionNotMetError,
+  LocationsDocumentCorruptError,
+  parseLocationsBlob,
+  parseLocationsDocument,
+  parseLocationsDocumentOrThrowCorrupt,
+} from "@/repository/LocationsRepository";
+
+/** Mirrors the shape @azure/storage-blob's RestError has for a Storage service error response. */
+const storageError = (statusCode: number, code: string) => Object.assign(new Error(code), { statusCode, code });
 
 const validWindDirectionDescriptions = [
   { intervalStart: 0, intervalStop: 180, category: "offshore", colorCode: "#FD0100" },
@@ -190,5 +201,82 @@ describe("parseLocationsDocument", () => {
     const json = JSON.stringify({ schemaVersion: 1, locations: [{ name: "No Id" }] });
 
     expect(() => parseLocationsDocument(json)).toThrow(/missing a string id/);
+  });
+});
+
+// These next three describe blocks cover the Phase 7 optimistic-concurrency logic used by
+// downloadLocationsDocument/uploadLocationsDocument. Those two functions themselves are thin
+// wrappers around the Azure SDK (like fetchLocations above, which also isn't unit tested here)
+// and are exercised indirectly via LocationsService.test.ts, which mocks this module wholesale.
+// What's tested directly here is the actual decision logic - error classification, condition
+// building, and corrupt-vs-missing classification - kept as pure functions for exactly this
+// reason.
+
+describe("isBlobNotFoundError", () => {
+  it("is true for a 404 statusCode", () => {
+    expect(isBlobNotFoundError(storageError(404, "BlobNotFound"))).toBe(true);
+  });
+
+  it("is true for the BlobNotFound error code even without a statusCode", () => {
+    expect(isBlobNotFoundError({ code: "BlobNotFound" })).toBe(true);
+  });
+
+  it("is false for an unrelated error", () => {
+    expect(isBlobNotFoundError(storageError(500, "InternalError"))).toBe(false);
+    expect(isBlobNotFoundError(new Error("boom"))).toBe(false);
+    expect(isBlobNotFoundError(null)).toBe(false);
+  });
+});
+
+describe("isConditionNotMetError", () => {
+  it("is true for a 412 Precondition Failed (If-Match failed - ETag conflict)", () => {
+    expect(isConditionNotMetError(storageError(412, "ConditionNotMet"))).toBe(true);
+  });
+
+  it("is true for a 409 Conflict (If-None-Match: * failed - blob already exists)", () => {
+    expect(isConditionNotMetError(storageError(409, "BlobAlreadyExists"))).toBe(true);
+  });
+
+  it("is false for an unrelated failure, so it is not mistaken for a conflict (write failure)", () => {
+    expect(isConditionNotMetError(storageError(503, "ServerBusy"))).toBe(false);
+    expect(isConditionNotMetError(storageError(404, "BlobNotFound"))).toBe(false);
+  });
+});
+
+describe("buildUploadConditions", () => {
+  it("conditions on If-Match when an ETag is given (normal update)", () => {
+    expect(buildUploadConditions('"abc123"')).toEqual({ ifMatch: '"abc123"' });
+  });
+
+  it("conditions on If-None-Match: * when etag is null (bootstrapping a brand-new document)", () => {
+    expect(buildUploadConditions(null)).toEqual({ ifNoneMatch: "*" });
+  });
+});
+
+describe("parseLocationsDocumentOrThrowCorrupt", () => {
+  it("returns the parsed document for valid JSON", () => {
+    const json = JSON.stringify({ schemaVersion: 1, locations: [{ id: "sande", name: "Sande" }] });
+
+    expect(parseLocationsDocumentOrThrowCorrupt(json).locations).toHaveLength(1);
+  });
+
+  it("throws LocationsDocumentCorruptError instead of treating invalid JSON as empty (malformed locations document)", () => {
+    expect(() => parseLocationsDocumentOrThrowCorrupt("{not valid json")).toThrow(LocationsDocumentCorruptError);
+  });
+
+  it("throws LocationsDocumentCorruptError for well-formed JSON that doesn't match the document contract", () => {
+    const json = JSON.stringify({ notLocations: [] });
+
+    expect(() => parseLocationsDocumentOrThrowCorrupt(json)).toThrow(LocationsDocumentCorruptError);
+  });
+
+  it("throws LocationsDocumentCorruptError (not the raw parse error) so callers can distinguish corruption from other failures", () => {
+    try {
+      parseLocationsDocumentOrThrowCorrupt("{not valid json");
+      throw new Error("expected parseLocationsDocumentOrThrowCorrupt to throw");
+    } catch (error) {
+      expect(error).toBeInstanceOf(LocationsDocumentCorruptError);
+      expect((error as Error).message).toMatch(/refusing to treat it as empty/);
+    }
   });
 });
