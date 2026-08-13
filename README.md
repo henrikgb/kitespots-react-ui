@@ -51,6 +51,20 @@ To get the project up and running:
 - Set up the Azure Function App (no API credentials needed for Yr/MET Norway, just an Azure Storage connection string).
 - Ensure the Azure blob storage connection is properly set up.
 
+### Environment variables
+
+Copy `.env.example` to `.env` and fill in real values (`.env` is gitignored - never commit it).
+
+**Security boundary**: the Azure Storage connection string (`AZURE_KITESPOTSAD77_CONNECTION_STRING`) grants full read/write access to the storage account and must never reach the browser. It is only ever read by server-side code (`src/repository/*.ts`, `src/service/*.ts`), which is only ever imported from `src/pages/api/*.ts`:
+
+```
+Browser -> same-origin Next.js API route -> server-only env var -> @azure/storage-blob -> Azure Blob Storage
+```
+
+Only variables explicitly prefixed `NEXT_PUBLIC_` are safe to expose to the browser - Next.js inlines them into the client bundle at build time. Every other variable in `.env.example` is server-only and must **never** be given a `NEXT_PUBLIC_` name, passed as a Docker build `ARG`, or referenced from a React component. See `.env.example` for the full list and what each variable is for.
+
+If deploying via Docker, runtime secrets (the storage connection string, NextAuth/Azure AD credentials) must be injected as **container environment variables at run time** (e.g. `docker run -e AZURE_KITESPOTSAD77_CONNECTION_STRING=...`), not as build arguments - see the comments in `Dockerfile`. If deploying to Azure Static Web Apps / App Service, set them under the resource's **Configuration > Application settings** in the Azure Portal, again as plain (non-`NEXT_PUBLIC_`) settings.
+
 ### Building and Running the Application in Docker
 This project can be run in both production and development environments using Docker. Below are the instructions for building and running the application in each environment.
 
@@ -62,9 +76,17 @@ To build and run the application in a production environment, follow these steps
    ```bash
    docker build --build-arg NODE_ENV=production -t kitespots-prod .
 
-2. **Run the Docker container**:
+2. **Run the Docker container**, passing the server-only secrets from your `.env` as runtime environment variables (never as build args - see "Environment variables" above):
    ```bash
-   docker run -p 3001:3000 kitespots-prod
+   docker run -p 3001:3000 \
+     -e AZURE_KITESPOTSAD77_CONNECTION_STRING="..." \
+     -e AZURE_BLOB_PUBLIC_BASE_URL="..." \
+     -e NEXTAUTH_URL="..." \
+     -e AZURE_AD_CLIENT_ID="..." \
+     -e AZURE_AD_CLIENT_SECRET="..." \
+     -e AZURE_AD_TENANT_ID="..." \
+     -e KITESPOTS_SECRET="..." \
+     kitespots-prod
 
 To build and run the application in a development environment, follow these steps:
 1. **Build the Docker image**:

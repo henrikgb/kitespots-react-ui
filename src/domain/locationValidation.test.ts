@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   generateLocationId,
   isDuplicateLocationName,
+  isValidLocationId,
   validateImageUpload,
   validateNewLocationInput,
   validateWindDirectionDescriptions,
@@ -162,5 +163,31 @@ describe("isDuplicateLocationName", () => {
   it("is case-insensitive and trims whitespace", () => {
     expect(isDuplicateLocationName("  Sande ", ["sande"])).toBe(true);
     expect(isDuplicateLocationName("Sola", ["sande"])).toBe(false);
+  });
+});
+
+describe("isValidLocationId", () => {
+  it("accepts ids that look like what generateLocationId produces", () => {
+    expect(isValidLocationId("sande")).toBe(true);
+    expect(isValidLocationId("sanjuanplaya")).toBe(true);
+    expect(isValidLocationId("sele-2")).toBe(true);
+    expect(isValidLocationId("location")).toBe(true);
+  });
+
+  it("rejects ids that could escape the location-images/ blob prefix (path traversal / injection)", () => {
+    expect(isValidLocationId("../../etc/passwd")).toBe(false);
+    expect(isValidLocationId("..")).toBe(false);
+    expect(isValidLocationId("foo/bar")).toBe(false);
+    expect(isValidLocationId("foo\\bar")).toBe(false);
+  });
+
+  it("rejects empty, whitespace, and otherwise malformed ids", () => {
+    expect(isValidLocationId("")).toBe(false);
+    expect(isValidLocationId(" sande")).toBe(false);
+    expect(isValidLocationId("sande ")).toBe(false);
+    expect(isValidLocationId("Sande")).toBe(false);
+    expect(isValidLocationId("sande--2")).toBe(false);
+    expect(isValidLocationId("-sande")).toBe(false);
+    expect(isValidLocationId("sande-")).toBe(false);
   });
 });

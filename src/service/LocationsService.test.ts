@@ -203,6 +203,12 @@ describe("LocationsService", () => {
       expect(uploadLocationsDocument).not.toHaveBeenCalled();
     });
 
+    it("rejects a malformed id (e.g. path traversal) with a 404 before touching Blob Storage", async () => {
+      await expect(deleteLocation("../../etc/passwd")).rejects.toMatchObject({ statusCode: 404 });
+      expect(downloadLocationsDocument).not.toHaveBeenCalled();
+      expect(uploadLocationsDocument).not.toHaveBeenCalled();
+    });
+
     it("surfaces a 409 conflict when another edit landed first (ETag conflict)", async () => {
       downloadLocationsDocument.mockResolvedValue(baseSnapshot());
       uploadLocationsDocument.mockRejectedValue(new LocationsWriteConflictError());
@@ -240,6 +246,14 @@ describe("LocationsService", () => {
       await expect(attachLocationImage("does-not-exist", Buffer.from("x"), "image/png")).rejects.toMatchObject({
         statusCode: 404,
       });
+    });
+
+    it("rejects a malformed id (e.g. path traversal) with a 404 before touching Blob Storage", async () => {
+      await expect(attachLocationImage("../../etc/passwd", Buffer.from("x"), "image/png")).rejects.toMatchObject({
+        statusCode: 404,
+      });
+      expect(uploadLocationImage).not.toHaveBeenCalled();
+      expect(downloadLocationsDocument).not.toHaveBeenCalled();
     });
 
     it("cleans up the just-uploaded image when the locations.json write fails (image cleanup after failed creation)", async () => {

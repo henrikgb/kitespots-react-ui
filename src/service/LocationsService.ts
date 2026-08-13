@@ -14,6 +14,7 @@ import {
   generateLocationId,
   getImageExtensionForMimeType,
   isDuplicateLocationName,
+  isValidLocationId,
   validateImageUpload,
   validateNewLocationInput,
 } from "@/domain/locationValidation";
@@ -131,6 +132,14 @@ export const createLocation = async (input: NewLocationInput): Promise<KiteSpotL
  * disappears from the frontend immediately even if a blob delete below fails.
  */
 export const deleteLocation = async (id: string): Promise<void> => {
+  // Defense in depth: id ends up in Blob Storage paths (target.imageBlobName is trusted, but
+  // `weather/${id}.json` below is built directly from it) - reject anything that isn't a
+  // server-generated-looking slug before it can reach a blob operation, even though a
+  // non-matching id would 404 below anyway. See isValidLocationId.
+  if (!isValidLocationId(id)) {
+    throw new LocationServiceError(`No location with id "${id}" exists.`, 404);
+  }
+
   const { document, etag } = await loadLocationsDocumentForUpdate();
   const target = document.locations.find((location) => location.id === id);
 
@@ -161,6 +170,13 @@ export const attachLocationImage = async (
   const imageErrors = validateImageUpload(contentType, data.length);
   if (imageErrors.length > 0) {
     throw new LocationServiceError("Invalid image upload.", 400, imageErrors);
+  }
+
+  // Defense in depth: id is used directly below to build the uploaded blob's name - reject
+  // anything that isn't a server-generated-looking slug before it can reach a blob operation.
+  // See isValidLocationId / deleteLocation.
+  if (!isValidLocationId(id)) {
+    throw new LocationServiceError(`No location with id "${id}" exists.`, 404);
   }
 
   const { document, etag } = await loadLocationsDocumentForUpdate();
