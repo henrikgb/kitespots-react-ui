@@ -2,9 +2,46 @@
 
 ## Weather data provider
 
-Weather forecasts are fetched hourly from the [MET Norway / Yr Locationforecast API](https://api.met.no/weatherapi/locationforecast/2.0/documentation) by a separate Azure Function App, and stored in Azure Blob Storage at `weather/<locationId>.json` per kite spot. This frontend reads that data server-side (see `src/repository/WeatherDataRepository.ts`) and never talks to Yr directly.
+Weather forecasts are fetched hourly from the [MET Norway / Yr Locationforecast API](https://api.met.no/weatherapi/locationforecast/2.0/documentation) by a separate Azure Function App ([FetchMeteomaticsWeatherData](https://github.com/henrikgb/FetchMeteomaticsWeatherData) - the repo name predates the Yr migration below and hasn't been renamed), and stored in Azure Blob Storage at `weather/<locationId>.json` per kite spot, in a provider-independent `WeatherData` shape (see `src/types/model/WeatherData.ts`). This frontend reads that data server-side (see `src/repository/WeatherDataRepository.ts`) and never talks to Yr directly - Yr-specific request/response shapes never leave the Function App.
 
-The backend previously used Meteomatics, but that integration relied on a free tier Meteomatics discontinued, which is why weather data was stale for a period. It has since been replaced with the Yr/MET Norway integration described above.
+The backend previously used Meteomatics, but that integration relied on a free tier Meteomatics discontinued, which is why weather data was stale for a period. It has since been fully replaced with the Yr/MET Norway integration described above - no Meteomatics code, credentials, or environment variables remain in either repository; the Yr API is free and needs no API key, only an identifying `User-Agent` header (see the Function App's `YrLocationForecastClient`).
+
+## Kite spot locations and images
+
+`locations.json` in the `weatherdata` Blob Storage container is the **single authoritative source** of kite spot locations for both this frontend and the Function App - there is no hardcoded location list anywhere in production code on either side. Its shape:
+
+```json
+{
+  "schemaVersion": 1,
+  "locations": [
+    {
+      "id": "sande",
+      "name": "Sande",
+      "latitude": 59.02,
+      "longitude": 5.59,
+      "imageBlobName": "location-images/sande.png",
+      "beginnerScore": 3,
+      "freestyleScore": 5,
+      "waveScore": 5,
+      "windDirectionDescriptions": [
+        { "intervalStart": 0, "intervalStop": 180, "category": "offshore", "colorCode": "#FD0100" }
+      ]
+    }
+  ]
+}
+```
+
+- **Reading**: `src/repository/LocationsRepository.ts` downloads and validates it server-side on every request (`fetchLocations`) - nothing is cached, so an admin edit is visible immediately. The Function App independently re-downloads and validates the same blob on every scheduled run (see its README) - neither side caches or hardcodes the location list.
+- **Images**: each location's `imageBlobName` points into the public `location-images` Blob Storage container (`access: "blob"` - anonymous *read* of individual blobs only, no container listing; write always requires the server-only connection string). `src/repository/LocationImagesRepository.ts` resolves `imageBlobName` into a public, directly-fetchable URL server-side (`getLocationImageUrl`) - the browser fetches images straight from Blob Storage, not through a Next.js proxy.
+- **Adding/deleting a location or its image**: sign in at `/Settings` with an account in the `NEXT_PUBLIC_KITESPOTS_ADMIN_EMAILS` allowlist (see `.env.example`) to reach the kite spot admin panel. Add/delete/upload-image all go through authenticated API routes (`POST`/`DELETE /api/locations`, `POST /api/locations/[id]/image`) which read-modify-write `locations.json` under Blob Storage ETag optimistic concurrency (see `src/service/LocationsService.ts`) - two concurrent edits fail with a 409 instead of silently overwriting each other. Deleting a location also removes its image and `weather/<id>.json` blob so nothing can reappear as an orphaned "phantom" location. A change takes effect on the Function App's very next scheduled run with no redeploy.
+- **Image migration script**: `scripts/migrate-location-images.mjs` is a one-off/re-runnable migration that uploads the original static beach photos under `src/assets/images/` into the `location-images` container - kept (and its source images kept alongside it) as the way to re-seed that container if it's ever recreated, not as part of the running application.
+
+### Required initial Blob Storage setup
+
+A brand-new storage account needs, in the `weatherdata` container:
+- `locations.json` seeded once (see the Function App README's "Seeding locations.json").
+
+The `location-images` container is created automatically (with `access: "blob"`) the first time an image is uploaded via the admin UI or `scripts/migrate-location-images.mjs`; it does not need to be created manually. The `weatherdata` container itself should be left at its default **private** access level - it is only ever read through this app's API routes and the Function App, never directly by the browser.
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -12,6 +49,8 @@ Welcome to kitespots-react-ui, the Kite Surf Weather Forecast application for Ro
 
 
 # Table of Contents
+- [Weather data provider](#weather-data-provider)
+- [Kite spot locations and images](#kite-spot-locations-and-images)
 - [Technologies](#technologies)
 - [Setup](#setup)
 - [Features](#features)
