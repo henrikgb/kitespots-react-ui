@@ -1,11 +1,14 @@
 import {
   downloadLocationsDocument,
   fetchLocations,
+  LocationsDocumentCorruptError,
+  LocationsDocumentSnapshot,
+  LocationsWriteConflictError,
   uploadLocationsDocument,
 } from "@/repository/LocationsRepository";
 import { deleteLocationImage, uploadLocationImage } from "@/repository/LocationImagesRepository";
 import { deleteWeatherData } from "@/repository/WeatherDataRepository";
-import { KiteSpotLocation, LocationRecord, getLocationImageUrl } from "@/types/model/Location";
+import { KiteSpotLocation, LocationRecord, LocationsDocument, getLocationImageUrl } from "@/types/model/Location";
 import {
   NewLocationInput,
   generateLocationId,
@@ -26,6 +29,46 @@ export class LocationServiceError extends Error {
     this.errors = errors;
   }
 }
+
+/**
+ * Loads locations.json for a read-modify-write, translating the repository's low-level
+ * corruption signal into an HTTP-facing error. A corrupt document is a data-integrity problem
+ * that needs manual attention, not something an admin action can be blamed for or retried past.
+ */
+const loadLocationsDocumentForUpdate = async (): Promise<LocationsDocumentSnapshot> => {
+  try {
+    return await downloadLocationsDocument();
+  } catch (error) {
+    if (error instanceof LocationsDocumentCorruptError) {
+      throw new LocationServiceError(
+        "locations.json is corrupted and could not be safely read. Manual intervention is required before further edits.",
+        500
+      );
+    }
+    throw error;
+  }
+};
+
+/**
+ * Writes locations.json back, translating an ETag/If-None-Match mismatch (someone else's write
+ * landed first - see LocationsRepository) into a 409 the API layer can surface to the admin
+ * instead of one edit silently clobbering the other. Deliberately does not retry: this is a
+ * low-concurrency admin feature, so asking the caller to re-read and resubmit is simpler and
+ * safer than an automatic merge/retry loop.
+ */
+const saveLocationsDocument = async (document: LocationsDocument, etag: string | null): Promise<void> => {
+  try {
+    await uploadLocationsDocument(document, etag);
+  } catch (error) {
+    if (error instanceof LocationsWriteConflictError) {
+      throw new LocationServiceError(
+        "The locations list was changed by someone else while this edit was in progress. Reload and try again.",
+        409
+      );
+    }
+    throw error;
+  }
+};
 
 const toKiteSpotLocation = (record: LocationRecord): KiteSpotLocation => ({
   id: record.id,
@@ -56,7 +99,7 @@ export const createLocation = async (input: NewLocationInput): Promise<KiteSpotL
     throw new LocationServiceError("Invalid location input.", 400, validation.errors);
   }
 
-  const document = await downloadLocationsDocument();
+  const { document, etag } = await loadLocationsDocumentForUpdate();
 
   if (isDuplicateLocationName(validation.data.name, document.locations.map((location) => location.name))) {
     throw new LocationServiceError(`A location named "${validation.data.name}" already exists.`, 409);
@@ -76,7 +119,7 @@ export const createLocation = async (input: NewLocationInput): Promise<KiteSpotL
   };
 
   document.locations.push(record);
-  await uploadLocationsDocument(document);
+  await saveLocationsDocument(document, etag);
 
   return toKiteSpotLocation(record);
 };
@@ -88,7 +131,7 @@ export const createLocation = async (input: NewLocationInput): Promise<KiteSpotL
  * disappears from the frontend immediately even if a blob delete below fails.
  */
 export const deleteLocation = async (id: string): Promise<void> => {
-  const document = await downloadLocationsDocument();
+  const { document, etag } = await loadLocationsDocumentForUpdate();
   const target = document.locations.find((location) => location.id === id);
 
   if (!target) {
@@ -96,7 +139,7 @@ export const deleteLocation = async (id: string): Promise<void> => {
   }
 
   document.locations = document.locations.filter((location) => location.id !== id);
-  await uploadLocationsDocument(document);
+  await saveLocationsDocument(document, etag);
 
   await Promise.all([
     target.imageBlobName ? deleteLocationImage(target.imageBlobName) : Promise.resolve(),
@@ -120,7 +163,7 @@ export const attachLocationImage = async (
     throw new LocationServiceError("Invalid image upload.", 400, imageErrors);
   }
 
-  const document = await downloadLocationsDocument();
+  const { document, etag } = await loadLocationsDocumentForUpdate();
   const target = document.locations.find((location) => location.id === id);
 
   if (!target) {
@@ -133,7 +176,21 @@ export const attachLocationImage = async (
   await uploadLocationImage(blobName, data, contentType as string);
 
   target.imageBlobName = blobName;
-  await uploadLocationsDocument(document);
+
+  try {
+    await saveLocationsDocument(document, etag);
+  } catch (error) {
+    // The image blob now exists in Blob Storage but locations.json was never updated to point
+    // at it. Its name is fully determined by the location id + extension (see blobName above),
+    // so a retry of this same call would just overwrite it harmlessly - but if the admin doesn't
+    // retry, best-effort delete it now rather than leaving a permanent orphan behind. This is
+    // not a distributed transaction: if the cleanup delete itself fails, we log and move on
+    // rather than compounding the failure.
+    await deleteLocationImage(blobName).catch((cleanupError) => {
+      console.error(`Failed to clean up orphaned image blob "${blobName}" after a failed locations.json update:`, cleanupError);
+    });
+    throw error;
+  }
 
   return toKiteSpotLocation(target);
 };

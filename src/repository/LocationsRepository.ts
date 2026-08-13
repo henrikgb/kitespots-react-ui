@@ -118,17 +118,152 @@ export const parseLocationsDocument = (rawJson: string): LocationsDocument => {
   return parsed as LocationsDocument;
 };
 
-export const downloadLocationsDocument = async (): Promise<LocationsDocument> => {
+/**
+ * Thrown when a conditional write to locations.json is rejected because the blob changed (or
+ * was created) since it was last read - either the ETag no longer matches (someone else's edit
+ * landed first) or the blob now exists when the write expected to create it from scratch (two
+ * concurrent "first ever write" bootstraps). The caller lost the race; it must not overwrite
+ * the newer content. See uploadLocationsDocument.
+ */
+export class LocationsWriteConflictError extends Error {
+  constructor(message = "locations.json was modified by someone else before this change could be saved.") {
+    super(message);
+    this.name = "LocationsWriteConflictError";
+  }
+}
+
+/**
+ * Thrown when locations.json exists but its content is not valid JSON or does not match the
+ * LocationsDocument contract. Deliberately distinct from "blob does not exist" (see
+ * downloadLocationsDocument) - a corrupt document must never be treated as "nothing here yet"
+ * and silently replaced with an empty/default document, which would destroy whatever real
+ * configuration is actually in there.
+ */
+export class LocationsDocumentCorruptError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "LocationsDocumentCorruptError";
+  }
+}
+
+export interface LocationsDocumentSnapshot {
+  document: LocationsDocument;
+  /**
+   * The blob's ETag at the moment it was read, to be passed back to uploadLocationsDocument for
+   * an optimistic-concurrency conditional write (If-Match). `null` means the blob did not exist
+   * at all (fresh environment, nothing has ever been written) - the next write must instead use
+   * an "only if it still doesn't exist" (If-None-Match: *) condition, see uploadLocationsDocument.
+   */
+  etag: string | null;
+}
+
+/**
+ * True for the RestError @azure/storage-blob throws when the blob doesn't exist (HTTP 404,
+ * x-ms-error-code "BlobNotFound"). Kept as a pure predicate over the error's shape (not the
+ * Azure SDK itself) so it can be unit tested without mocking Blob Storage - mirrors this file's
+ * other pure helpers like parseLocationsDocument.
+ */
+export const isBlobNotFoundError = (error: unknown): boolean => {
+  const err = error as { statusCode?: number; code?: string } | null;
+  return err?.statusCode === 404 || err?.code === "BlobNotFound";
+};
+
+/**
+ * True for the RestError @azure/storage-blob throws when a conditional write's If-Match or
+ * If-None-Match precondition fails - i.e. someone else's write landed first (HTTP 412
+ * "ConditionNotMet") or, for a fresh-blob bootstrap, the blob already exists (HTTP 409
+ * "BlobAlreadyExists"). Pure predicate, see isBlobNotFoundError.
+ */
+export const isConditionNotMetError = (error: unknown): boolean => {
+  const err = error as { statusCode?: number; code?: string } | null;
+  return (
+    err?.statusCode === 412 ||
+    err?.statusCode === 409 ||
+    err?.code === "ConditionNotMet" ||
+    err?.code === "BlobAlreadyExists"
+  );
+};
+
+/**
+ * Builds the Blob Storage request condition for a locations.json write. `null` means the caller
+ * believes the blob does not exist yet, so the write must only succeed if that is still true
+ * (If-None-Match: *); otherwise the write is conditioned on the ETag read alongside the content
+ * (If-Match). Pure function, see isBlobNotFoundError.
+ */
+export const buildUploadConditions = (
+  expectedEtag: string | null
+): { ifMatch: string } | { ifNoneMatch: string } => (expectedEtag ? { ifMatch: expectedEtag } : { ifNoneMatch: "*" });
+
+/**
+ * Parses locations.json content for an admin read-modify-write, translating a parse/validation
+ * failure into LocationsDocumentCorruptError. Pure function (no Azure SDK calls) wrapping
+ * parseLocationsDocument, so the "corrupt blob" classification can be unit tested in isolation.
+ */
+export const parseLocationsDocumentOrThrowCorrupt = (rawJson: string): LocationsDocument => {
+  try {
+    return parseLocationsDocument(rawJson);
+  } catch (parseError) {
+    throw new LocationsDocumentCorruptError(
+      `locations.json exists but is not valid - refusing to treat it as empty and overwrite it: ${(parseError as Error).message}`
+    );
+  }
+};
+
+/** Node-side helper: @azure/storage-blob's BlobClient.download() hands back a raw stream. */
+const streamToBuffer = async (readable: NodeJS.ReadableStream): Promise<Buffer> => {
+  const chunks: Buffer[] = [];
+  for await (const chunk of readable) {
+    chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk));
+  }
+  return Buffer.concat(chunks);
+};
+
+/**
+ * Downloads locations.json for an admin read-modify-write operation (add/delete/attach-image),
+ * capturing its ETag in the same request as its content so the two can never drift apart. Pair
+ * with uploadLocationsDocument, passing back the returned etag, to detect a concurrent edit
+ * instead of silently overwriting it (Phase 7 optimistic concurrency).
+ *
+ * A missing blob (404) is treated as "initial setup, nothing written yet" - not corruption - and
+ * returns an empty document with etag: null so the first write can safely create it. A blob that
+ * exists but fails to parse/validate is corruption and throws LocationsDocumentCorruptError
+ * rather than being papered over.
+ */
+export const downloadLocationsDocument = async (): Promise<LocationsDocumentSnapshot> => {
   const blobServiceClient = BlobServiceClient.fromConnectionString(process.env.AZURE_KITESPOTSAD77_CONNECTION_STRING);
   const containerClient = blobServiceClient.getContainerClient(LOCATIONS_AZURE_BLOB_CONTAINER);
   const blobClient = containerClient.getBlobClient(LOCATIONS_BLOB_NAME);
 
-  const blobContent = await blobClient.downloadToBuffer();
-  return parseLocationsDocument(blobContent.toString('utf-8'));
+  let downloadResponse;
+  try {
+    downloadResponse = await blobClient.download();
+  } catch (error) {
+    if (isBlobNotFoundError(error)) {
+      return { document: { schemaVersion: CURRENT_SCHEMA_VERSION, locations: [] }, etag: null };
+    }
+    throw error;
+  }
+
+  const content = await streamToBuffer(downloadResponse.readableStreamBody);
+  const document = parseLocationsDocumentOrThrowCorrupt(content.toString('utf-8'));
+
+  return { document, etag: downloadResponse.etag ?? null };
 };
 
-/** Overwrites locations.json. schemaVersion defaults to the current version if not carried over. */
-export const uploadLocationsDocument = async (document: LocationsDocument): Promise<void> => {
+/**
+ * Overwrites locations.json, conditioned on the ETag captured by downloadLocationsDocument so a
+ * concurrent write is detected instead of silently lost (optimistic concurrency - see Phase 7).
+ * `expectedEtag: null` means the caller believes the blob does not exist yet and the write must
+ * only succeed if that is still true (If-None-Match: *); otherwise the write is conditioned on
+ * If-Match: expectedEtag. Either condition failing throws LocationsWriteConflictError - the
+ * caller must re-read and retry (or surface a conflict to the user); this function never retries
+ * on its own, keeping this a single conditional PUT with no distributed locking involved.
+ * schemaVersion defaults to the current version if not carried over. Returns the new ETag.
+ */
+export const uploadLocationsDocument = async (
+  document: LocationsDocument,
+  expectedEtag: string | null
+): Promise<string> => {
   const body = JSON.stringify(
     { schemaVersion: document.schemaVersion || CURRENT_SCHEMA_VERSION, locations: document.locations },
     null,
@@ -139,8 +274,18 @@ export const uploadLocationsDocument = async (document: LocationsDocument): Prom
   const containerClient = blobServiceClient.getContainerClient(LOCATIONS_AZURE_BLOB_CONTAINER);
   const blockBlobClient = containerClient.getBlockBlobClient(LOCATIONS_BLOB_NAME);
 
-  await blockBlobClient.upload(body, Buffer.byteLength(body), {
-    overwrite: true,
-    blobHTTPHeaders: { blobContentType: "application/json" },
-  });
+  const conditions = buildUploadConditions(expectedEtag);
+
+  try {
+    const result = await blockBlobClient.upload(body, Buffer.byteLength(body), {
+      blobHTTPHeaders: { blobContentType: "application/json" },
+      conditions,
+    });
+    return result.etag as string;
+  } catch (error) {
+    if (isConditionNotMetError(error)) {
+      throw new LocationsWriteConflictError();
+    }
+    throw error;
+  }
 };
