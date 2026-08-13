@@ -9,3 +9,11 @@
 **/npm-debug.log
 LICENSE
 README.md
+
+# SECURITY: never let real secrets (Azure Storage connection string, NextAuth/Azure AD
+# credentials - see .env.example) get copied into the build context and baked into an image
+# layer. Runtime config belongs in the container's environment (docker run -e / the hosting
+# platform's application settings), not in the image itself.
+.env
+.env.*
+!.env.example

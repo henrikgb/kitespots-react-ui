@@ -18,7 +18,6 @@ COPY . .
 
 # BUILD STAGE #########################################################################################################
 # Uses the base image again as the starting point, allowing you to set a build argument (NODE_ENV), defaulting to production.
-  #Sets environment variables that may be needed during the build process, such as Azure storage connection strings.
   #Runs the npm run build command only if the NODE_ENV is set to production, which means the actual production build is created.
 
 FROM base AS build
@@ -27,12 +26,22 @@ ARG NODE_ENV=production
 # Set environment variable based on the build argument (default: production)
 ENV NODE_ENV=$NODE_ENV
 
-# Load environment variables (for both production and development)
-ARG AZURE_STORAGE_CONNECTION_STRING
-ARG AZURE_KITESPOTSAD77_CONNECTION_STRING
-
-ENV NEXT_PUBLIC_AZURE_STORAGE_CONNECTION_STRING=$AZURE_STORAGE_CONNECTION_STRING
-ENV NEXT_PUBLIC_AZURE_KITESPOTSAD77_CONNECTION_STRING=$AZURE_KITESPOTSAD77_CONNECTION_STRING
+# SECURITY: the Azure Storage connection string (AZURE_KITESPOTSAD77_CONNECTION_STRING) must
+# NEVER be passed as a build ARG or baked into a NEXT_PUBLIC_* variable here. NEXT_PUBLIC_*
+# values get inlined into the client-side JavaScript bundle at build time and shipped to every
+# browser - a storage account connection string is full read/write access to the account, so
+# that would hand out the keys to the whole storage account to any site visitor. It is also
+# not needed at build time at all: it is only read server-side, at request time, by the API
+# routes under src/pages/api/ (see src/repository/*.ts) - so it belongs in the *runtime*
+# environment of the running container (e.g. `docker run -e AZURE_KITESPOTSAD77_CONNECTION_STRING=...`,
+# or the hosting platform's application settings / secrets), never as a build ARG. See .env.example.
+#
+# NEXT_PUBLIC_KITESPOTS_ADMIN_EMAILS is the one exception: it is genuinely meant to be public
+# (an email allowlist, not a credential - see src/domain/adminAuthorization.ts) and does need to
+# be present at build time to be inlined into the client bundle, so it is safe and correct to
+# pass as a build ARG if you want the admin UI hint baked into a prebuilt image.
+ARG NEXT_PUBLIC_KITESPOTS_ADMIN_EMAILS
+ENV NEXT_PUBLIC_KITESPOTS_ADMIN_EMAILS=$NEXT_PUBLIC_KITESPOTS_ADMIN_EMAILS
 
 # Production Build
 RUN if [ "$NODE_ENV" = "production" ]; \

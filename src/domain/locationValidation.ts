@@ -210,3 +210,13 @@ export const isDuplicateLocationName = (name: string, existingNames: string[]): 
   const normalized = name.trim().toLowerCase();
   return existingNames.some((existingName) => existingName.trim().toLowerCase() === normalized);
 };
+
+// Matches exactly what generateLocationId can produce: lowercase alphanumeric segments joined
+// by single hyphens (e.g. "sande", "newspot-2"). Client-supplied location ids (URL path params
+// on the delete/attach-image routes) are re-validated against this before being used to build a
+// Blob Storage blob name (see LocationsService.deleteLocation / attachLocationImage) - defense
+// in depth so a "/", "..", or other unexpected character in an id can never end up inside a blob
+// path, even if it somehow existed in locations.json (e.g. a hand-edited/corrupted document).
+const LOCATION_ID_PATTERN = /^[a-z0-9]+(-[a-z0-9]+)*$/;
+
+export const isValidLocationId = (id: string): boolean => LOCATION_ID_PATTERN.test(id);
