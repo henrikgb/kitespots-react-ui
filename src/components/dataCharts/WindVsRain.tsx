@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import { EChartsOption } from 'echarts';
+import { TooltipFormatterCallback } from 'echarts/types/dist/shared';
 import { EChartsBase } from '@/components/dataCharts/EChartsBase';
 import {useTranslation} from 'next-i18next';
 import useThemeStore from "@/store/themeStore";
+import { formatAxisDateLabel, formatTooltipDateTime, getDayBoundaryTimestamps } from '@/domain/chartDateAxis';
 
 interface DataObjectProps {
   date: string;
@@ -23,7 +25,7 @@ interface WindVsRainProps extends EChartsOption {
 
 const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
   const {theme} = useThemeStore();
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [gridRight, setGridRight] = useState('15%');
   const [gridLeft, setGridLeft] = useState('10%');
   const [textColour, setTextColour] = useState<string>();
@@ -53,22 +55,38 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Extracting dates for x-axis
+  // Dates for the day-separator markLine - the x-axis itself is a `time` axis, so series
+  // data carries its own [date, value] pairs rather than indexing into a shared category list.
   const dates = data?.windSpeed.map((d) => d.date) ?? [];
+  const dayBoundaries = getDayBoundaryTimestamps(dates);
 
   // ECharts renders `null` entries as a gap in the line (its documented mechanism for
   // missing data points), but its published series.data typings don't include null in the
   // value union - cast to bridge that gap without changing runtime behavior.
-  type ChartValue = number[];
+  type TimeSeriesValue = [string, number][];
 
   // Extracting windGust values
-  const windGustValues = (data?.windGust.map((d) => d.value) ?? []) as unknown[] as ChartValue;
+  const windGustValues = (data?.windGust.map((d) => [d.date, d.value]) ?? []) as unknown[] as TimeSeriesValue;
 
   // Extracting windSpeed values
-  const windSpeedValues = (data?.windSpeed.map((d) => d.value) ?? []) as unknown[] as ChartValue;
+  const windSpeedValues = (data?.windSpeed.map((d) => [d.date, d.value]) ?? []) as unknown[] as TimeSeriesValue;
 
   // Extracting precipitation values
-  const precipitationValues = (data?.precipitation.map((d) => d.value) ?? []) as unknown[] as ChartValue;
+  const precipitationValues = (data?.precipitation.map((d) => [d.date, d.value]) ?? []) as unknown[] as TimeSeriesValue;
+
+  // Renders the axis-trigger tooltip header as a readable date/time instead of the raw
+  // ISO timestamp category value, keeping the per-series rows ECharts renders by default.
+  const tooltipFormatter: TooltipFormatterCallback<any> = (params) => {
+    const items = Array.isArray(params) ? params : [params];
+    if (items.length === 0) {
+      return '';
+    }
+    const header = formatTooltipDateTime(items[0].axisValue, i18n.language);
+    const rows = items
+      .map((item: any) => `${item.marker}${t(item.seriesName)}: ${item.value ?? '-'}`)
+      .join('<br/>');
+    return `${header}<br/>${rows}`;
+  };
 
   const options: EChartsOption = {
     title: {
@@ -98,6 +116,7 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
           backgroundColor: '#505765',
         },
       },
+      formatter: tooltipFormatter,
     },
     legend: {
       data: [t("gust"), t("wind"), t("rain")],
@@ -122,12 +141,20 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
     ],
     xAxis: [
       {
-        type: 'category',
+        // `time` (not `category`) so points are spaced by actual elapsed time - the
+        // forecast's hourly near-term data and 6-hourly tail otherwise would have looked
+        // like they cover the same width per point, squeezing later days visually.
+        type: 'time',
         boundaryGap: false,
         axisLine: { onZero: false },
-        data: dates,
         axisLabel: {
-          formatter: (value: string) => value.replace(' ', '\n'),
+          formatter: (value: number) => formatAxisDateLabel(value, i18n.language),
+          hideOverlap: true,
+          color: textColour,
+          rich: {
+            day: { fontWeight: 'bold', color: textColour, lineHeight: 16 },
+            time: { color: textColour, fontSize: 10, lineHeight: 14 },
+          },
         },
         nameTextStyle: {
           color: textColour,
@@ -168,6 +195,15 @@ const WindVsRain: React.FC<WindVsRainProps> = ({ data, ...opts }) => {
         },
         color: '#ff6666',
         data: windGustValues,
+        // Thin vertical line at the first point of each day, so days stay visually
+        // distinguishable even where the axis itself only has room for a time label.
+        markLine: {
+          silent: true,
+          symbol: 'none',
+          label: { show: false },
+          lineStyle: { color: 'rgba(128, 128, 128, 0.35)', width: 1 },
+          data: dayBoundaries.map((value) => ({ xAxis: value })),
+        },
       },
       {
         name: t("wind"),
