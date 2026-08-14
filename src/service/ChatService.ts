@@ -130,7 +130,6 @@ const buildSystemPrompt = (
     "  than quietly omitting the spot - the user should learn *why* it's off the list, not just that " +
     "  it is.",
     " - Treat any time of the day whose windConditionLabel is \"over-land - gusty\" as potentially unsafe for beginners, even if meetsPreferences is true - mention the gustiness and suggest a different day or spot instead.",
-    /7/
   ].join("\n");
 };
 
