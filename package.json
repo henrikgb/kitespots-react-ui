@@ -11,6 +11,7 @@
     "migrate:location-images": "node scripts/migrate-location-images.mjs"
   },
   "dependencies": {
+    "@anthropic-ai/sdk": "^0.117.1",
     "@azure/storage-blob": "^12.15.0",
     "@material-tailwind/react": "^2.1.9",
     "@types/node": "18.16.3",

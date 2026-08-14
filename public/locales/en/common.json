@@ -72,5 +72,20 @@
   "validationWindDirectionRequired": "At least one wind direction classification is required.",
   "confirmDeleteLocationTitle": "Delete {{name}}?",
   "confirmDeleteLocationMessage": "This will permanently remove the location, its image, and its current weather data. It will stop receiving weather updates. This cannot be undone.",
-  "notAuthorizedForAdmin": "This account is not authorized to manage kite spots."
+  "notAuthorizedForAdmin": "This account is not authorized to manage kite spots.",
+  "yes": "Yes",
+  "no": "No",
+  "send": "Send",
+  "chatTitle": "Kitespots assistant",
+  "chatOpenLabel": "Open chat assistant",
+  "chatWelcome": "Hi! I'm the Kitespots.no assistant. I'll ask a couple of quick questions first so I know what counts as good conditions for you.",
+  "chatMinWindQuestion": "What is the minimum wind speed in m/s that you need to be able to kite?",
+  "chatMaxWindQuestion": "What is the maximum wind speed in m/s that you feel comfortable with?",
+  "chatRainQuestion": "Do you care about rain while you are kite surfing?",
+  "chatOnboardingComplete": "Got it! Ask me things like \"Where should I go this weekend?\" and I'll check the forecast for you.",
+  "chatWindSpeedAnswer": "{{value}} m/s",
+  "chatInvalidWindSpeed": "Please enter a valid wind speed in m/s, e.g. 7.",
+  "chatMaxBelowMin": "That's below your minimum ({{min}} m/s) - please enter a higher number.",
+  "chatWindSpeedPlaceholder": "Wind speed (m/s)",
+  "chatInputPlaceholder": "Ask about kiting conditions..."
 }

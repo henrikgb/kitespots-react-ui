@@ -2,6 +2,7 @@ import "@/styles/styles.css";
 import '@/styles/globals.css';
 import "@/components/headerNavigationBar/navbarStyling.css";
 import HeaderNavBar from "@/components/headerNavigationBar/HeaderNavBar";
+import { ChatWidget } from "@/components/chat/ChatWidget";
 import { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import useThemeStore from "@/store/themeStore";
@@ -19,6 +20,7 @@ function App({ Component, pageProps: { session, ...pageProps} }: AppProps) {
         <div className="page-body">
           <Component {...pageProps} />
         </div>
+        <ChatWidget />
       </div>
     </SessionProvider>
   );

@@ -72,5 +72,20 @@
   "validationWindDirectionRequired": "Minst én vindretningsklassifisering er påkrevd.",
   "confirmDeleteLocationTitle": "Slette {{name}}?",
   "confirmDeleteLocationMessage": "Dette vil permanent fjerne lokasjonen, bildet og gjeldende værdata. Lokasjonen vil ikke lenger motta væroppdateringer. Dette kan ikke angres.",
-  "notAuthorizedForAdmin": "Denne kontoen har ikke tilgang til å administrere kitespots."
+  "notAuthorizedForAdmin": "Denne kontoen har ikke tilgang til å administrere kitespots.",
+  "yes": "Ja",
+  "no": "Nei",
+  "send": "Send",
+  "chatTitle": "Kitespots-assistent",
+  "chatOpenLabel": "Åpne chat-assistent",
+  "chatWelcome": "Hei! Jeg er Kitespots.no-assistenten. Jeg starter med noen raske spørsmål slik at jeg vet hva som er gode forhold for deg.",
+  "chatMinWindQuestion": "Hva er den laveste vindstyrken i m/s du trenger for å kunne kite?",
+  "chatMaxWindQuestion": "Hva er den høyeste vindstyrken i m/s du føler deg komfortabel med?",
+  "chatRainQuestion": "Bryr du deg om regn når du står på kite?",
+  "chatOnboardingComplete": "Skjønner! Spør meg gjerne om ting som «Hvor bør jeg dra denne helgen?», så sjekker jeg værmeldingen for deg.",
+  "chatWindSpeedAnswer": "{{value}} m/s",
+  "chatInvalidWindSpeed": "Skriv inn en gyldig vindstyrke i m/s, f.eks. 7.",
+  "chatMaxBelowMin": "Det er lavere enn minimumet ditt ({{min}} m/s) - skriv inn et høyere tall.",
+  "chatWindSpeedPlaceholder": "Vindstyrke (m/s)",
+  "chatInputPlaceholder": "Spør om kiteforhold..."
 }
