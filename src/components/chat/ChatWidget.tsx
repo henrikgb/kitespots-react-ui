@@ -29,10 +29,22 @@ export const ChatWidget = () => {
         </svg>
       </button>
 
-      <Dialog open={isOpen} handler={() => setOpen(false)} size="sm">
-        <DialogHeader className="flex items-center justify-between">
-          <Typography variant="h5">{t("chatTitle")}</Typography>
-          <IconButton variant="text" onClick={() => setOpen(false)} aria-label={t("cancel")}>
+      <Dialog
+        open={isOpen}
+        handler={() => setOpen(false)}
+        size="sm"
+        className="m-2 w-[calc(100vw-1rem)] min-w-0 max-w-sm"
+      >
+        <DialogHeader className="flex items-center justify-between gap-2 p-3 sm:p-4">
+          <Typography variant="h5" className="text-lg sm:text-2xl">
+            {t("chatTitle")}
+          </Typography>
+          <IconButton
+            variant="text"
+            onClick={() => setOpen(false)}
+            aria-label={t("cancel")}
+            className="shrink-0"
+          >
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
               <path
                 fillRule="evenodd"
@@ -42,7 +54,7 @@ export const ChatWidget = () => {
             </svg>
           </IconButton>
         </DialogHeader>
-        <DialogBody className="flex flex-col gap-4">
+        <DialogBody className="flex flex-col gap-3 p-3 sm:gap-4 sm:p-4">
           <ChatMessageList messages={messages} isSending={isSending} />
           <ChatComposer />
         </DialogBody>

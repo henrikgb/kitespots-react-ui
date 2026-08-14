@@ -18,15 +18,15 @@ export const ChatMessageList = ({ messages, isSending }: ChatMessageListProps) =
   }, [messages.length, isSending]);
 
   return (
-    <div className="flex flex-col gap-3 overflow-y-auto px-1" style={{ maxHeight: "50vh" }} data-testid="chat-message-list">
+    <div className="flex w-full flex-col gap-3 overflow-x-hidden overflow-y-auto px-1" style={{ maxHeight: "50vh" }} data-testid="chat-message-list">
       {messages.map((message, index) => (
         <div
           key={index}
-          className={`max-w-[85%] rounded-lg px-3 py-2 ${
+          className={`max-w-[90%] rounded-lg px-3 py-2 ${
             message.role === "assistant" ? "self-start bg-webPageContainerBody" : "self-end bg-headerColor text-white"
           }`}
         >
-          <Typography className="whitespace-pre-wrap" variant="small">
+          <Typography className="whitespace-pre-wrap break-words" variant="small">
             {message.translationKey ? t(message.translationKey, message.translationValues) : message.content}
           </Typography>
         </div>

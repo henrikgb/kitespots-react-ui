@@ -128,11 +128,11 @@ export const ChatComposer = () => {
 
   if (onboardingStep === "rain") {
     return (
-      <div className="flex justify-end gap-2">
-        <Button variant="outlined" onClick={() => submitRain(false)} disabled={isSending}>
+      <div className="flex gap-2">
+        <Button variant="outlined" className="flex-1" onClick={() => submitRain(false)} disabled={isSending}>
           {t("no")}
         </Button>
-        <Button variant="filled" onClick={() => submitRain(true)} disabled={isSending}>
+        <Button variant="filled" className="flex-1" onClick={() => submitRain(true)} disabled={isSending}>
           {t("yes")}
         </Button>
       </div>
@@ -146,16 +146,22 @@ export const ChatComposer = () => {
           {validationError}
         </Typography>
       )}
-      <div className="flex gap-2">
+      <div className="flex flex-col gap-2 sm:flex-row">
         <Input
           type={onboardingStep === "complete" ? "text" : "number"}
           label={onboardingStep === "complete" ? t("chatInputPlaceholder") : t("chatWindSpeedPlaceholder")}
           value={inputValue}
           onChange={(event) => setInputValue(event.target.value)}
           disabled={isSending}
+          containerProps={{ className: "!min-w-0" }}
           data-testid="chat-input"
         />
-        <Button type="submit" disabled={isSending || inputValue.trim().length === 0} data-testid="chat-send">
+        <Button
+          type="submit"
+          disabled={isSending || inputValue.trim().length === 0}
+          className="w-full shrink-0 sm:w-auto"
+          data-testid="chat-send"
+        >
           {t("send")}
         </Button>
       </div>
