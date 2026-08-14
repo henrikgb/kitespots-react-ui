@@ -113,6 +113,7 @@ const buildSystemPrompt = (
     "</forecast_data>",
     "",
     "When answering:",
+    "- When answering give the user a specific recommended time slot (spot + date) for kiting based on a floating average of the forecast data with +- 3 hours, not just a vague 'good day' or 'bad day'. When doing so, give the format 'spot name - name of day - YYYY-MM-DD - HH:MM-HH:MM' (e.g. 'Hommersåk - Saturday -2024-06-15 - 10:00-13:00').",
     "- Lead with spots/days where meetsPreferences is true, best wind match first.",
     "- If nothing matches, say so plainly, then suggest the closest options (e.g. only slightly " +
       "too light/strong, or a rainy day), citing the real numbers.",
