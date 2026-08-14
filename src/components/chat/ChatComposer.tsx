@@ -154,6 +154,7 @@ export const ChatComposer = () => {
           onChange={(event) => setInputValue(event.target.value)}
           disabled={isSending}
           containerProps={{ className: "!min-w-0" }}
+          className="text-base"
           data-testid="chat-input"
         />
         <Button
