@@ -134,24 +134,29 @@ const buildSystemPrompt = (
   ].join("\n");
 };
 
+const REFUSAL_FALLBACK_TEXT =
+  "Sorry, I can't help with that. Try asking about kitesurfing conditions at one of our spots instead.";
+
 /**
- * Generates the assistant's reply to one chat turn. Refetches locations/weather on every call
- * (no caching) - this mirrors GET /api/weatherData and keeps the assistant's answers as current
- * as the hourly Function App refresh, at the cost of a few extra Blob Storage reads per message,
- * which is an acceptable trade-off for this traffic volume.
+ * Generates the assistant's reply to one chat turn, streaming text as Claude produces it via
+ * onTextDelta rather than waiting for the full response. Refetches locations/weather on every
+ * call (no caching) - this mirrors GET /api/weatherData and keeps the assistant's answers as
+ * current as the hourly Function App refresh, at the cost of a few extra Blob Storage reads per
+ * message, which is an acceptable trade-off for this traffic volume.
  */
-export const getChatReply = async (
+export const streamChatReply = async (
   userMessage: string,
   history: ChatMessage[],
-  preferences: UserWindPreferences
-): Promise<string> => {
+  preferences: UserWindPreferences,
+  onTextDelta: (textDelta: string) => void
+): Promise<void> => {
   const [locations, weatherData] = await Promise.all([fetchLocations(), fetchWeatherData()]);
   const forecastContext = buildForecastContext(locations, weatherData, preferences);
   const system = buildSystemPrompt(preferences, forecastContext);
 
   const trimmedHistory = history.slice(-MAX_HISTORY_MESSAGES);
 
-  const response = await getClient().messages.create({
+  const stream = getClient().messages.stream({
     model: CHAT_MODEL,
     max_tokens: 1024,
     system,
@@ -162,12 +167,18 @@ export const getChatReply = async (
     ],
   });
 
-  if (response.stop_reason === "refusal") {
-    return "Sorry, I can't help with that. Try asking about kitesurfing conditions at one of our spots instead.";
-  }
+  let sentAnyText = false;
+  stream.on("text", (textDelta) => {
+    sentAnyText = true;
+    onTextDelta(textDelta);
+  });
 
-  const textBlock = response.content.find(
-    (block): block is Anthropic.TextBlock => block.type === "text"
-  );
-  return textBlock?.text ?? "Sorry, I couldn't come up with an answer to that. Try rephrasing your question.";
+  const finalMessage = await stream.finalMessage();
+  if (!sentAnyText) {
+    onTextDelta(
+      finalMessage.stop_reason === "refusal"
+        ? REFUSAL_FALLBACK_TEXT
+        : "Sorry, I couldn't come up with an answer to that. Try rephrasing your question."
+    );
+  }
 };

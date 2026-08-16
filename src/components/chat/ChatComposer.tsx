@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Input, Typography } from "@material-tailwind/react";
 import { useTranslation } from "next-i18next";
 import { useChatStore } from "@/store/chatStore";
-import { getChatApiErrorMessage, sendChatMessage } from "@/util/axiosRequests/chatApi";
+import { getChatApiErrorMessage, sendChatMessageStream } from "@/util/axiosRequests/chatApi";
 
 /** Above this, a wind speed answer is almost certainly a typo, not a real value in m/s. */
 const MAX_REASONABLE_WIND_SPEED_MS = 60;
@@ -29,6 +29,7 @@ export const ChatComposer = () => {
     preferences,
     isSending,
     addMessage,
+    appendToLastMessage,
     setDraftMinWindSpeedMs,
     setDraftMaxWindSpeedMs,
     setOnboardingStep,
@@ -106,8 +107,18 @@ export const ChatComposer = () => {
     setValidationError(null);
     setIsSending(true);
     try {
-      const reply = await sendChatMessage(text, history, preferences);
-      addMessage({ role: "assistant", content: reply });
+      // The first chunk starts a new assistant message (this also hides the "typing" loader -
+      // see ChatMessageList); every chunk after that is appended to it, so the reply grows in
+      // place as Claude streams it.
+      let hasStartedReply = false;
+      await sendChatMessageStream(text, history, preferences, (chunk) => {
+        if (!hasStartedReply) {
+          hasStartedReply = true;
+          addMessage({ role: "assistant", content: chunk });
+        } else {
+          appendToLastMessage(chunk);
+        }
+      });
     } catch (error) {
       addMessage({ role: "assistant", content: getChatApiErrorMessage(error) });
     } finally {

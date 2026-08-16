@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { getChatReply } from "@/service/ChatService";
+import { streamChatReply } from "@/service/ChatService";
 import { ChatMessage, UserWindPreferences } from "@/types/model/Chat";
 
 const MAX_MESSAGE_LENGTH = 2000;
@@ -53,11 +53,34 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const validHistory = isValidHistory(history) ? history : [];
 
+  // Headers are only committed on the first text chunk, so a failure that happens before Claude
+  // starts responding (e.g. a Blob Storage read failing) can still be reported as JSON like
+  // before; a failure mid-stream just ends the response, since the client has already started
+  // rendering plain-text chunks by then.
+  let headersSent = false;
+  const ensureStreamingHeaders = () => {
+    if (!headersSent) {
+      headersSent = true;
+      res.writeHead(200, {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache, no-transform",
+        "X-Content-Type-Options": "nosniff",
+      });
+    }
+  };
+
   try {
-    const reply = await getChatReply(message.trim(), validHistory, preferences);
-    res.status(200).json({ reply });
+    await streamChatReply(message.trim(), validHistory, preferences, (textDelta) => {
+      ensureStreamingHeaders();
+      res.write(textDelta);
+    });
+    res.end();
   } catch (error) {
     console.error("Error generating chat reply:", error);
-    res.status(500).json({ error: "An error occurred while talking to the chat assistant." });
+    if (headersSent) {
+      res.end();
+    } else {
+      res.status(500).json({ error: "An error occurred while talking to the chat assistant." });
+    }
   }
 }
