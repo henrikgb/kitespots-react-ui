@@ -16,6 +16,8 @@ interface ChatState {
 
   setOpen: (open: boolean) => void;
   addMessage: (message: ChatMessage) => void;
+  /** Appends a streamed text chunk to the last message's content - see ChatComposer's use of sendChatMessageStream. */
+  appendToLastMessage: (chunk: string) => void;
   setDraftMinWindSpeedMs: (value: number) => void;
   setDraftMaxWindSpeedMs: (value: number) => void;
   setOnboardingStep: (step: OnboardingStep) => void;
@@ -43,6 +45,16 @@ export const useChatStore = create<ChatState>()(
 
       setOpen: (open) => set({ isOpen: open }),
       addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
+      appendToLastMessage: (chunk) =>
+        set((state) => {
+          if (state.messages.length === 0) {
+            return state;
+          }
+          const messages = [...state.messages];
+          const lastIndex = messages.length - 1;
+          messages[lastIndex] = { ...messages[lastIndex], content: messages[lastIndex].content + chunk };
+          return { messages };
+        }),
       setDraftMinWindSpeedMs: (value) => set({ draftMinWindSpeedMs: value }),
       setDraftMaxWindSpeedMs: (value) => set({ draftMaxWindSpeedMs: value }),
       setOnboardingStep: (step) => set({ onboardingStep: step }),

@@ -17,6 +17,11 @@ export const ChatMessageList = ({ messages, isSending }: ChatMessageListProps) =
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages.length, isSending]);
 
+  // Once the streamed reply's first chunk arrives, ChatComposer appends it to a new assistant
+  // message - at that point the growing text itself is the "still working" signal, so the
+  // loader below would be a redundant second one. Only show it while waiting for that first chunk.
+  const showTypingIndicator = isSending && messages[messages.length - 1]?.role !== "assistant";
+
   return (
     <div className="flex w-full flex-col gap-3 overflow-x-hidden overflow-y-auto px-1" style={{ maxHeight: "50vh" }} data-testid="chat-message-list">
       {messages.map((message, index) => (
@@ -31,7 +36,7 @@ export const ChatMessageList = ({ messages, isSending }: ChatMessageListProps) =
           </Typography>
         </div>
       ))}
-      {isSending && (
+      {showTypingIndicator && (
         <div className="self-start rounded-lg bg-webPageContainerBody px-3 py-3">
           <BeatLoader size={6} color="#2d728f" aria-label="Loading" />
         </div>
